@@ -20,7 +20,7 @@ const navLinks = [
   },
   { href: "/eisagogi", label: "Εισαγωγή" },
   { href: "/karieres", label: "Απόφοιτοι & Καριέρα" },
-  { href: "/nea", label: "Νέα" },
+  { href: "/eggrafes", label: "Εγγραφές" },
   { href: "/faq", label: "Συχνές Ερωτήσεις" },
   { href: "/epikoinonia", label: "Επικοινωνία" },
 ];
