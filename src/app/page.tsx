@@ -1,41 +1,12 @@
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, Sparkles, BookOpen, GraduationCap, Microscope, Building, Calendar, ArrowUpRight } from "lucide-react";
 
+import ScrollCanvasHero from "@/components/sections/ScrollCanvasHero";
+
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden">
-        {/* Decorative elements */}
-        <div className="absolute top-0 right-0 w-[800px] h-[800px] blob-blue opacity-30 -translate-y-1/4 translate-x-1/4 pointer-events-none rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] blob-green opacity-20 translate-y-1/4 -translate-x-1/4 pointer-events-none rounded-full blur-3xl"></div>
-        
-        <div className="section-container px-4 relative z-10 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card mb-8 animate-float">
-            <Sparkles size={16} className="text-secondary" />
-            <span className="text-sm font-medium text-text-secondary">Νέος Κύκλος Σπουδών</span>
-          </div>
-          
-          <h1 className="font-heading text-5xl md:text-7xl font-bold tracking-tight text-text-primary mb-6 max-w-4xl mx-auto leading-tight">
-            Η Επιστήμη πίσω από την <span className="text-gradient-blue">Ομορφιά</span> & την <span className="text-gradient-green">Υγεία</span>
-          </h1>
-          
-          <p className="text-lg md:text-xl text-text-secondary mb-10 max-w-2xl mx-auto leading-relaxed">
-            Πρόγραμμα Μεταπτυχιακών Σπουδών στην Κοσμητολογία από το Διεθνές Πανεπιστήμιο της Ελλάδος.
-            Εξειδίκευση στην παρασκευή, έλεγχο και εφαρμογή καινοτόμων καλλυντικών.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/eisagogi" className="w-full sm:w-auto px-8 py-4 bg-primary text-primary-foreground font-medium rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2">
-              Αιτήσεις Εισαγωγής
-              <ArrowRight size={18} />
-            </Link>
-            <Link href="/programma" className="w-full sm:w-auto px-8 py-4 bg-white text-text-primary border border-border-soft font-medium rounded-full shadow-sm hover:bg-muted transition-all duration-300 flex items-center justify-center">
-              Το Πρόγραμμα Σπουδών
-            </Link>
-          </div>
-        </div>
-      </section>
+      <ScrollCanvasHero frameCount={50} />
 
       {/* About Institution & Department */}
       <section className="py-20 bg-white relative">
