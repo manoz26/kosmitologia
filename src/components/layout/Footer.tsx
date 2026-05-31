@@ -48,7 +48,7 @@ export function Footer() {
             <li><Link href="/" className="text-text-secondary text-sm hover:text-primary transition-colors">Αρχική</Link></li>
             <li><Link href="/sxetika" className="text-text-secondary text-sm hover:text-primary transition-colors">Σχετικά με το ΠΜΣ</Link></li>
             <li><Link href="/programma" className="text-text-secondary text-sm hover:text-primary transition-colors">Πρόγραμμα Σπουδών</Link></li>
-            <li><Link href="/eisagogi" className="text-text-secondary text-sm hover:text-primary transition-colors">Εισαγωγή</Link></li>
+            <li><Link href="/eggrafes" className="text-text-secondary text-sm hover:text-primary transition-colors">Εισαγωγή</Link></li>
             <li><Link href="/karieres" className="text-text-secondary text-sm hover:text-primary transition-colors">Καριέρες & Απόφοιτοι</Link></li>
             <li><Link href="/faq" className="text-text-secondary text-sm hover:text-primary transition-colors">Συχνές Ερωτήσεις</Link></li>
           </ul>

@@ -4,7 +4,8 @@ import React from "react";
 import { motion } from "framer-motion";
 import { 
   CalendarDays, FileText, GraduationCap, Download, Mail, MapPin, 
-  BookOpen, Languages, Award, Briefcase, User, ShieldCheck
+  BookOpen, Languages, Award, Briefcase, User, ShieldCheck,
+  Users, BookMarked, Microscope
 } from "lucide-react";
 
 const DOCUMENTS = [
@@ -25,8 +26,9 @@ const DOCUMENTS = [
   },
   {
     title: "Λοιποί Τίτλοι Σπουδών",
-    desc: "(εάν υπάρχουν)",
+    desc: "Αντίγραφα επιπλέον τίτλων σπουδών.",
     icon: Award,
+    optional: true,
   },
   {
     title: "Βιογραφικό Σημείωμα",
@@ -40,13 +42,15 @@ const DOCUMENTS = [
   },
   {
     title: "Επιστημονικές Δημοσιεύσεις",
-    desc: "Επιστημονικές δημοσιεύσεις ή διακρίσεις (εάν υπάρχουν)",
+    desc: "Επιστημονικές δημοσιεύσεις ή διακρίσεις.",
     icon: FileText,
+    optional: true,
   },
   {
     title: "Επαγγελματική Εμπειρία",
-    desc: "Αποδεικτικά επαγγελματικής ή/και ερευνητικής εμπειρίας (εάν υπάρχουν)",
+    desc: "Αποδεικτικά επαγγελματικής ή/και ερευνητικής εμπειρίας.",
     icon: Briefcase,
+    optional: true,
   },
   {
     title: "Αστυνομική Ταυτότητα",
@@ -61,14 +65,17 @@ const DOCUMENTS = [
 ];
 
 export default function EggrafesPage() {
+  const currentYear = new Date().getFullYear();
+  const nextYear = currentYear + 1;
+
   return (
-    <main className="min-h-screen flex flex-col pt-24 bg-surface">
+    <main className="min-h-screen flex flex-col pt-24">
       
       {/* HEADER SECTION */}
-      <section className="bg-white py-16 lg:py-24 border-b border-border-soft">
+      <section className="py-16 lg:py-24">
         <div className="section-container px-4 max-w-4xl mx-auto text-center">
           <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-            <span className="text-secondary font-bold text-sm tracking-widest uppercase mb-4 block">Κύκλος Σπουδών 2026-2027</span>
+            <span className="text-secondary font-bold text-sm tracking-widest uppercase mb-4 block" suppressHydrationWarning>Κύκλος Σπουδών {currentYear}-{nextYear}</span>
             <h1 className="font-heading text-4xl md:text-5xl font-extrabold text-text-primary mb-6">
               Εγγραφές & Αιτήσεις
             </h1>
@@ -98,11 +105,11 @@ export default function EggrafesPage() {
               <div className="space-y-6">
                 <div className="flex items-center justify-between border-b border-border-soft pb-6">
                   <p className="text-text-secondary text-lg font-medium">Έναρξη</p>
-                  <p className="text-text-primary font-bold text-xl bg-surface px-4 py-1.5 rounded-full border border-border-soft">01/06/2026</p>
+                  <p className="text-text-primary font-bold text-xl bg-surface px-4 py-1.5 rounded-full border border-border-soft" suppressHydrationWarning>10/06/{currentYear}</p>
                 </div>
                 <div className="flex items-center justify-between">
                   <p className="text-text-secondary text-lg font-medium">Λήξη</p>
-                  <p className="text-text-primary font-bold text-xl bg-surface px-4 py-1.5 rounded-full border border-border-soft">20/07/2026</p>
+                  <p className="text-text-primary font-bold text-xl bg-surface px-4 py-1.5 rounded-full border border-border-soft" suppressHydrationWarning>10/07/{currentYear}</p>
                 </div>
               </div>
             </motion.div>
@@ -136,7 +143,7 @@ export default function EggrafesPage() {
       </section>
 
       {/* DOCUMENTS LIST */}
-      <section className="py-16 bg-surface relative z-10">
+      <section className="py-16 relative z-10">
         <div className="section-container px-4 max-w-4xl mx-auto">
           <div className="mb-12 text-center md:text-left">
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-text-primary mb-6">
@@ -157,8 +164,13 @@ export default function EggrafesPage() {
                     <Icon size={24} />
                   </div>
                   <div>
-                    <h3 className="font-bold text-text-primary text-lg mb-2 group-hover:text-primary transition-colors">
+                    <h3 className="font-bold text-text-primary text-lg mb-2 group-hover:text-primary transition-colors flex items-center flex-wrap gap-2">
                       {doc.title}
+                      {doc.optional && (
+                        <span className="text-xs font-bold bg-secondary/10 text-secondary px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                          Προαιρετικο
+                        </span>
+                      )}
                     </h3>
                     <p className="text-text-secondary text-sm sm:text-base leading-relaxed">
                       {doc.desc}
@@ -172,7 +184,7 @@ export default function EggrafesPage() {
       </section>
 
       {/* SUBMISSION INFO */}
-      <section className="py-24 bg-white border-t border-border-soft relative z-10">
+      <section className="py-24 relative z-10">
         <div className="section-container px-4 max-w-4xl mx-auto text-center">
           
           <div className="w-20 h-20 bg-secondary/10 text-secondary rounded-3xl flex items-center justify-center mx-auto mb-8 rotate-3">

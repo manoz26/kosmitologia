@@ -68,43 +68,6 @@ const admissionItems: AccordionItem[] = [
     ),
   },
   {
-    id: "criteria",
-    icon: ClipboardCheck,
-    title: "Κριτήρια Επιλογής",
-    content: (
-      <div className="space-y-4">
-        <p className="text-sm text-text-secondary">
-          Η επιλογή γίνεται <strong className="text-text-primary">χωρίς γραπτές εξετάσεις</strong>,
-          με αξιολόγηση φακέλου υποψηφιότητας:
-        </p>
-        <div className="space-y-3">
-          {[
-            { label: "Συνάφεια πτυχίου", pct: 10, color: "bg-lavender" },
-            { label: "Βαθμός πτυχίου (GPA)", pct: 20, color: "bg-mint" },
-            { label: "Βαθμοί σε σχετικά μαθήματα", pct: 10, color: "bg-peach" },
-            { label: "Εμπειρία & Συστατικές", pct: 60, color: "bg-lavender-light" },
-          ].map((c) => (
-            <div key={c.label}>
-              <div className="flex justify-between text-sm mb-1.5">
-                <span className="text-text-secondary">{c.label}</span>
-                <span className="font-heading font-bold text-text-primary">{c.pct}%</span>
-              </div>
-              <div className="h-2 rounded-full bg-lavender-50 overflow-hidden">
-                <motion.div
-                  initial={{ width: 0 }}
-                  whileInView={{ width: `${c.pct}%` }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.8, ease: "easeOut" }}
-                  className={cn("h-full rounded-full", c.color)}
-                />
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    ),
-  },
-  {
     id: "fees",
     icon: Euro,
     title: "Δίδακτρα & Απαλλαγές",
@@ -197,7 +160,7 @@ export function AdmissionSection() {
     >
       <div className="max-w-3xl mx-auto space-y-3">
         {admissionItems.map((item) => (
-          <AccordionItemComponent
+            <AccordionItemComponent
             key={item.id}
             item={item}
             isOpen={openId === item.id}

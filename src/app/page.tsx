@@ -5,7 +5,7 @@ import ScrollCanvasHero from "@/components/sections/ScrollCanvasHero";
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-surface">
       <ScrollCanvasHero frameCount={50} />
 
       <div className="bg-gradient-to-b from-[#A5BA5F] to-[#F4F7ED]">

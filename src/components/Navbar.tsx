@@ -82,7 +82,7 @@ export function Navbar() {
             {/* CTA + Mobile Toggle */}
             <div className="flex items-center gap-3">
               <Link
-                href="/eisagogi"
+                href="/eggrafes"
                 className="hidden sm:inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-lavender to-lavender-dark px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-lavender/20 hover:shadow-lavender/40 hover:scale-105 active:scale-100 transition-all duration-200"
               >
                 Υποβολή Αίτησης
@@ -165,7 +165,7 @@ export function Navbar() {
 
                 <div className="mt-auto">
                   <Link
-                    href="/eisagogi"
+                    href="/eggrafes"
                     onClick={() => setIsMobileOpen(false)}
                     className="flex items-center justify-center gap-2 w-full rounded-2xl bg-gradient-to-r from-lavender to-lavender-dark px-6 py-4 text-base font-bold text-white shadow-lg shadow-lavender/25"
                   >

@@ -18,7 +18,6 @@ const navLinks = [
       { href: "/ergastiria", label: "Εργαστήρια & Υποδομές" },
     ]
   },
-  { href: "/eisagogi", label: "Εισαγωγή" },
   { href: "/karieres", label: "Απόφοιτοι & Καριέρα" },
   { href: "/eggrafes", label: "Εγγραφές" },
   { href: "/faq", label: "Συχνές Ερωτήσεις" },

@@ -101,7 +101,7 @@ export default function ScrollVideoHero() {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/eisagogi" className="w-full sm:w-auto px-8 py-4 bg-primary text-primary-foreground font-medium rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2">
+            <Link href="/sxetika#admission" className="w-full sm:w-auto px-8 py-4 bg-primary text-primary-foreground font-medium rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2">
               Αιτήσεις Εισαγωγής
               <ArrowRight size={18} />
             </Link>

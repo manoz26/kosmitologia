@@ -12,7 +12,7 @@ export interface NavGroup {
 export const mainNavItems: NavItem[] = [
   { label: "Αρχική", href: "/" },
   { label: "Πρόγραμμα Σπουδών", href: "/programma" },
-  { label: "Εισαγωγή", href: "/eisagogi" },
+  { label: "Εισαγωγή", href: "/eggrafes" },
   { label: "Διδάσκοντες", href: "/didaskotes" },
   { label: "Καριέρα", href: "/karieres" },
   { label: "Νέα", href: "/nea" },
@@ -34,9 +34,9 @@ export const footerGroups: NavGroup[] = [
     label: "Πρόγραμμα",
     items: [
       { label: "Πρόγραμμα Σπουδών", href: "/programma" },
-      { label: "Εισαγωγή & Δικαιολογητικά", href: "/eisagogi" },
+      { label: "Εισαγωγή & Δικαιολογητικά", href: "/eggrafes" },
       { label: "Διδάσκοντες", href: "/didaskotes" },
-      { label: "Δίδακτρα", href: "/eisagogi#didaktra" },
+      { label: "Δίδακτρα", href: "/eggrafes" },
     ],
   },
   {

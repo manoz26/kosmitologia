@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { Outfit, Inter } from "next/font/google";
+import { Montserrat, Inter } from "next/font/google";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import "./globals.css";
 
-const outfit = Outfit({
+const montserrat = Montserrat({
   subsets: ["latin", "latin-ext"],
   variable: "--font-heading",
   display: "swap",
@@ -53,8 +53,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="el" className={`${outfit.variable} ${inter.variable}`}>
-      <body className="min-h-dvh flex flex-col antialiased">
+    <html lang="el" className={`${montserrat.variable} ${inter.variable}`}>
+      <body className="min-h-dvh flex flex-col antialiased bg-gradient-to-b from-[#E0F2FE] via-[#E8F5E9] to-[#F4F7ED]">
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />

@@ -113,7 +113,7 @@ export function HeroSection() {
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
             <Link
-              href="/eisagogi"
+              href="/sxetika#admission"
               className="group relative inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-lavender via-lavender-dark to-lavender px-8 py-4 text-base font-bold text-white shadow-xl shadow-lavender/25 hover:shadow-lavender/40 hover:scale-105 active:scale-100 transition-all duration-300 bg-[length:200%_auto] animate-gradient"
             >
               Ξεκινήστε την Αίτηση

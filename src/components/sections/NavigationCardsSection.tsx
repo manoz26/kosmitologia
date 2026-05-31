@@ -37,7 +37,7 @@ const cards = [
   {
     title: "Διαδικασία Εισαγωγής",
     description: "Όλα όσα χρειάζεστε για την εγγραφή σας στο πρόγραμμα.",
-    href: "/eisagogi",
+    href: "/sxetika#admission",
     type: "campus" as const,
     label: "Φωτογραφία: Γραμματεία / Αμφιθέατρα"
   },

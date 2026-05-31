@@ -17,7 +17,7 @@ export default function ProgrammaPage() {
         
         {/* Placeholder gallery */}
         <div className="mt-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="font-heading text-3xl font-bold text-text-primary mb-8 text-center border-b border-zinc-200 dark:border-zinc-800 pb-4">
+          <h2 className="font-heading text-3xl font-bold text-text-primary mb-8 text-center border-b border-teal-500/10 dark:border-teal-500/10 pb-4">
             Στιγμιότυπα από τα Εργαστηριακά Μαθήματα
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
