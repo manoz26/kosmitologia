@@ -33,7 +33,7 @@ export function SpecializationsSection() {
   return (
     <SectionWrapper
       id="specializations"
-      variant="light"
+      variant="plain"
       title="Οι 2 Ειδικεύσεις του Προγράμματος"
       subtitle="Επιλέξτε την κατεύθυνση που ταιριάζει στους επαγγελματικούς σας στόχους"
     >
