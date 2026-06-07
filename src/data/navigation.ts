@@ -25,7 +25,6 @@ export const homeScrollLinks: NavItem[] = [
   { label: "Διδάσκοντες", href: "#faculty" },
   { label: "Εισαγωγή", href: "#admission" },
   { label: "Καριέρα", href: "#careers" },
-  { label: "FAQ", href: "#faq" },
   { label: "Επικοινωνία", href: "#contact" },
 ];
 
@@ -42,7 +41,6 @@ export const footerGroups: NavGroup[] = [
   {
     label: "Χρήσιμα",
     items: [
-      { label: "Συχνές Ερωτήσεις", href: "/faq" },
       { label: "Νέα & Ανακοινώσεις", href: "/nea" },
       { label: "Καριέρα & Αποκατάσταση", href: "/karieres" },
       { label: "ΔιΠΑΕ", href: "https://www.ihu.gr", isExternal: true },

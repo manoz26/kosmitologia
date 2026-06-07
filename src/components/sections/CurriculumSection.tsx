@@ -41,18 +41,21 @@ function CourseCard({ course, index, onClick }: { course: Course; index: number;
       icon: "bg-lavender text-white",
       badge: "bg-lavender-50 text-lavender-dark",
       border: "hover:border-lavender/30",
+      textHover: "group-hover:text-lavender",
     },
     mint: {
       bg: "bg-mint-50",
       icon: "bg-mint text-white",
       badge: "bg-mint-50 text-mint-dark",
       border: "hover:border-mint/30",
+      textHover: "group-hover:text-mint-dark",
     },
     peach: {
       bg: "bg-peach-50",
       icon: "bg-peach text-white",
       badge: "bg-peach-50 text-peach-warm",
       border: "hover:border-peach/30",
+      textHover: "group-hover:text-peach-warm",
     },
   };
 
@@ -71,13 +74,16 @@ function CourseCard({ course, index, onClick }: { course: Course; index: number;
       }}
       onClick={onClick}
       className={cn(
-        "glass-card rounded-2xl p-5 cursor-pointer transition-colors border border-transparent",
+        "group border border-border-soft shadow-sm bg-white rounded-2xl p-5 cursor-pointer transition-colors border border-transparent flex flex-col justify-between h-full relative overflow-hidden",
         colors.border,
         course.ects === 30 && "md:col-span-2"
       )}
     >
-      <div className="flex items-start gap-4">
-        <div className={cn("flex-shrink-0 h-11 w-11 rounded-xl flex items-center justify-center", colors.icon)}>
+      {/* Subtle hover gradient background effect */}
+      <div className="absolute inset-0 bg-gradient-to-br from-white/0 to-white/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+
+      <div className="flex items-start gap-4 relative z-10">
+        <div className={cn("flex-shrink-0 h-11 w-11 rounded-md flex items-center justify-center shadow-sm", colors.icon)}>
           <CourseIcon name={course.icon} />
         </div>
         <div className="flex-1 min-w-0">
@@ -89,12 +95,16 @@ function CourseCard({ course, index, onClick }: { course: Course; index: number;
               {course.ects} ECTS
             </span>
           </div>
-          <h3 className="font-heading font-semibold text-sm text-text-primary leading-snug mb-1.5">
+          <h3 className="font-heading font-semibold text-sm text-text-primary leading-snug mb-1.5 group-hover:text-primary transition-colors">
             {course.nameGr}
           </h3>
           <p className="text-xs text-text-muted leading-relaxed line-clamp-2">
             {course.description}
           </p>
+          <div className={cn("mt-3 flex items-center gap-1.5 text-[11px] font-bold text-text-muted transition-colors", colors.textHover)}>
+            <span>Περισσότερα</span>
+            <LucideIcons.ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
+          </div>
         </div>
       </div>
     </motion.div>
@@ -115,12 +125,12 @@ function CourseModal({ course, onClose }: { course: Course; onClose: () => void 
         initial={{ opacity: 0, scale: 0.95, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 20 }}
-        className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white rounded-3xl shadow-2xl z-10"
+        className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white rounded-md shadow-md z-10"
       >
         <div className="sticky top-0 right-0 p-4 flex justify-end bg-gradient-to-b from-white via-white to-transparent z-20 pointer-events-none">
           <button
             onClick={onClose}
-            className="p-2 bg-white rounded-full text-text-secondary hover:bg-muted hover:text-text-primary transition-colors pointer-events-auto shadow-sm border border-border-soft"
+            className="p-2 bg-white rounded-md text-text-secondary hover:bg-muted hover:text-text-primary transition-colors pointer-events-auto shadow-sm border border-border-soft"
           >
             <LucideIcons.X size={20} />
           </button>
@@ -128,7 +138,7 @@ function CourseModal({ course, onClose }: { course: Course; onClose: () => void 
 
         <div className="px-8 pb-10 pt-4 -mt-12">
           <div className="flex items-center gap-3 mb-4">
-            <div className="h-12 w-12 rounded-xl bg-lavender/10 text-lavender flex items-center justify-center shrink-0">
+            <div className="h-12 w-12 rounded-md bg-lavender/10 text-lavender flex items-center justify-center shrink-0">
               <CourseIcon name={course.icon} />
             </div>
             <div>
@@ -168,6 +178,23 @@ function CourseModal({ course, onClose }: { course: Course; onClose: () => void 
               </div>
             )}
 
+            {course.skills && course.skills.length > 0 && (
+              <div>
+                <h4 className="flex items-center gap-2 font-heading font-bold text-text-primary mb-3">
+                  <LucideIcons.Lightbulb size={18} className="text-peach-warm" />
+                  Γενικές & Ειδικές Ικανότητες
+                </h4>
+                <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {course.skills.map((skill, idx) => (
+                    <li key={idx} className="flex items-start gap-2 text-sm text-text-secondary leading-relaxed p-3 rounded-xl bg-peach-50/50 border border-peach/20 transition-all hover:bg-peach-50 hover:border-peach/40">
+                      <LucideIcons.Zap size={16} className="text-peach-warm shrink-0 mt-0.5" />
+                      <span>{skill}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
             {course.professors && course.professors.length > 0 && (
               <div className="p-4 rounded-2xl bg-surface border border-border-soft">
                 <h4 className="flex items-center gap-2 font-heading font-bold text-text-primary mb-3">
@@ -193,7 +220,7 @@ function CourseModal({ course, onClose }: { course: Course; onClose: () => void 
                 </h4>
                 <ul className="space-y-3">
                   {course.books.map((book, idx) => (
-                    <li key={idx} className="flex items-start gap-3 p-3 rounded-xl bg-surface border border-border-soft text-sm text-text-secondary leading-relaxed">
+                    <li key={idx} className="flex items-start gap-3 p-3 rounded-2xl bg-surface border border-border-soft text-sm text-text-secondary leading-relaxed">
                       <LucideIcons.BookOpen size={16} className="text-text-muted shrink-0 mt-0.5" />
                       <span>{book}</span>
                     </li>
@@ -221,9 +248,9 @@ export function CurriculumSection() {
 
   return (
     <>
-      <SectionWrapper
+      <SectionWrapper variant="muted" divider="bold"
         id="curriculum"
-        variant="mesh"
+        
         title="Πρόγραμμα Σπουδών"
         subtitle="Μαθήματα"
       >
@@ -234,7 +261,7 @@ export function CurriculumSection() {
               key={sem.id}
               onClick={() => { setActiveSemester(sem.id as 1 | 2 | 3); setActiveTrack("all"); }}
               className={cn(
-                "relative px-6 py-3 rounded-2xl text-sm font-semibold transition-all duration-300",
+                "relative px-6 py-3 rounded-md text-sm font-semibold transition-all duration-300",
                 activeSemester === sem.id
                   ? "bg-primary text-white shadow-md shadow-primary/20 scale-105"
                   : "bg-white/90 border border-white/50 text-text-secondary hover:bg-white hover:text-primary shadow-sm"
@@ -260,7 +287,7 @@ export function CurriculumSection() {
             <button
               onClick={() => setActiveTrack("all")}
               className={cn(
-                "px-4 py-2 rounded-xl text-xs font-semibold transition-all border",
+                "px-4 py-2 rounded-md text-xs font-semibold transition-all border",
                 activeTrack === "all"
                   ? "bg-primary text-white border-primary shadow-sm"
                   : "bg-white/80 border-white/60 text-text-secondary hover:bg-white hover:text-primary"
@@ -273,7 +300,7 @@ export function CurriculumSection() {
                 key={track.id}
                 onClick={() => setActiveTrack(track.id)}
                 className={cn(
-                  "px-4 py-2 rounded-xl text-xs font-semibold transition-all border",
+                  "px-4 py-2 rounded-md text-xs font-semibold transition-all border",
                   activeTrack === track.id
                     ? track.color === "mint"
                       ? "bg-mint text-white border-mint shadow-sm"

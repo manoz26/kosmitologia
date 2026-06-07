@@ -5,11 +5,11 @@ import { footerGroups, contactInfo } from "@/data/navigation";
 
 export function Footer() {
   return (
-    <footer className="relative bg-text-primary text-white overflow-hidden">
+    <footer className="relative bg-text-primary text-white overflow-hidden border-t-[8px] border-secondary">
       {/* Decorative top gradient */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-lavender to-transparent" />
-      <div className="absolute top-0 left-1/4 w-96 h-96 rounded-full blob-lavender opacity-20 pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 rounded-full blob-mint opacity-10 pointer-events-none" />
+      <div className="absolute top-0 left-0 right-0 h-[1px] bg-white/10" />
+      <div className="absolute top-0 left-1/4 w-96 h-96 rounded-full blob-lavender opacity-40 pointer-events-none" />
+      <div className="absolute bottom-0 right-1/4 w-96 h-96 rounded-full blob-mint opacity-30 pointer-events-none" />
 
       <div className="relative section-container px-4 sm:px-6 lg:px-8 pt-16 pb-8">
         {/* Top Section */}
@@ -17,7 +17,7 @@ export function Footer() {
           {/* Brand */}
           <div className="lg:col-span-2">
             <Link href="/" className="flex items-center gap-3 mb-5">
-              <div className="h-11 w-11 overflow-hidden rounded-xl bg-gradient-to-br from-lavender to-mint p-[2px]">
+              <div className="h-11 w-11 overflow-hidden rounded-md bg-gradient-to-br from-lavender to-mint p-[2px]">
                 <div className="flex h-full w-full items-center justify-center rounded-[10px] bg-text-primary">
                   <Image
                     src="/images/logo.png"

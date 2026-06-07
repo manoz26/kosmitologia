@@ -16,7 +16,7 @@ const gradients = [
 
 export function FacultySection() {
   return (
-    <SectionWrapper
+    <SectionWrapper variant="white"
       id="faculty"
       title="Διδάσκοντες"
       subtitle="Ακαδημαϊκή Ομάδα"
@@ -30,11 +30,11 @@ export function FacultySection() {
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.4, delay: i * 0.04, ease: [0.22, 1, 0.36, 1] }}
             whileHover={{ y: -4, transition: { duration: 0.2 } }}
-            className="glass-card rounded-2xl p-5 group cursor-default"
+            className="border border-border-soft shadow-sm bg-white rounded-md p-5 group cursor-default"
           >
             <div className="flex items-center gap-3 mb-3">
               <div
-                className={`flex-shrink-0 h-11 w-11 rounded-xl bg-gradient-to-br ${
+                className={`flex-shrink-0 h-11 w-11 rounded-md bg-gradient-to-br ${
                   gradients[i % gradients.length]
                 } flex items-center justify-center text-white font-heading font-bold text-sm shadow-md`}
               >

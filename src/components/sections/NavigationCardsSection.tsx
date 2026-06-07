@@ -91,9 +91,9 @@ export function NavigationCardsSection() {
           {cards.map((card) => (
             <motion.div key={card.title} variants={itemVariants}>
               <Link href={card.href} className="group block h-full">
-                <div className="glass-card rounded-2xl p-4 h-full flex flex-col transition-all duration-300 hover:shadow-xl hover:shadow-lavender/20 hover:-translate-y-1">
+                <div className="border border-border-soft shadow-sm bg-white rounded-md p-4 h-full flex flex-col transition-all duration-300 hover:shadow-sm hover:shadow-lavender/20 hover:-translate-y-1">
                   
-                  <div className="relative mb-6 overflow-hidden rounded-xl">
+                  <div className="relative mb-6 overflow-hidden rounded-md">
                     <PlaceholderImage 
                       type={card.type} 
                       label={card.label} 

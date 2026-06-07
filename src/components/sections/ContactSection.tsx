@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Mail, Phone, MapPin, Send, Clock } from "lucide-react";
+import { Mail, Phone, MapPin, Send, Clock, Bus, TrainFront, Car } from "lucide-react";
 import { SectionWrapper } from "@/components/ui/SectionWrapper";
 import { contactInfo } from "@/data/navigation";
 import { GlassCard } from "@/components/ui/GlassCard";
@@ -32,9 +32,9 @@ const contactCards = [
 
 export function ContactSection() {
   return (
-    <SectionWrapper
+    <SectionWrapper variant="muted"
       id="contact"
-      variant="mesh"
+      
       title="Επικοινωνία"
       subtitle="Γραμματεία ΠΜΣ"
     >
@@ -47,7 +47,7 @@ export function ContactSection() {
                 href={card.href}
                 className="flex items-start gap-4 group"
               >
-                <div className={`flex-shrink-0 h-12 w-12 rounded-xl bg-gradient-to-br ${card.color} flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform`}>
+                <div className={`flex-shrink-0 h-12 w-12 rounded-md bg-gradient-to-br ${card.color} flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform`}>
                   <card.icon className="h-5 w-5" />
                 </div>
                 <div>
@@ -65,7 +65,7 @@ export function ContactSection() {
           ))}
 
           {/* Hours */}
-          <div className="flex items-center gap-3 glass-card rounded-xl px-4 py-3">
+          <div className="flex items-center gap-3 border border-border-soft shadow-sm bg-white rounded-md px-4 py-3">
             <Clock className="h-4 w-4 text-lavender flex-shrink-0" />
             <p className="text-xs text-text-muted">
               Ωράριο Γραμματείας: <span className="font-medium text-text-secondary">Δευτ-Παρ 09:00-15:00</span>
@@ -80,7 +80,7 @@ export function ContactSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="glass-card-elevated rounded-3xl p-8"
+            className="border border-border-soft shadow-md bg-white rounded-md p-8"
           >
             <h3 className="font-heading text-lg font-bold text-text-primary mb-6">
               Στείλτε μας μήνυμα
@@ -95,7 +95,7 @@ export function ContactSection() {
                   <input
                     type="text"
                     placeholder="π.χ. Μαρία Παπαδοπούλου"
-                    className="w-full px-4 py-3 rounded-xl bg-white/60 border border-border-soft text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-lavender/30 focus:border-lavender transition-all"
+                    className="w-full px-4 py-3 rounded-md bg-white/60 border border-border-soft text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-lavender/30 focus:border-lavender transition-all"
                   />
                 </div>
                 <div>
@@ -105,7 +105,7 @@ export function ContactSection() {
                   <input
                     type="email"
                     placeholder="you@example.com"
-                    className="w-full px-4 py-3 rounded-xl bg-white/60 border border-border-soft text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-lavender/30 focus:border-lavender transition-all"
+                    className="w-full px-4 py-3 rounded-md bg-white/60 border border-border-soft text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-lavender/30 focus:border-lavender transition-all"
                   />
                 </div>
               </div>
@@ -114,7 +114,7 @@ export function ContactSection() {
                 <label className="block text-xs font-medium text-text-secondary mb-1.5 uppercase tracking-wider">
                   Θέμα
                 </label>
-                <select className="w-full px-4 py-3 rounded-xl bg-white/60 border border-border-soft text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-lavender/30 focus:border-lavender transition-all appearance-none cursor-pointer">
+                <select className="w-full px-4 py-3 rounded-md bg-white/60 border border-border-soft text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-lavender/30 focus:border-lavender transition-all appearance-none cursor-pointer">
                   <option>Γενική Ερώτηση</option>
                   <option>Αίτηση Εγγραφής</option>
                   <option>Πρόγραμμα Σπουδών</option>
@@ -130,13 +130,13 @@ export function ContactSection() {
                 <textarea
                   rows={4}
                   placeholder="Γράψτε το μήνυμά σας εδώ..."
-                  className="w-full px-4 py-3 rounded-xl bg-white/60 border border-border-soft text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-lavender/30 focus:border-lavender transition-all resize-none"
+                  className="w-full px-4 py-3 rounded-md bg-white/60 border border-border-soft text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-lavender/30 focus:border-lavender transition-all resize-none"
                 />
               </div>
 
               <button
                 type="button"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-lavender to-lavender-dark px-8 py-3.5 text-sm font-bold text-white shadow-lg shadow-lavender/20 hover:shadow-lavender/40 hover:scale-[1.02] active:scale-100 transition-all duration-200"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-md bg-gradient-to-r from-lavender to-lavender-dark px-8 py-3.5 text-sm font-bold text-white shadow-lg shadow-lavender/20 hover:shadow-lavender/40 hover:scale-[1.02] active:scale-100 transition-all duration-200"
               >
                 <Send className="h-4 w-4" />
                 Αποστολή Μηνύματος
@@ -151,7 +151,7 @@ export function ContactSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3 }}
-            className="mt-6 rounded-2xl overflow-hidden glass-card h-64"
+            className="mt-6 rounded-md overflow-hidden border border-border-soft shadow-sm bg-white h-64"
           >
             <iframe
               src={contactInfo.mapEmbedUrl}
@@ -163,6 +163,58 @@ export function ContactSection() {
               referrerPolicy="no-referrer-when-downgrade"
               title="Χάρτης ΔιΠΑΕ"
             />
+          </motion.div>
+
+          {/* Access Info */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4 }}
+            className="mt-8"
+          >
+            <h3 className="font-heading text-lg font-bold text-text-primary mb-4 flex items-center gap-2">
+              <MapPin className="h-5 w-5 text-peach-warm" />
+              Πρόσβαση στο Campus
+            </h3>
+            
+            <div className="grid sm:grid-cols-3 gap-4">
+              <div className="border border-border-soft shadow-sm bg-white rounded-md p-5 border border-border-soft hover:border-lavender/30 transition-colors group shadow-sm hover:shadow-md">
+                <div className="h-10 w-10 rounded-md bg-lavender-50 text-lavender-dark flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                  <Bus className="h-5 w-5" />
+                </div>
+                <h4 className="font-heading font-semibold text-sm text-text-primary mb-2">
+                  ΟΑΣΘ (Γραμμή 52)
+                </h4>
+                <p className="text-xs text-text-secondary leading-relaxed">
+                  Η γραμμή 52 (Ν.Σ. Σταθμός - ΑΤΕΙ) συνδέει το κέντρο της Θεσσαλονίκης απευθείας με τις εγκαταστάσεις μας στη Σίνδο.
+                </p>
+              </div>
+
+              <div className="border border-border-soft shadow-sm bg-white rounded-md p-5 border border-border-soft hover:border-mint/30 transition-colors group shadow-sm hover:shadow-md">
+                <div className="h-10 w-10 rounded-md bg-mint-50 text-mint-dark flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                  <TrainFront className="h-5 w-5" />
+                </div>
+                <h4 className="font-heading font-semibold text-sm text-text-primary mb-2">
+                  Προαστιακός
+                </h4>
+                <p className="text-xs text-text-secondary leading-relaxed">
+                  Τακτικά δρομολόγια από τον Ν.Σ. Σταθμό προς τον Σταθμό Σίνδου. Το campus βρίσκεται σε μικρή απόσταση από τον σταθμό.
+                </p>
+              </div>
+
+              <div className="border border-border-soft shadow-sm bg-white rounded-md p-5 border border-border-soft hover:border-peach/30 transition-colors group shadow-sm hover:shadow-md">
+                <div className="h-10 w-10 rounded-md bg-peach-50 text-peach-warm flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                  <Car className="h-5 w-5" />
+                </div>
+                <h4 className="font-heading font-semibold text-sm text-text-primary mb-2">
+                  Εθνική Οδός
+                </h4>
+                <p className="text-xs text-text-secondary leading-relaxed">
+                  Στο 15ο χλμ. της Ε.Ο. Θεσσαλονίκης - Αθηνών (ΠΑΘΕ). Η πρόσβαση γίνεται εύκολα μέσω της ειδικής εξόδου για Σίνδο.
+                </p>
+              </div>
+            </div>
           </motion.div>
         </div>
       </div>

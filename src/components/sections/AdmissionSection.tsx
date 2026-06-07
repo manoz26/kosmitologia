@@ -81,7 +81,7 @@ const admissionItems: AccordionItem[] = [
             Συνολικά δίδακτρα για ολόκληρο το πρόγραμμα
           </p>
         </div>
-        <div className="flex items-start gap-3 p-4 rounded-xl bg-mint-50/50">
+        <div className="flex items-start gap-3 p-4 rounded-md bg-mint-50/50">
           <CheckCircle2 className="h-5 w-5 text-mint flex-shrink-0 mt-0.5" />
           <div>
             <p className="text-sm font-medium text-text-primary mb-1">
@@ -105,8 +105,8 @@ function AccordionItemComponent({ item, isOpen, onToggle }: {
 }) {
   return (
     <div className={cn(
-      "glass-card rounded-2xl overflow-hidden transition-all duration-300",
-      isOpen && "glass-card-elevated ring-1 ring-lavender/20"
+      "border border-border-soft shadow-sm bg-white rounded-2xl overflow-hidden transition-all duration-300",
+      isOpen && "border border-border-soft shadow-md bg-white ring-1 ring-lavender/20"
     )}>
       <button
         onClick={onToggle}
@@ -114,7 +114,7 @@ function AccordionItemComponent({ item, isOpen, onToggle }: {
         aria-expanded={isOpen}
       >
         <div className={cn(
-          "flex-shrink-0 h-10 w-10 rounded-xl flex items-center justify-center transition-colors",
+          "flex-shrink-0 h-10 w-10 rounded-md flex items-center justify-center transition-colors",
           isOpen ? "bg-lavender text-white" : "bg-lavender-50 text-lavender"
         )}>
           <item.icon className="h-5 w-5" />
@@ -152,9 +152,9 @@ export function AdmissionSection() {
   const [openId, setOpenId] = useState<string | null>("who");
 
   return (
-    <SectionWrapper
+    <SectionWrapper variant="white"
       id="admission"
-      variant="gradient"
+      
       title="Εισαγωγή στο ΠΜΣ"
       subtitle="Αιτήσεις & Δικαιολογητικά"
     >
@@ -176,7 +176,7 @@ export function AdmissionSection() {
         viewport={{ once: true }}
         className="mt-12 text-center"
       >
-        <div className="inline-flex items-center gap-3 glass-card-elevated rounded-2xl px-6 py-4">
+        <div className="inline-flex items-center gap-3 border border-border-soft shadow-md bg-white rounded-md px-6 py-4">
           <Award className="h-5 w-5 text-lavender" />
           <p className="text-sm text-text-secondary">
             Οι αιτήσεις υποβάλλονται{" "}

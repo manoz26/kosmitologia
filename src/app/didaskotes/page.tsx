@@ -7,12 +7,14 @@ export const metadata: Metadata = {
 };
 
 import { FacultySection } from "@/components/sections/FacultySection";
+import { CommitteeSection } from "@/components/sections/CommitteeSection";
 import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
 
 export default function DidaskotesPage() {
   return (
     <PageShell title="Διδακτικό Προσωπικό" subtitle="Γνωρίστε τους Καθηγητές μας">
       <div className="py-12 section-container">
+        <CommitteeSection />
         <FacultySection />
         
         {/* Placeholder gallery */}

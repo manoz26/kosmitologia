@@ -4,8 +4,8 @@ import Image from "next/image";
 
 export function Footer() {
   return (
-    <footer className="bg-[#F4F7ED] pt-16 pb-8 relative overflow-hidden">
-      <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/3 w-96 h-96 blob-blue opacity-50 pointer-events-none rounded-full blur-3xl"></div>
+    <footer className="bg-[#F4F7ED] pt-16 pb-8 relative overflow-hidden border-t-[8px] border-secondary">
+      <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/3 w-96 h-96 blob-blue opacity-50 pointer-events-none rounded-md hidden"></div>
       
       <div className="section-container px-4 grid grid-cols-1 md:grid-cols-4 gap-12 relative z-10">
         <div className="md:col-span-2">
@@ -50,7 +50,6 @@ export function Footer() {
             <li><Link href="/programma" className="text-text-secondary text-sm hover:text-primary transition-colors">Πρόγραμμα Σπουδών</Link></li>
             <li><Link href="/eggrafes" className="text-text-secondary text-sm hover:text-primary transition-colors">Εισαγωγή</Link></li>
             <li><Link href="/karieres" className="text-text-secondary text-sm hover:text-primary transition-colors">Καριέρες & Απόφοιτοι</Link></li>
-            <li><Link href="/faq" className="text-text-secondary text-sm hover:text-primary transition-colors">Συχνές Ερωτήσεις</Link></li>
           </ul>
         </div>
       </div>

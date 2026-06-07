@@ -38,7 +38,7 @@ export function PageShell({ title, subtitle, children, className }: PageShellPro
             </h1>
             <div className="mt-6 flex items-center gap-2">
               <span className="h-[3px] w-8 rounded-full bg-lavender" />
-              <span className="h-[3px] w-16 rounded-full bg-gradient-to-r from-lavender via-mint to-peach" />
+              <span className="h-[3px] w-16 rounded-md bg-gradient-to-r from-lavender via-mint to-peach" />
               <span className="h-[3px] w-8 rounded-full bg-mint" />
             </div>
           </motion.div>
@@ -52,9 +52,9 @@ export function PageShell({ title, subtitle, children, className }: PageShellPro
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="glass-card-elevated rounded-3xl p-12 text-center max-w-2xl mx-auto"
+            className="border border-border-soft shadow-md bg-white rounded-md p-12 text-center max-w-2xl mx-auto"
           >
-            <div className="h-16 w-16 rounded-2xl bg-lavender-50 flex items-center justify-center mx-auto mb-6">
+            <div className="h-16 w-16 rounded-md bg-lavender-50 flex items-center justify-center mx-auto mb-6">
               <span className="text-3xl">🚧</span>
             </div>
             <h2 className="font-heading text-xl font-bold text-text-primary mb-3">

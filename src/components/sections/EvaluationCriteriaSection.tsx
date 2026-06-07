@@ -26,13 +26,13 @@ export function EvaluationCriteriaSection() {
               whileInView={{ opacity: 1, x: 0 }} 
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="bg-white rounded-3xl p-8 border border-border-soft shadow-lg shadow-black/5 relative overflow-hidden h-full"
+              className="bg-white rounded-md p-8 border border-border-soft shadow-lg shadow-black/5 relative overflow-hidden h-full"
             >
               <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
                 <Award size={120} />
               </div>
               
-              <div className="w-16 h-16 bg-secondary/10 text-secondary rounded-2xl flex items-center justify-center mb-6">
+              <div className="w-16 h-16 bg-secondary/10 text-secondary rounded-md flex items-center justify-center mb-6">
                 <Users size={32} />
               </div>
               
@@ -79,7 +79,7 @@ export function EvaluationCriteriaSection() {
                   { title: "Ξένες Γλώσσες", desc: "Γνώση επιπλέον γλωσσών (πλην Αγγλικών)", icon: Languages },
                   { title: "Συνέντευξη", desc: "Προσωπική αξιολόγηση ικανοτήτων", icon: Users }
                 ].map((item, i) => (
-                  <div key={i} className="bg-white border border-border-soft rounded-2xl p-4 flex gap-4 hover:border-primary/30 transition-colors shadow-sm">
+                  <div key={i} className="bg-white border border-border-soft rounded-md p-4 flex gap-4 hover:border-primary/30 transition-colors shadow-sm">
                     <div className="w-10 h-10 rounded-lg bg-surface flex items-center justify-center text-primary shrink-0">
                       <item.icon size={20} />
                     </div>

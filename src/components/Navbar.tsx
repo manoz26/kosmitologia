@@ -44,7 +44,7 @@ export function Navbar() {
           <div className="flex h-18 items-center justify-between lg:h-20">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-3 group">
-              <div className="relative h-10 w-10 overflow-hidden rounded-xl bg-gradient-to-br from-lavender to-mint p-[2px]">
+              <div className="relative h-10 w-10 overflow-hidden rounded-md bg-gradient-to-br from-lavender to-mint p-[2px]">
                 <div className="flex h-full w-full items-center justify-center rounded-[10px] bg-white/90 backdrop-blur-sm">
                   <Image
                     src="/images/logo.png"
@@ -74,7 +74,7 @@ export function Navbar() {
                   className="relative px-4 py-2 text-sm font-medium text-text-secondary hover:text-lavender transition-colors group"
                 >
                   {item.label}
-                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[2px] w-0 bg-gradient-to-r from-lavender to-mint rounded-full transition-all duration-300 group-hover:w-3/4" />
+                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[2px] w-0 bg-gradient-to-r from-lavender to-mint rounded-md transition-all duration-300 group-hover:w-3/4" />
                 </Link>
               ))}
             </nav>
@@ -91,7 +91,7 @@ export function Navbar() {
 
               <button
                 onClick={() => setIsMobileOpen(!isMobileOpen)}
-                className="lg:hidden relative z-[110] flex h-11 w-11 items-center justify-center rounded-xl hover:bg-lavender-50 transition-colors"
+                className="lg:hidden relative z-[110] flex h-11 w-11 items-center justify-center rounded-md hover:bg-lavender-50 transition-colors"
                 aria-label={isMobileOpen ? "Κλείσιμο μενού" : "Άνοιγμα μενού"}
               >
                 <AnimatePresence mode="wait">
@@ -140,7 +140,7 @@ export function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="fixed top-0 right-0 bottom-0 z-[95] w-[85%] max-w-sm bg-white shadow-2xl lg:hidden"
+              className="fixed top-0 right-0 bottom-0 z-[95] w-[85%] max-w-sm bg-white shadow-md lg:hidden"
             >
               <div className="flex flex-col h-full pt-24 px-6 pb-8">
                 <nav className="flex flex-col gap-1">
@@ -154,7 +154,7 @@ export function Navbar() {
                       <Link
                         href={item.href}
                         onClick={() => setIsMobileOpen(false)}
-                        className="flex items-center justify-between py-3.5 px-4 text-base font-medium text-text-primary hover:text-lavender hover:bg-lavender-50 rounded-xl transition-colors"
+                        className="flex items-center justify-between py-3.5 px-4 text-base font-medium text-text-primary hover:text-lavender hover:bg-lavender-50 rounded-md transition-colors"
                       >
                         {item.label}
                         <ChevronRight className="h-4 w-4 text-text-muted" />
@@ -167,7 +167,7 @@ export function Navbar() {
                   <Link
                     href="/eggrafes"
                     onClick={() => setIsMobileOpen(false)}
-                    className="flex items-center justify-center gap-2 w-full rounded-2xl bg-gradient-to-r from-lavender to-lavender-dark px-6 py-4 text-base font-bold text-white shadow-lg shadow-lavender/25"
+                    className="flex items-center justify-center gap-2 w-full rounded-full bg-gradient-to-r from-lavender to-lavender-dark px-6 py-4 text-base font-bold text-white shadow-lg shadow-lavender/25"
                   >
                     Υποβολή Αίτησης
                     <ChevronRight className="h-5 w-5" />

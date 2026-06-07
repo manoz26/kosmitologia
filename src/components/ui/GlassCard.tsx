@@ -13,10 +13,10 @@ interface GlassCardProps {
 }
 
 const variantStyles = {
-  default: "glass-card",
-  elevated: "glass-card-elevated",
+  default: "border border-border-soft shadow-sm bg-white",
+  elevated: "border border-border-soft shadow-md bg-white",
   colored:
-    "glass-card-elevated bg-gradient-to-br from-white/70 via-white/60 to-lavender-50/50",
+    "border border-border-soft shadow-md bg-white bg-gradient-to-br from-white/70 via-white/60 to-lavender-50/50",
 };
 
 export function GlassCard({
@@ -42,7 +42,7 @@ export function GlassCard({
           : undefined
       }
       className={cn(
-        "rounded-2xl p-6 transition-colors duration-300",
+        "rounded-md p-6 transition-colors duration-300",
         variantStyles[variant],
         hover && "cursor-pointer",
         className

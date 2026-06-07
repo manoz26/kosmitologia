@@ -26,9 +26,9 @@ const institutionFeatures = [
 
 export function InstitutionSection() {
   return (
-    <SectionWrapper
+    <SectionWrapper variant="white"
       id="institution"
-      variant="gradient"
+      
       title="Το Ίδρυμα & Το Τμήμα"
       subtitle="Σύγχρονες Εγκαταστάσεις, Υψηλό Επίπεδο Σπουδών"
     >
@@ -45,7 +45,7 @@ export function InstitutionSection() {
             {institutionFeatures.map((feature, idx) => (
               <GlassCard key={idx} variant="colored" delay={idx * 0.1}>
                 <div className="flex items-start gap-5 p-3">
-                  <div className="flex-shrink-0 h-14 w-14 rounded-2xl bg-gradient-to-br from-mint-light to-mint flex items-center justify-center text-white shadow-lg shadow-mint/20 transform hover:scale-105 transition-transform">
+                  <div className="flex-shrink-0 h-14 w-14 rounded-md bg-gradient-to-br from-mint-light to-mint flex items-center justify-center text-white shadow-lg shadow-mint/20 transform hover:scale-105 transition-transform">
                     <feature.icon className="h-7 w-7" />
                   </div>
                   <div>
@@ -66,7 +66,7 @@ export function InstitutionSection() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="relative order-1 lg:order-2"
         >
-          <div className="relative rounded-3xl overflow-hidden aspect-square md:aspect-[4/3] glass-card-elevated shadow-2xl group">
+          <div className="relative rounded-md overflow-hidden aspect-square md:aspect-[4/3] border border-border-soft shadow-md bg-white shadow-md group">
             {/* Using a solid gradient or if a campus image exists. I'll use a beautiful gradient that matches the theme and an abstract pattern since we don't have a specific campus image uploaded here */}
             <div className="absolute inset-0 bg-gradient-to-br from-lavender-dark via-lavender to-mint opacity-90 z-0"></div>
             
@@ -86,10 +86,10 @@ export function InstitutionSection() {
           <motion.div
             animate={{ y: [5, -5, 5] }}
             transition={{ duration: 5, repeat: Infinity }}
-            className="absolute -bottom-6 -left-6 glass-card-elevated rounded-2xl p-5 shadow-xl max-w-[220px] bg-white/90 backdrop-blur-lg z-20"
+            className="absolute -bottom-6 -left-6 border border-border-soft shadow-md bg-white rounded-md p-5 shadow-sm max-w-[220px] bg-white/90 backdrop-blur-lg z-20"
           >
              <div className="flex items-center gap-3 mb-2">
-               <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-peach to-peach-dark flex items-center justify-center">
+               <div className="h-10 w-10 rounded-md bg-gradient-to-br from-peach to-peach-dark flex items-center justify-center">
                  <MapPin className="h-5 w-5 text-white" />
                </div>
                <span className="font-heading font-bold text-text-primary text-sm">Σίνδος, Θεσσαλονίκη</span>

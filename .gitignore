@@ -39,3 +39,14 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# scratch and script helpers
+/scratch
+/extract.js
+/out.txt
+/parse_lines.js
+/parsed.txt
+/parsed_courses.json
+/update_courses.js
+node_modules/
+**/node_modules/

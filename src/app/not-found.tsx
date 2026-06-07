@@ -6,7 +6,7 @@ export default function NotFound() {
   return (
     <PageShell title="404 - Σφάλμα" subtitle="Η σελίδα δεν βρέθηκε">
       <div className="section-container px-4 py-24 flex flex-col items-center justify-center text-center">
-        <div className="w-24 h-24 bg-primary/5 text-primary rounded-full flex items-center justify-center mb-8">
+        <div className="w-24 h-24 bg-primary/5 text-primary rounded-md flex items-center justify-center mb-8">
           <FileQuestion size={48} />
         </div>
         
@@ -21,7 +21,7 @@ export default function NotFound() {
         
         <Link 
           href="/" 
-          className="inline-flex items-center gap-2 bg-gradient-to-r from-primary to-primary/80 text-white px-8 py-4 rounded-full font-bold hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+          className="inline-flex items-center gap-2 bg-gradient-to-r from-primary to-primary/80 text-white px-8 py-4 rounded-md font-bold hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
         >
           Επιστροφή στην Αρχική
           <ArrowRight size={18} />

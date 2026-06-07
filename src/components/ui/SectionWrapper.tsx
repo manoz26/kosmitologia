@@ -9,16 +9,21 @@ interface SectionWrapperProps {
   id?: string;
   children: ReactNode;
   className?: string;
-  variant?: "plain" | "gradient" | "mesh";
+  variant?: "plain" | "gradient" | "mesh" | "white" | "slate" | "primary" | "muted";
   title?: string;
   subtitle?: string;
   centered?: boolean;
+  divider?: "none" | "top" | "bottom" | "bold";
 }
 
 const bgVariants = {
   plain: "",
   gradient: "bg-gradient-to-b from-surface via-lavender-50/30 to-surface",
   mesh: "mesh-gradient",
+  white: "bg-white",
+  slate: "bg-slate-50",
+  muted: "bg-muted",
+  primary: "bg-primary/5",
 };
 
 export function SectionWrapper({
@@ -29,9 +34,17 @@ export function SectionWrapper({
   title,
   subtitle,
   centered = true,
+  divider = "none",
 }: SectionWrapperProps) {
   const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  const dividerClasses = {
+    none: "",
+    top: "border-t border-border",
+    bottom: "border-b border-border",
+    bold: "border-t-[6px] border-foreground",
+  };
 
   return (
     <section
@@ -40,6 +53,7 @@ export function SectionWrapper({
       className={cn(
         "relative section-padding scroll-mt-24 overflow-hidden",
         bgVariants[variant],
+        dividerClasses[divider],
         className
       )}
     >
@@ -63,7 +77,7 @@ export function SectionWrapper({
             )}
             <div className="mt-6 mx-auto flex items-center gap-2 justify-center">
               <span className="h-[3px] w-8 rounded-full bg-lavender" />
-              <span className="h-[3px] w-16 rounded-full bg-gradient-to-r from-lavender via-mint to-peach" />
+              <span className="h-[3px] w-16 rounded-md bg-gradient-to-r from-lavender via-mint to-peach" />
               <span className="h-[3px] w-8 rounded-full bg-mint" />
             </div>
           </motion.div>

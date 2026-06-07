@@ -86,7 +86,7 @@ export default function ScrollVideoHero() {
           className="absolute inset-0 z-20 flex flex-col items-center justify-center section-container px-4 text-center mt-16"
           style={{ opacity: textOpacity, y: textY }}
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 mb-8 animate-float text-white">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-white/10 backdrop-blur-md border border-white/20 mb-8  text-white">
             <Sparkles size={16} className="text-secondary" />
             <span className="text-sm font-medium">Νέος Κύκλος Σπουδών</span>
           </div>
@@ -101,11 +101,11 @@ export default function ScrollVideoHero() {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/sxetika#admission" className="w-full sm:w-auto px-8 py-4 bg-primary text-primary-foreground font-medium rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2">
+            <Link href="/sxetika#admission" className="w-full sm:w-auto px-8 py-4 bg-primary text-primary-foreground font-medium rounded-md shadow-lg hover:shadow-sm hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2">
               Αιτήσεις Εισαγωγής
               <ArrowRight size={18} />
             </Link>
-            <Link href="/programma" className="w-full sm:w-auto px-8 py-4 bg-white/20 backdrop-blur-md text-white border border-white/30 font-medium rounded-full shadow-sm hover:bg-white/30 transition-all duration-300 flex items-center justify-center">
+            <Link href="/programma" className="w-full sm:w-auto px-8 py-4 bg-white/20 backdrop-blur-md text-white border border-white/30 font-medium rounded-md shadow-sm hover:bg-white/30 transition-all duration-300 flex items-center justify-center">
               Το Πρόγραμμα Σπουδών
             </Link>
           </div>

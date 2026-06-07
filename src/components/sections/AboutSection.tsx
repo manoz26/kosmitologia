@@ -14,9 +14,9 @@ const objectives = [
 
 export function AboutSection() {
   return (
-    <SectionWrapper
+    <SectionWrapper variant="white"
       id="about"
-      variant="gradient"
+      
       title="Σχετικά με το Πρόγραμμα"
       subtitle="Αναλυτικοί Στόχοι του ΠΜΣ Κοσμητολογία"
     >
@@ -34,8 +34,8 @@ export function AboutSection() {
             σύγχρονων και άρτια εκπαιδευμένων στελεχών με υψηλό επίπεδο εφαρμογής επιστημονικών γνώσεων.
           </p>
 
-          <div className="flex items-start gap-4 p-4 mb-8 bg-lavender-50/50 border border-lavender-100 rounded-2xl">
-            <div className="flex-shrink-0 h-12 w-12 rounded-xl bg-lavender flex items-center justify-center">
+          <div className="flex items-start gap-4 p-4 mb-8 bg-lavender-50/50 border border-lavender-100 rounded-md">
+            <div className="flex-shrink-0 h-12 w-12 rounded-md bg-lavender flex items-center justify-center">
               <Clock className="h-6 w-6 text-white" />
             </div>
             <div>
@@ -57,7 +57,7 @@ export function AboutSection() {
                 transition={{ delay: i * 0.1 + 0.3 }}
                 className="flex items-start gap-3 group"
               >
-                <div className="flex-shrink-0 h-10 w-10 rounded-xl bg-white shadow-sm border border-lavender-100 flex items-center justify-center group-hover:bg-lavender group-hover:border-lavender transition-all duration-300">
+                <div className="flex-shrink-0 h-10 w-10 rounded-md bg-white shadow-sm border border-lavender-100 flex items-center justify-center group-hover:bg-lavender group-hover:border-lavender transition-all duration-300">
                   <obj.icon className="h-5 w-5 text-lavender group-hover:text-white transition-colors" />
                 </div>
                 <span className="text-sm text-text-secondary leading-snug pt-1 group-hover:text-text-primary transition-colors">
@@ -76,7 +76,7 @@ export function AboutSection() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="relative"
         >
-          <div className="relative rounded-3xl overflow-hidden aspect-[4/3] glass-card-elevated shadow-xl">
+          <div className="relative rounded-md overflow-hidden aspect-[4/3] border border-border-soft shadow-md bg-white shadow-sm">
             <Image
               src="/images/lab.png"
               alt="Εργαστήριο Κοσμητολογίας ΔιΠΑΕ"
@@ -90,10 +90,10 @@ export function AboutSection() {
           <motion.div
             animate={{ y: [-5, 5, -5] }}
             transition={{ duration: 4, repeat: Infinity }}
-            className="absolute -bottom-6 -left-4 glass-card-elevated rounded-2xl px-5 py-4 shadow-lg bg-white/95 backdrop-blur-md"
+            className="absolute -bottom-6 -left-4 border border-border-soft shadow-md bg-white rounded-md px-5 py-4 shadow-lg bg-white/95 backdrop-blur-md"
           >
             <div className="flex items-center gap-4">
-              <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-mint to-mint-dark flex items-center justify-center shadow-md">
+              <div className="h-12 w-12 rounded-md bg-gradient-to-br from-mint to-mint-dark flex items-center justify-center shadow-md">
                 <BookOpen className="h-6 w-6 text-white" />
               </div>
               <div>

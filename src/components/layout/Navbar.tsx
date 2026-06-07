@@ -20,7 +20,6 @@ const navLinks = [
   },
   { href: "/karieres", label: "Απόφοιτοι & Καριέρα" },
   { href: "/eggrafes", label: "Εγγραφές" },
-  { href: "/faq", label: "Συχνές Ερωτήσεις" },
   { href: "/epikoinonia", label: "Επικοινωνία" },
 ];
 
@@ -81,7 +80,7 @@ export function Navbar() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 10 }}
                       transition={{ duration: 0.2 }}
-                      className="absolute top-full left-0 mt-2 w-56 bg-white border border-border-soft shadow-xl rounded-xl overflow-hidden py-2"
+                      className="absolute top-full left-0 mt-2 w-56 bg-white border border-border-soft shadow-sm rounded-md overflow-hidden py-2"
                     >
                       {item.subLinks.map((subLink) => (
                         <Link
@@ -110,7 +109,7 @@ export function Navbar() {
                 {pathname === item.href && (
                   <motion.div
                     layoutId="navbar-indicator"
-                    className="absolute -bottom-1 left-0 right-0 h-[2px] bg-secondary rounded-full"
+                    className="absolute -bottom-1 left-0 right-0 h-[2px] bg-secondary rounded-md"
                     initial={false}
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
                   />

@@ -28,7 +28,7 @@ const colorMap: Record<CareerPath["color"], { icon: string; bg: string; glow: st
 
 export function CareersSection() {
   return (
-    <SectionWrapper
+    <SectionWrapper variant="muted"
       id="careers"
       title="Επαγγελματικές Προοπτικές"
       subtitle="Καριέρα"
@@ -51,12 +51,12 @@ export function CareersSection() {
                 transition: { duration: 0.25 },
               }}
               className={cn(
-                "glass-card-elevated rounded-3xl p-7 cursor-default group",
+                "border border-border-soft shadow-md bg-white rounded-md p-7 cursor-default group",
                 isLarge && "md:col-span-2 lg:col-span-1"
               )}
             >
               <div className={cn(
-                "h-14 w-14 rounded-2xl bg-gradient-to-br flex items-center justify-center text-white mb-5 shadow-lg transition-transform duration-300 group-hover:scale-110",
+                "h-14 w-14 rounded-md bg-gradient-to-br flex items-center justify-center text-white mb-5 shadow-lg transition-transform duration-300 group-hover:scale-110",
                 colors.icon,
                 colors.glow
               )}>

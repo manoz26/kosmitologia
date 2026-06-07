@@ -21,7 +21,7 @@ export default function ScrollCanvasHero({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [imagesLoaded, setImagesLoaded] = useState(0);
   
-  // Create array of image paths
+  // Create array of image objects without side effects
   const images = useMemo(() => {
     if (typeof window === "undefined") return [];
     
@@ -34,13 +34,35 @@ export default function ScrollCanvasHero({
       // Format number to 3 digits (e.g., 001)
       const num = i.toString().padStart(3, "0");
       img.src = `${imagePrefix}${num}${imageExtension}`;
-      img.onload = () => {
-        setImagesLoaded((prev) => prev + 1);
-      };
       loadedImages.push(img);
     }
     return loadedImages;
-  }, [frameCount, imagePrefix, imageExtension]);
+  }, [frameCount, imagePrefix, imageExtension, startFromZero]);
+
+  // Attach onload handlers in useEffect to avoid state updates during render
+  useEffect(() => {
+    if (images.length === 0) return;
+    
+    let loadedCount = 0;
+    
+    images.forEach((img) => {
+      if (img.complete) {
+        loadedCount++;
+      } else {
+        img.onload = () => {
+          setImagesLoaded((prev) => prev + 1);
+        };
+      }
+    });
+    
+    setImagesLoaded(loadedCount);
+    
+    return () => {
+      images.forEach((img) => {
+        img.onload = null;
+      });
+    };
+  }, [images]);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -137,7 +159,7 @@ export default function ScrollCanvasHero({
           className="absolute inset-0 z-20 flex flex-col items-center justify-center section-container px-4 text-center mt-16"
           style={{ opacity: textOpacity, y: textY }}
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 mb-8 animate-float text-white">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-white/10 backdrop-blur-md border border-white/20 mb-8  text-white">
             <Sparkles size={16} className="text-secondary" />
             <span className="text-sm font-medium">Νέος Κύκλος Σπουδών</span>
           </div>
@@ -152,11 +174,11 @@ export default function ScrollCanvasHero({
           </p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="/eggrafes" className="w-full sm:w-auto px-8 py-4 bg-primary text-primary-foreground font-medium rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2">
+            <Link href="/eggrafes" className="w-full sm:w-auto px-8 py-4 bg-primary text-primary-foreground font-medium rounded-md shadow-lg hover:shadow-sm hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2">
               Αιτήσεις Εισαγωγής
               <ArrowRight size={18} />
             </Link>
-            <Link href="/programma" className="w-full sm:w-auto px-8 py-4 bg-white/20 backdrop-blur-md text-white border border-white/30 font-medium rounded-full shadow-sm hover:bg-white/30 transition-all duration-300 flex items-center justify-center">
+            <Link href="/programma" className="w-full sm:w-auto px-8 py-4 bg-white/20 backdrop-blur-md text-white border border-white/30 font-medium rounded-md shadow-sm hover:bg-white/30 transition-all duration-300 flex items-center justify-center">
               Το Πρόγραμμα Σπουδών
             </Link>
           </div>

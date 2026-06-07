@@ -58,7 +58,7 @@ export function PlaceholderImage({
   return (
     <div 
       className={cn(
-        "w-full flex flex-col items-center justify-center rounded-xl overflow-hidden border border-dashed border-zinc-200 dark:border-zinc-800 bg-gradient-to-br transition-colors",
+        "w-full flex flex-col items-center justify-center rounded-md overflow-hidden border border-dashed border-zinc-200 dark:border-zinc-800 bg-gradient-to-br transition-colors",
         config.color,
         aspectRatios[aspectRatio],
         className

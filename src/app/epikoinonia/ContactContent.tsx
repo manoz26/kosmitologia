@@ -134,7 +134,7 @@ function InfoCard({ card, index }: { card: typeof INFO_CARDS[0], index: number }
       whileHover={{ y: -4 }}
       transition={{ duration: 0.2, ease: "easeOut" }}
       className="bg-white/80 backdrop-blur-md border border-border-soft p-6 relative group transition-colors hover:border-text-primary/20"
-      // Sharp corners: removed rounded-3xl, kept default (sharp)
+      // Sharp corners: removed rounded-md, kept default (sharp)
     >
       <div className="absolute top-0 left-0 w-1 h-0 bg-text-primary transition-all duration-300 group-hover:h-full" />
       
@@ -280,7 +280,7 @@ function ContactForm() {
             >
               {isSubmitting ? (
                 <>
-                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-md animate-spin" />
                   <span>Αποστολη...</span>
                 </>
               ) : (

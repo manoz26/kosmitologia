@@ -92,9 +92,9 @@ export default function EggrafesPage() {
           <div className="grid md:grid-cols-2 gap-6">
             
             {/* DATES CARD */}
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1, duration: 0.5 }} className="bg-white rounded-3xl p-8 md:p-10 border border-border-soft shadow-lg shadow-black/5 hover:shadow-xl transition-shadow">
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1, duration: 0.5 }} className="bg-white rounded-md p-8 md:p-10 border border-border-soft shadow-lg shadow-black/5 hover:shadow-sm transition-shadow">
               <div className="flex items-center gap-4 mb-8">
-                <div className="w-14 h-14 bg-primary/10 text-primary rounded-2xl flex items-center justify-center">
+                <div className="w-14 h-14 bg-primary/10 text-primary rounded-md flex items-center justify-center">
                   <CalendarDays size={28} />
                 </div>
                 <h2 className="font-heading font-bold text-2xl text-text-primary leading-tight">
@@ -105,19 +105,19 @@ export default function EggrafesPage() {
               <div className="space-y-6">
                 <div className="flex items-center justify-between border-b border-border-soft pb-6">
                   <p className="text-text-secondary text-lg font-medium">Έναρξη</p>
-                  <p className="text-text-primary font-bold text-xl bg-surface px-4 py-1.5 rounded-full border border-border-soft" suppressHydrationWarning>10/06/{currentYear}</p>
+                  <p className="text-text-primary font-bold text-xl bg-surface px-4 py-1.5 rounded-md border border-border-soft" suppressHydrationWarning>10/06/{currentYear}</p>
                 </div>
                 <div className="flex items-center justify-between">
                   <p className="text-text-secondary text-lg font-medium">Λήξη</p>
-                  <p className="text-text-primary font-bold text-xl bg-surface px-4 py-1.5 rounded-full border border-border-soft" suppressHydrationWarning>10/07/{currentYear}</p>
+                  <p className="text-text-primary font-bold text-xl bg-surface px-4 py-1.5 rounded-md border border-border-soft" suppressHydrationWarning>10/07/{currentYear}</p>
                 </div>
               </div>
             </motion.div>
 
             {/* DOWNLOAD CARD */}
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.5 }} className="bg-gradient-to-br from-primary to-[#7a8f3c] rounded-3xl p-8 md:p-10 shadow-lg shadow-primary/20 text-white relative overflow-hidden flex flex-col justify-center">
-              <div className="absolute -right-10 -top-10 w-40 h-40 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
-              <div className="absolute -left-10 -bottom-10 w-40 h-40 bg-black/10 rounded-full blur-2xl pointer-events-none"></div>
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.5 }} className="bg-gradient-to-br from-primary to-[#7a8f3c] rounded-md p-8 md:p-10 shadow-lg shadow-primary/20 text-white relative overflow-hidden flex flex-col justify-center">
+              <div className="absolute -right-10 -top-10 w-40 h-40 bg-white/10 rounded-full hidden pointer-events-none"></div>
+              <div className="absolute -left-10 -bottom-10 w-40 h-40 bg-black/10 rounded-full hidden pointer-events-none"></div>
               <div className="relative z-10 text-center md:text-left flex flex-col h-full justify-between">
                 <div>
                   <h2 className="font-heading font-bold text-3xl mb-4">
@@ -130,7 +130,7 @@ export default function EggrafesPage() {
                 <a 
                   href="/aitisi.docx" 
                   download="aitisi.docx"
-                  className="inline-flex items-center justify-center md:justify-start gap-3 bg-white text-primary px-8 py-4 rounded-full font-bold hover:bg-surface transition-colors shadow-lg self-start w-full md:w-auto text-lg"
+                  className="inline-flex items-center justify-center md:justify-start gap-3 bg-white text-primary px-8 py-4 rounded-md font-bold hover:bg-surface transition-colors shadow-lg self-start w-full md:w-auto text-lg"
                 >
                   <Download size={22} />
                   Λήψη .docx
@@ -149,25 +149,25 @@ export default function EggrafesPage() {
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-text-primary mb-6">
               Διαδικασία Υποβολής Αιτήσεων
             </h2>
-            <div className="w-16 h-1 bg-secondary mx-auto md:mx-0 mb-6 rounded-full"></div>
+            <div className="w-16 h-1 bg-secondary mx-auto md:mx-0 mb-6 rounded-md"></div>
             <p className="text-text-secondary text-lg">
               Η διαδικασία της αίτησης γίνεται με την κατάθεση από μέρους των ενδιαφερομένων των κάτωθι δικαιολογητικών:
             </p>
           </div>
 
-          <div className="bg-white rounded-3xl border border-border-soft overflow-hidden shadow-lg shadow-black/5">
+          <div className="bg-white rounded-md border border-border-soft overflow-hidden shadow-lg shadow-black/5">
             {DOCUMENTS.map((doc, idx) => {
               const Icon = doc.icon;
               return (
                 <div key={idx} className="group border-b border-border-soft last:border-0 p-6 sm:p-8 flex items-start gap-6 hover:bg-primary/5 transition-colors">
-                  <div className="w-12 h-12 bg-surface border border-border-soft text-text-secondary rounded-xl flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-white group-hover:border-primary transition-colors">
+                  <div className="w-12 h-12 bg-surface border border-border-soft text-text-secondary rounded-md flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-white group-hover:border-primary transition-colors">
                     <Icon size={24} />
                   </div>
                   <div>
                     <h3 className="font-bold text-text-primary text-lg mb-2 group-hover:text-primary transition-colors flex items-center flex-wrap gap-2">
                       {doc.title}
                       {doc.optional && (
-                        <span className="text-xs font-bold bg-secondary/10 text-secondary px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                        <span className="text-xs font-bold bg-secondary/10 text-secondary px-2.5 py-0.5 rounded-md uppercase tracking-wider">
                           Προαιρετικο
                         </span>
                       )}
@@ -187,7 +187,7 @@ export default function EggrafesPage() {
       <section className="py-24 relative z-10">
         <div className="section-container px-4 max-w-4xl mx-auto text-center">
           
-          <div className="w-20 h-20 bg-secondary/10 text-secondary rounded-3xl flex items-center justify-center mx-auto mb-8 rotate-3">
+          <div className="w-20 h-20 bg-secondary/10 text-secondary rounded-md flex items-center justify-center mx-auto mb-8 rotate-3">
             <Mail size={36} />
           </div>
           
@@ -199,7 +199,7 @@ export default function EggrafesPage() {
           </p>
 
           <div className="flex flex-col md:flex-row items-stretch justify-center gap-6 text-left">
-            <div className="bg-surface p-8 md:p-10 rounded-3xl border border-border-soft flex-1 flex flex-col">
+            <div className="bg-surface p-8 md:p-10 rounded-md border border-border-soft flex-1 flex flex-col">
               <h3 className="font-bold text-xl text-text-primary mb-4 flex items-center gap-3">
                 <MapPin className="text-primary" size={24} /> 
                 Διεύθυνση Γραμματείας
@@ -211,7 +211,7 @@ export default function EggrafesPage() {
               </address>
             </div>
 
-            <div className="bg-surface p-8 md:p-10 rounded-3xl border border-border-soft flex-1 flex flex-col">
+            <div className="bg-surface p-8 md:p-10 rounded-md border border-border-soft flex-1 flex flex-col">
               <h3 className="font-bold text-xl text-text-primary mb-4 flex items-center gap-3">
                 <Mail className="text-primary" size={24} />
                 Αποστολή Email

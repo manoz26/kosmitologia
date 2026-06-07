@@ -34,17 +34,17 @@ export function HeroSection() {
       <motion.div
         animate={{ y: [-10, 10, -10], rotate: [0, 5, 0] }}
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-[15%] left-[8%] w-72 h-72 rounded-full blob-lavender pointer-events-none"
+        className="absolute top-[15%] left-[8%] w-72 h-72 rounded-full blob-lavender opacity-60 pointer-events-none"
       />
       <motion.div
         animate={{ y: [10, -15, 10], rotate: [0, -3, 0] }}
         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-[30%] right-[5%] w-96 h-96 rounded-full blob-mint pointer-events-none"
+        className="absolute top-[30%] right-[5%] w-96 h-96 rounded-full blob-lavender opacity-60 pointer-events-none"
       />
       <motion.div
         animate={{ y: [-8, 12, -8] }}
         transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-[20%] left-[20%] w-64 h-64 rounded-full blob-peach pointer-events-none"
+        className="absolute bottom-[20%] left-[20%] w-64 h-64 rounded-full blob-lavender opacity-60 pointer-events-none"
       />
 
       {/* Floating glass shapes */}
@@ -114,7 +114,7 @@ export function HeroSection() {
           >
             <Link
               href="/sxetika#admission"
-              className="group relative inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-lavender via-lavender-dark to-lavender px-8 py-4 text-base font-bold text-white shadow-xl shadow-lavender/25 hover:shadow-lavender/40 hover:scale-105 active:scale-100 transition-all duration-300 bg-[length:200%_auto] animate-gradient"
+              className="group relative inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-lavender via-lavender-dark to-lavender px-8 py-4 text-base font-bold text-white shadow-lg shadow-lavender/25 hover:shadow-lavender/40 hover:-translate-y-1 transition-all duration-300"
             >
               Ξεκινήστε την Αίτηση
               <ChevronRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
