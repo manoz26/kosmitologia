@@ -1,44 +1,79 @@
 export interface CareerPath {
+  id: string;
   icon: string;
   title: string;
-  description: string;
-  color: "lavender" | "mint" | "peach" | "peach-warm" | "lavender-light";
+  shortDescription: string;
+  fullDescription: string;
+  colorTheme: "blue" | "green" | "slate" | "indigo" | "emerald";
+  skills: string[];
+  opportunities: string[];
+  roles: string[];
 }
 
 export const careerPaths: CareerPath[] = [
   {
+    id: "rnd",
     icon: "flask-conical",
-    title: "Έρευνα & Ανάπτυξη",
-    description:
+    title: "Έρευνα & Ανάπτυξη (R&D)",
+    shortDescription:
       "Στελέχωση τμημάτων R&D εταιρειών καλλυντικών, σχεδιασμός και αξιολόγηση καινοτόμων προϊόντων με τεκμηριωμένη αποτελεσματικότητα.",
-    color: "lavender",
+    fullDescription:
+      "Ο τομέας της Έρευνας και Ανάπτυξης αποτελεί την καρδιά της καινοτομίας στην κοσμητολογία. Οι απόφοιτοι αναλαμβάνουν τον σχεδιασμό νέων φορμουλών, την επιλογή καινοτόμων δραστικών συστατικών και την αξιολόγηση της ασφάλειας και αποτελεσματικότητάς τους. Απαιτείται βαθιά γνώση χημείας καλλυντικών και δερματολογίας.",
+    colorTheme: "blue",
+    skills: ["Σχεδιασμός Φορμουλών", "Αξιολόγηση Αποτελεσματικότητας", "In-vitro & In-vivo δοκιμές", "Χημεία Καλλυντικών"],
+    opportunities: ["Εταιρείες Καλλυντικών", "Ερευνητικά Ινστιτούτα", "Εργαστήρια Ποιοτικού Ελέγχου"],
+    roles: ["R&D Scientist", "Formulator", "Research Manager"]
   },
   {
+    id: "industry",
     icon: "factory",
     title: "Βιομηχανία Καλλυντικών",
-    description:
+    shortDescription:
       "Εργασία σε βιομηχανίες παραγωγής καλλυντικών και δερμοφαρμακευτικών, με ρόλους σε παραγωγή, ποιοτικό έλεγχο και κανονιστική συμμόρφωση.",
-    color: "mint",
+    fullDescription:
+      "Η βιομηχανική παραγωγή καλλυντικών απαιτεί αυστηρά πρότυπα και εξειδικευμένες γνώσεις. Οι απόφοιτοι μπορούν να στελεχώσουν θέσεις ευθύνης στη γραμμή παραγωγής, διασφαλίζοντας την ποιότητα (QA/QC) και την τήρηση των διεθνών κανονισμών (Regulatory Affairs).",
+    colorTheme: "green",
+    skills: ["Ποιοτικός Έλεγχος (QC)", "Διασφάλιση Ποιότητας (QA)", "Κανονιστική Συμμόρφωση (Regulatory)", "Διαχείριση Παραγωγής"],
+    opportunities: ["Βιομηχανίες Καλλυντικών", "Φαρμακοβιομηχανίες", "Εταιρείες Πρώτων Υλών"],
+    roles: ["Quality Control Manager", "Regulatory Affairs Specialist", "Production Supervisor"]
   },
   {
+    id: "health",
     icon: "heart-handshake",
-    title: "Υγεία & Αισθητική",
-    description:
+    title: "Υγεία & Αισθητική Δερματολογία",
+    shortDescription:
       "Συνεργασία με δερματολόγους και επαγγελματίες υγείας σε κλινικό περιβάλλον, εφαρμογή εξατομικευμένων κοσμητολογικών πρωτοκόλλων.",
-    color: "peach",
+    fullDescription:
+      "Η γέφυρα μεταξύ αισθητικής και υγείας. Οι ειδικοί συνεργάζονται με δερματολόγους, πλαστικούς χειρουργούς και φαρμακοποιούς για την παροχή εξειδικευμένων συμβουλών περιποίησης και την εφαρμογή πρωτοκόλλων για δερματικές παθήσεις ή μετεγχειρητική φροντίδα.",
+    colorTheme: "emerald",
+    skills: ["Κλινική Αξιολόγηση Δέρματος", "Δερμοκαλλυντικά Πρωτόκολλα", "Συμβουλευτική Ασθενών", "Συνεργασία με Ιατρούς"],
+    opportunities: ["Δερματολογικές Κλινικές", "Φαρμακεία (Εξειδικευμένα)", "Κέντρα Ιατρικής Αισθητικής"],
+    roles: ["Clinical Skincare Specialist", "Dermo-Cosmetics Consultant", "Medical Liaison"]
   },
   {
+    id: "business",
     icon: "rocket",
     title: "Επιχειρηματικότητα & Consulting",
-    description:
+    shortDescription:
       "Ανάπτυξη ιδίας επιχείρησης, παροχή συμβουλευτικών υπηρεσιών σε ανάπτυξη και προώθηση καλλυντικών, συμμετοχή σε ερευνητικά προγράμματα.",
-    color: "peach-warm",
+    fullDescription:
+      "Για όσους έχουν επιχειρηματικό πνεύμα, η γνώση της κοσμητολογίας προσφέρει τεράστιες ευκαιρίες. Από τη δημιουργία ενός δικού σας brand καλλυντικών μέχρι την παροχή B2B συμβουλευτικών υπηρεσιών σε άλλες εταιρείες για ανάπτυξη, marketing ή νομοθεσία.",
+    colorTheme: "indigo",
+    skills: ["Brand Development", "Product Marketing", "B2B Consulting", "Επιχειρηματικός Σχεδιασμός"],
+    opportunities: ["Startups", "Συμβουλευτικές Εταιρείες", "Marketing Agencies"],
+    roles: ["Founder/CEO", "Cosmetics Consultant", "Brand Manager"]
   },
   {
+    id: "education",
     icon: "graduation-cap",
     title: "Εκπαίδευση & Κατάρτιση",
-    description:
+    shortDescription:
       "Διδασκαλία και κατάρτιση νέων επαγγελματιών στον τομέα της κοσμητολογίας, σε ακαδημαϊκά ιδρύματα ή εκπαιδευτικούς φορείς.",
-    color: "lavender-light",
+    fullDescription:
+      "Η μετάδοση της γνώσης είναι ζωτικής σημασίας για την εξέλιξη του κλάδου. Οι κάτοχοι του μεταπτυχιακού διπλώματος μπορούν να ακολουθήσουν ακαδημαϊκή καριέρα, να διδάξουν σε ιδιωτικά ή δημόσια εκπαιδευτικά ιδρύματα (ΙΕΚ, ΚΔΒΜ) ή να αναλάβουν την εκπαίδευση προσωπικού (trainers) σε εταιρείες καλλυντικών.",
+    colorTheme: "slate",
+    skills: ["Διδακτική Ικανότητα", "Σχεδιασμός Εκπαιδευτικού Υλικού", "Corporate Training", "Ακαδημαϊκή Έρευνα"],
+    opportunities: ["Ακαδημαϊκά Ιδρύματα", "Εταιρείες Καλλυντικών (Training Dept)", "Ινστιτούτα Επαγγελματικής Κατάρτισης"],
+    roles: ["Εκπαιδευτής / Trainer", "Καθηγητής", "Scientific Communicator"]
   },
 ];

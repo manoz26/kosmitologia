@@ -37,25 +37,25 @@ function CourseCard({ course, index, onClick }: { course: Course; index: number;
 
   const colorClasses = {
     lavender: {
-      bg: "bg-lavender-50",
-      icon: "bg-lavender text-white",
-      badge: "bg-lavender-50 text-lavender-dark",
-      border: "hover:border-lavender/30",
-      textHover: "group-hover:text-lavender",
+      bg: "bg-indigo-50",
+      icon: "bg-indigo-500 text-white",
+      badge: "bg-indigo-50 text-indigo-700",
+      border: "hover:border-indigo-500/30",
+      textHover: "group-hover:text-indigo-600",
     },
     mint: {
-      bg: "bg-mint-50",
-      icon: "bg-mint text-white",
-      badge: "bg-mint-50 text-mint-dark",
-      border: "hover:border-mint/30",
-      textHover: "group-hover:text-mint-dark",
+      bg: "bg-teal-50",
+      icon: "bg-teal-500 text-white",
+      badge: "bg-teal-50 text-teal-700",
+      border: "hover:border-teal-500/30",
+      textHover: "group-hover:text-teal-700",
     },
     peach: {
-      bg: "bg-peach-50",
-      icon: "bg-peach text-white",
-      badge: "bg-peach-50 text-peach-warm",
-      border: "hover:border-peach/30",
-      textHover: "group-hover:text-peach-warm",
+      bg: "bg-rose-50",
+      icon: "bg-rose-500 text-white",
+      badge: "bg-rose-50 text-rose-600",
+      border: "hover:border-rose-400/30",
+      textHover: "group-hover:text-rose-600",
     },
   };
 
@@ -138,12 +138,12 @@ function CourseModal({ course, onClose }: { course: Course; onClose: () => void 
 
         <div className="px-8 pb-10 pt-4 -mt-12">
           <div className="flex items-center gap-3 mb-4">
-            <div className="h-12 w-12 rounded-md bg-lavender/10 text-lavender flex items-center justify-center shrink-0">
+            <div className="h-12 w-12 rounded-md bg-indigo-50 text-indigo-500 flex items-center justify-center shrink-0">
               <CourseIcon name={course.icon} />
             </div>
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <span className="inline-flex px-2.5 py-0.5 rounded-md text-[11px] font-bold uppercase tracking-wider bg-lavender-50 text-lavender-dark">
+                <span className="inline-flex px-2.5 py-0.5 rounded-md text-[11px] font-bold uppercase tracking-wider bg-indigo-50 text-indigo-700">
                   {course.code}
                 </span>
                 <span className="text-xs font-semibold text-text-secondary bg-muted px-2.5 py-0.5 rounded-md">
@@ -164,13 +164,13 @@ function CourseModal({ course, onClose }: { course: Course; onClose: () => void 
             {course.outcomes && course.outcomes.length > 0 && (
               <div>
                 <h4 className="flex items-center gap-2 font-heading font-bold text-text-primary mb-3">
-                  <LucideIcons.Target size={18} className="text-lavender" />
+                  <LucideIcons.Target size={18} className="text-indigo-500" />
                   Μαθησιακά Αποτελέσματα
                 </h4>
                 <ul className="space-y-2">
                   {course.outcomes.map((outcome, idx) => (
                     <li key={idx} className="flex items-start gap-2 text-sm text-text-secondary leading-relaxed">
-                      <LucideIcons.CheckCircle2 size={16} className="text-mint shrink-0 mt-0.5" />
+                      <LucideIcons.CheckCircle2 size={16} className="text-teal-500 shrink-0 mt-0.5" />
                       <span>{outcome}</span>
                     </li>
                   ))}
@@ -181,13 +181,13 @@ function CourseModal({ course, onClose }: { course: Course; onClose: () => void 
             {course.skills && course.skills.length > 0 && (
               <div>
                 <h4 className="flex items-center gap-2 font-heading font-bold text-text-primary mb-3">
-                  <LucideIcons.Lightbulb size={18} className="text-peach-warm" />
+                  <LucideIcons.Lightbulb size={18} className="text-rose-500" />
                   Γενικές & Ειδικές Ικανότητες
                 </h4>
                 <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   {course.skills.map((skill, idx) => (
-                    <li key={idx} className="flex items-start gap-2 text-sm text-text-secondary leading-relaxed p-3 rounded-xl bg-peach-50/50 border border-peach/20 transition-all hover:bg-peach-50 hover:border-peach/40">
-                      <LucideIcons.Zap size={16} className="text-peach-warm shrink-0 mt-0.5" />
+                    <li key={idx} className="flex items-start gap-2 text-sm text-text-secondary leading-relaxed p-3 rounded-xl bg-rose-50 border border-rose-100 transition-all hover:bg-rose-100 hover:border-rose-200">
+                      <LucideIcons.Zap size={16} className="text-rose-500 shrink-0 mt-0.5" />
                       <span>{skill}</span>
                     </li>
                   ))}
@@ -198,7 +198,7 @@ function CourseModal({ course, onClose }: { course: Course; onClose: () => void 
             {course.professors && course.professors.length > 0 && (
               <div className="p-4 rounded-2xl bg-surface border border-border-soft">
                 <h4 className="flex items-center gap-2 font-heading font-bold text-text-primary mb-3">
-                  <LucideIcons.Users size={18} className="text-lavender" />
+                  <LucideIcons.Users size={18} className="text-indigo-500" />
                   Διδάσκοντες
                 </h4>
                 <div className="flex flex-wrap gap-2">
@@ -215,7 +215,7 @@ function CourseModal({ course, onClose }: { course: Course; onClose: () => void 
             {course.books && course.books.length > 0 && (
               <div>
                 <h4 className="flex items-center gap-2 font-heading font-bold text-text-primary mb-3">
-                  <LucideIcons.Book size={18} className="text-lavender" />
+                  <LucideIcons.Book size={18} className="text-indigo-500" />
                   Προτεινόμενα Συγγράμματα
                 </h4>
                 <ul className="space-y-3">
@@ -250,9 +250,6 @@ export function CurriculumSection() {
     <>
       <SectionWrapper variant="muted" divider="bold"
         id="curriculum"
-        
-        title="Πρόγραμμα Σπουδών"
-        subtitle="Μαθήματα"
       >
         {/* Semester Tabs */}
         <div className="flex flex-wrap justify-center gap-3 mb-8">
@@ -303,8 +300,8 @@ export function CurriculumSection() {
                   "px-4 py-2 rounded-md text-xs font-semibold transition-all border",
                   activeTrack === track.id
                     ? track.color === "mint"
-                      ? "bg-mint text-white border-mint shadow-sm"
-                      : "bg-peach-warm text-white border-peach-warm shadow-sm"
+                      ? "bg-teal-500 text-white border-teal-500 shadow-sm"
+                      : "bg-rose-500 text-white border-rose-500 shadow-sm"
                     : "bg-white/80 border-white/60 text-text-secondary hover:bg-white hover:text-primary"
                 )}
               >
