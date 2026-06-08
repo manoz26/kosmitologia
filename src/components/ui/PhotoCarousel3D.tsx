@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 interface CarouselPhoto {
   id: string;
   label: string;
-  type?: "students" | "faculty" | "campus" | "lab";
+  type?: "students" | "professor" | "campus" | "lab" | "classroom" | "equipment" | "generic";
 }
 
 const photos: CarouselPhoto[] = [
@@ -56,7 +56,7 @@ export function PhotoCarousel3D() {
     };
   }, [currentIndex, isHovered]);
 
-  const variants = {
+  const variants: import("framer-motion").Variants = {
     enter: (direction: number) => ({
       x: direction > 0 ? 300 : -300,
       opacity: 0,
