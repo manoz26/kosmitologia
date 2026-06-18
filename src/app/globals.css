@@ -23,6 +23,16 @@
   --color-ihu-green-light: #A5BA5F;
   --color-ihu-green-dark: #5F712A;
   --color-ihu-green-50: #F4F7ED;
+
+  /* ── Λαχανί (chartreuse) scroll palette — flagship homepage theme ── */
+  --color-lachani: #AEC94A;
+  --color-lachani-vivid: #B9D84A;
+  --color-lachani-bright: #C8E25E;
+  --color-lachani-deep: #8FAE39;
+  --color-lachani-mid: #C6D98C;
+  --color-lachani-soft: #E4EEC8;
+  --color-lachani-mist: #F1F6E4;
+  --color-lachani-pale: #F4F7ED;
   --color-surface: #FAFBFE;
   --color-text-primary: #1E293B;
   --color-text-secondary: #475569;
@@ -370,5 +380,182 @@
 
   html {
     scroll-behavior: auto;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   ΛΑΧΑΝΙ HOME — flagship scroll-driven 3D redesign
+   Additive utilities & keyframes. Scoped with `lh-` / `home-` prefixes so they
+   never collide with the rest of the site.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+@layer utilities {
+  /* Deeper perspective tiers for big 3D stages */
+  .perspective-1200 { perspective: 1200px; }
+  .perspective-1800 { perspective: 1800px; }
+  .perspective-2600 { perspective: 2600px; }
+  .perspective-origin-top { perspective-origin: 50% 0%; }
+  .perspective-origin-bottom { perspective-origin: 50% 100%; }
+
+  .transform-3d { transform-style: preserve-3d; }
+  .will-change-transform { will-change: transform; }
+
+  /* Λαχανί gradient text */
+  .text-gradient-lachani {
+    background: linear-gradient(120deg, var(--color-lachani-deep) 0%, var(--color-lachani) 45%, var(--color-lachani-bright) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .text-gradient-fresh {
+    background: linear-gradient(120deg, #5F712A 0%, #879D42 40%, #B9D84A 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Frosted glass tuned for the λαχανί canvas */
+  .glass-lachani {
+    background: rgba(255, 255, 255, 0.62);
+    backdrop-filter: blur(16px) saturate(120%);
+    -webkit-backdrop-filter: blur(16px) saturate(120%);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 18px 50px -24px rgba(95, 113, 42, 0.45), inset 0 1px 0 rgba(255,255,255,0.7);
+  }
+  .glass-lachani-deep {
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(22px) saturate(130%);
+    -webkit-backdrop-filter: blur(22px) saturate(130%);
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    box-shadow: 0 30px 70px -30px rgba(95, 113, 42, 0.55), inset 0 1px 0 rgba(255,255,255,0.65);
+  }
+
+  /* Soft inner ring used on glass chips */
+  .ring-glass { box-shadow: inset 0 0 0 1px rgba(255,255,255,0.55); }
+
+  /* Subtle film-grain / noise overlay (data-uri SVG) */
+  .home-grain {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+  }
+
+  /* Dotted halftone field */
+  .home-dots {
+    background-image: radial-gradient(rgba(95,113,42,0.18) 1px, transparent 1.4px);
+    background-size: 22px 22px;
+  }
+  .home-grid-soft {
+    background-image:
+      linear-gradient(rgba(95,113,42,0.12) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(95,113,42,0.12) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+}
+
+/* ── Λαχανί keyframes ── */
+@keyframes lh-blob-morph {
+  0%, 100% { border-radius: 42% 58% 63% 37% / 41% 44% 56% 59%; transform: translate3d(0,0,0) rotate(0deg); }
+  33% { border-radius: 58% 42% 38% 62% / 63% 38% 62% 37%; transform: translate3d(18px,-16px,0) rotate(6deg); }
+  66% { border-radius: 38% 62% 56% 44% / 49% 61% 39% 51%; transform: translate3d(-14px,12px,0) rotate(-5deg); }
+}
+
+@keyframes lh-aurora-pan {
+  0% { transform: translate3d(-8%, 0, 0) scale(1.1); opacity: 0.7; }
+  50% { transform: translate3d(8%, -4%, 0) scale(1.25); opacity: 1; }
+  100% { transform: translate3d(-8%, 0, 0) scale(1.1); opacity: 0.7; }
+}
+
+@keyframes lh-tilt-float {
+  0%, 100% { transform: translateY(0) rotateX(0deg) rotateY(0deg); }
+  25% { transform: translateY(-10px) rotateX(3deg) rotateY(-3deg); }
+  50% { transform: translateY(-4px) rotateX(0deg) rotateY(3deg); }
+  75% { transform: translateY(-12px) rotateX(-3deg) rotateY(0deg); }
+}
+
+@keyframes lh-droplet-bob {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-18px) scale(1.04); }
+}
+
+@keyframes lh-spin-y {
+  from { transform: rotateY(0deg); }
+  to { transform: rotateY(360deg); }
+}
+
+@keyframes lh-sheen {
+  0% { transform: translateX(-130%) skewX(-18deg); }
+  60%, 100% { transform: translateX(230%) skewX(-18deg); }
+}
+
+@keyframes lh-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes lh-marquee-rev {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes lh-sparkle {
+  0%, 100% { opacity: 0; transform: scale(0.4) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1) rotate(45deg); }
+}
+
+@keyframes lh-pulse-ring {
+  0% { transform: scale(0.85); opacity: 0.7; }
+  70% { opacity: 0; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+@keyframes lh-bubble-rise {
+  0% { transform: translateY(20px) scale(0.6); opacity: 0; }
+  20% { opacity: 0.8; }
+  100% { transform: translateY(-120px) scale(1); opacity: 0; }
+}
+
+@keyframes lh-orbit {
+  from { transform: rotate(0deg) translateX(var(--orbit-r, 80px)) rotate(0deg); }
+  to { transform: rotate(360deg) translateX(var(--orbit-r, 80px)) rotate(-360deg); }
+}
+
+@keyframes lh-shimmer-text {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+@keyframes lh-wave {
+  0%, 100% { d: path("M0,40 C120,80 240,0 360,40 C480,80 600,0 720,40 L720,120 L0,120 Z"); }
+  50% { d: path("M0,40 C120,0 240,80 360,40 C480,0 600,80 720,40 L720,120 L0,120 Z"); }
+}
+
+.animate-lh-blob-morph { animation: lh-blob-morph 18s ease-in-out infinite; }
+.animate-lh-aurora { animation: lh-aurora-pan 16s ease-in-out infinite; }
+.animate-lh-tilt-float { animation: lh-tilt-float 9s ease-in-out infinite; }
+.animate-lh-droplet-bob { animation: lh-droplet-bob 6.5s ease-in-out infinite; }
+.animate-lh-spin-y { animation: lh-spin-y 22s linear infinite; }
+.animate-lh-sheen { animation: lh-sheen 5.5s ease-in-out infinite; }
+.animate-lh-marquee { animation: lh-marquee 38s linear infinite; }
+.animate-lh-marquee-rev { animation: lh-marquee-rev 44s linear infinite; }
+.animate-lh-sparkle { animation: lh-sparkle 3.4s ease-in-out infinite; }
+.animate-lh-pulse-ring { animation: lh-pulse-ring 3s ease-out infinite; }
+.animate-lh-bubble { animation: lh-bubble-rise 7s ease-in infinite; }
+.animate-lh-shimmer-text {
+  background-size: 200% auto;
+  animation: lh-shimmer-text 6s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-lh-blob-morph,
+  .animate-lh-aurora,
+  .animate-lh-tilt-float,
+  .animate-lh-droplet-bob,
+  .animate-lh-spin-y,
+  .animate-lh-sheen,
+  .animate-lh-marquee,
+  .animate-lh-marquee-rev,
+  .animate-lh-sparkle,
+  .animate-lh-pulse-ring,
+  .animate-lh-bubble,
+  .animate-lh-shimmer-text {
+    animation: none !important;
   }
 }

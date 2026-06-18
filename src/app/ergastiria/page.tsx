@@ -1,48 +1,41 @@
-"use client";
+import { Metadata } from "next";
 
-import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
-import { PageShell } from "@/components/PageShell";
+import { ScrollBackdrop } from "@/components/home/ScrollBackdrop";
+import { LachaniPageHeader } from "@/components/home/LachaniPageHeader";
+import { LabShowcase3D } from "@/components/home/LabShowcase3D";
+import { ScienceMethodology3D } from "@/components/home/ScienceMethodology3D";
+import { ResearchSpotlight3D } from "@/components/home/ResearchSpotlight3D";
+import { FormulationLab3D } from "@/components/home/FormulationLab3D";
+
+export const metadata: Metadata = {
+  title: "Εργαστήρια & Υποδομές",
+  description:
+    "Τα εργαστήρια του ΠΜΣ Κοσμητολογία — παρασκευή, ενόργανη ανάλυση, αξιολόγηση δέρματος, ερευνητικές περιοχές και η επιστημονική μεθοδολογία του προγράμματος.",
+};
 
 export default function ErgastiriaPage() {
   return (
-    <PageShell title="Εργαστήρια & Εξοπλισμός" subtitle="Γνωρίστε τους σύγχρονους χώρους έρευνας και ανάπτυξης">
-      <div className="py-12 section-container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        <div className="mb-16">
-          <p className="text-lg text-text-secondary leading-relaxed max-w-3xl mb-8">
-            Τα εργαστήρια του Προγράμματος Μεταπτυχιακών Σπουδών "Κοσμητολογία" είναι εξοπλισμένα με 
-            όργανα τελευταίας τεχνολογίας, εξασφαλίζοντας ένα ασφαλές και καινοτόμο περιβάλλον για 
-            τους φοιτητές. Εδώ λαμβάνουν χώρα πειράματα, παρασκευές καλλυντικών και ποιοτικοί έλεγχοι.
-          </p>
-        </div>
+    <div className="relative">
+      <ScrollBackdrop />
 
-        <h2 className="font-heading text-3xl font-bold text-text-primary mb-8 border-b border-zinc-200 dark:border-zinc-800 pb-4">
-          Οι Χώροι των Εργαστηρίων
-        </h2>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
-          <PlaceholderImage type="lab" label="Φωτογραφία: Εργαστήριο Παρασκευής" aspectRatio="video" />
-          <PlaceholderImage type="lab" label="Φωτογραφία: Εργαστήριο Ποιοτικού Ελέγχου" aspectRatio="video" />
-          <PlaceholderImage type="lab" label="Φωτογραφία: Εργαστήριο Μικροβιολογίας" aspectRatio="video" />
-          <PlaceholderImage type="lab" label="Φωτογραφία: Χημείο / Απαγωγός" aspectRatio="video" />
-        </div>
+      <div className="relative z-0">
+        <LachaniPageHeader
+          eyebrow="Χώροι Έρευνας & Ανάπτυξης"
+          title="Εργαστήρια &"
+          highlight="Υποδομές"
+          intro="Πλήρως εξοπλισμένα εργαστήρια παρασκευής, ενόργανης ανάλυσης και αξιολόγησης δέρματος, όπου η θεωρία γίνεται πράξη — από την πρώτη ύλη μέχρι τον ποιοτικό έλεγχο και την έρευνα."
+        />
 
-        <h2 className="font-heading text-3xl font-bold text-text-primary mb-8 border-b border-zinc-200 dark:border-zinc-800 pb-4">
-          Όργανα & Εξοπλισμός
-        </h2>
+        {/* The labs themselves */}
+        <LabShowcase3D />
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <PlaceholderImage type="equipment" label="Φωτογραφία: Φασματοφωτόμετρο" aspectRatio="square" />
-          <PlaceholderImage type="equipment" label="Φωτογραφία: Ζυγός Ακριβείας" aspectRatio="square" />
-          <PlaceholderImage type="equipment" label="Φωτογραφία: Αναδευτήρες" aspectRatio="square" />
-          <PlaceholderImage type="equipment" label="Φωτογραφία: Συσκευή pH" aspectRatio="square" />
-          <PlaceholderImage type="equipment" label="Φωτογραφία: Συσκευές HPLC" aspectRatio="square" />
-          <PlaceholderImage type="equipment" label="Φωτογραφία: Ομογενοποιητής" aspectRatio="square" />
-          <PlaceholderImage type="equipment" label="Φωτογραφία: Υδατόλουτρα" aspectRatio="square" />
-          <PlaceholderImage type="equipment" label="Φωτογραφία: Φυγοκέντρος" aspectRatio="square" />
-        </div>
+        {/* A hands-on formulation walkthrough */}
+        <FormulationLab3D />
 
+        {/* How research is done here + the active research areas */}
+        <ScienceMethodology3D />
+        <ResearchSpotlight3D />
       </div>
-    </PageShell>
+    </div>
   );
 }

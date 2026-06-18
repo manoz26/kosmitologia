@@ -1,11 +1,30 @@
 import { Metadata } from "next";
-import { PageShell } from "@/components/PageShell";
+
+import { ScrollBackdrop } from "@/components/home/ScrollBackdrop";
+import { LachaniPageHeader } from "@/components/home/LachaniPageHeader";
+import { NewsSection } from "@/components/home/NewsSection";
 
 export const metadata: Metadata = {
   title: "Νέα & Ανακοινώσεις",
-  description: "Τελευταίες ανακοινώσεις, προκηρύξεις και νέα του ΠΜΣ Κοσμητολογία.",
+  description:
+    "Τελευταίες ανακοινώσεις, προκηρύξεις, εκδηλώσεις και νέα του ΠΜΣ Κοσμητολογία.",
 };
 
 export default function NeaPage() {
-  return <PageShell title="Νέα & Ανακοινώσεις" subtitle="Ενημέρωση" />;
+  return (
+    <div className="relative">
+      <ScrollBackdrop />
+
+      <div className="relative z-0">
+        <LachaniPageHeader
+          eyebrow="Ενημέρωση"
+          title="Νέα &"
+          highlight="Ανακοινώσεις"
+          intro="Προκηρύξεις, εκδηλώσεις και τα τελευταία νέα του προγράμματος και της κοινότητάς μας."
+        />
+
+        <NewsSection />
+      </div>
+    </div>
+  );
 }

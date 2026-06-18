@@ -52,7 +52,7 @@ export function CommunityGallery() {
   return (
     <section 
       ref={containerRef}
-      className="relative w-full py-24 md:py-32 overflow-hidden bg-[#F4F7ED]"
+      className="relative w-full py-24 md:py-32 overflow-hidden bg-transparent"
     >
       {/* Lightbox Modal */}
       <AnimatePresence>
@@ -93,8 +93,8 @@ export function CommunityGallery() {
 
       {/* Abstract Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-primary/10 blur-[120px]" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-secondary/10 blur-[150px]" />
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-ihu-green/15 blur-[120px]" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-ihu-green-light/20 blur-[150px]" />
       </div>
 
       {/* Content Container */}
@@ -103,13 +103,13 @@ export function CommunityGallery() {
           style={{ opacity: opacityText, scale: scaleText }}
           className="flex flex-col items-center"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-primary/20 text-primary font-medium text-sm mb-6 shadow-sm">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/70 backdrop-blur-md border border-ihu-green-dark/20 text-ihu-green-dark font-medium text-sm mb-6 shadow-sm">
             <Sparkles size={16} />
             <span>Η Κοινότητά μας</span>
           </div>
-          
+
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-extrabold text-text-primary tracking-tight mb-6">
-            Η <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Ζωή</span> στο ΠΜΣ Κοσμητολογίας
+            Η <span className="text-transparent bg-clip-text bg-gradient-to-r from-ihu-green-dark to-ihu-green">Ζωή</span> στο ΠΜΣ Κοσμητολογίας
           </h2>
           
           <p className="text-lg md:text-xl text-text-secondary leading-relaxed max-w-2xl mx-auto mb-10">
@@ -118,7 +118,7 @@ export function CommunityGallery() {
 
           <div className="flex flex-wrap justify-center gap-6">
              <div className="flex items-center gap-3 bg-white/60 backdrop-blur-sm px-5 py-3 rounded-2xl border border-white/40 shadow-sm transition-all hover:bg-white/80 hover:-translate-y-1">
-                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                <div className="w-10 h-10 rounded-full bg-ihu-green/10 flex items-center justify-center text-ihu-green-dark">
                   <Users size={20} />
                 </div>
                 <div className="text-left">
@@ -136,7 +136,7 @@ export function CommunityGallery() {
                 </div>
              </div>
              <div className="flex items-center gap-3 bg-white/60 backdrop-blur-sm px-5 py-3 rounded-2xl border border-white/40 shadow-sm transition-all hover:bg-white/80 hover:-translate-y-1">
-                <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center text-accent">
+                <div className="w-10 h-10 rounded-full bg-ihu-green-light/20 flex items-center justify-center text-ihu-green-dark">
                   <MessageCircleHeart size={20} />
                 </div>
                 <div className="text-left">
@@ -183,7 +183,7 @@ export function CommunityGallery() {
                 onClick={() => setSelectedImage(src)}
                 className="relative w-[280px] h-[200px] md:w-[400px] md:h-[280px] rounded-3xl overflow-hidden shadow-md flex-shrink-0 border-4 border-white transform transition-all duration-500 hover:scale-[1.03] hover:shadow-2xl hover:z-30 cursor-zoom-in group/card"
               >
-                <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover/card:opacity-30 transition-opacity duration-300 z-10 mix-blend-overlay" />
+                <div className="absolute inset-0 bg-ihu-green/20 opacity-0 group-hover/card:opacity-30 transition-opacity duration-300 z-10 mix-blend-overlay" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-300 z-10 flex items-end justify-center pb-6">
                   <div className="bg-white/20 backdrop-blur-md px-4 py-2 rounded-full flex items-center gap-2 text-white transform translate-y-4 group-hover/card:translate-y-0 transition-transform duration-300">
                     <ZoomIn size={18} />

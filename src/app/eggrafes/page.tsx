@@ -2,11 +2,16 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { 
-  CalendarDays, FileText, GraduationCap, Download, Mail, MapPin, 
+import {
+  CalendarDays, FileText, GraduationCap, Download, Mail, MapPin,
   BookOpen, Languages, Award, Briefcase, User, ShieldCheck,
   Users, BookMarked, Microscope
 } from "lucide-react";
+
+import { LachaniSurface } from "@/components/home/LachaniSurface";
+import { AdmissionTimeline3D } from "@/components/home/AdmissionTimeline3D";
+import { TuitionCalculator3D } from "@/components/home/TuitionCalculator3D";
+import { DownloadsSection } from "@/components/home/DownloadsSection";
 
 const DOCUMENTS = [
   {
@@ -232,6 +237,13 @@ export default function EggrafesPage() {
 
         </div>
       </section>
+
+      {/* ── Λαχανί band: admission timeline, tuition & downloads ── */}
+      <LachaniSurface>
+        <AdmissionTimeline3D />
+        <TuitionCalculator3D />
+        <DownloadsSection />
+      </LachaniSurface>
 
     </main>
   );
