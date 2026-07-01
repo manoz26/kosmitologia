@@ -20,7 +20,7 @@ import { navTargets } from "./lib/data";
 import { Icon } from "./lib/primitives";
 
 /* A handful of key targets surfaced in the compact mobile dock. */
-const MOBILE_TARGETS = ["top", "overview", "ingredients", "careers", "cta"] as const;
+const MOBILE_TARGETS = ["top", "journey", "sxoli", "careers", "news"] as const;
 
 function scrollToId(id: string) {
   if (id === "top") {

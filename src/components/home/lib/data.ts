@@ -879,15 +879,11 @@ export interface NavTarget {
    live on dedicated pages are no longer listed here. */
 export const navTargets: NavTarget[] = [
   { id: "top", label: "Αρχή", icon: "sparkles" },
-  { id: "overview", label: "Με μια ματιά", icon: "layers" },
-  { id: "directions", label: "Κατευθύνσεις", icon: "scale" },
   { id: "journey", label: "Διαδρομή", icon: "orbit" },
-  { id: "ingredients", label: "Συστατικά", icon: "droplets" },
-  { id: "why", label: "Γιατί εμείς", icon: "star" },
+  { id: "sxoli", label: "Η Σχολή", icon: "building" },
   { id: "mentors", label: "Διδάσκοντες", icon: "users" },
   { id: "careers", label: "Καριέρα", icon: "trending" },
   { id: "news", label: "Νέα", icon: "book" },
-  { id: "cta", label: "Αίτηση", icon: "rocket" },
 ];
 
 /* ────────────────────────────────────────────
