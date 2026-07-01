@@ -54,7 +54,7 @@ function HeroCopy() {
       <h1 className="mx-auto max-w-4xl font-heading text-5xl font-extrabold leading-[1.05] tracking-tight text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.5)] md:text-7xl">
         Η επιστήμη
         <br />
-        του <span className="text-[#cfe38a]">ωραίου</span>.
+        της <span className="text-[#cfe38a]">κοσμητολογίας</span>.
       </h1>
       <p className="mx-auto mt-6 max-w-xl text-base text-white/85 drop-shadow-md md:text-lg">
         Από τη φύση, στο εργαστήριο, στο δέρμα.
