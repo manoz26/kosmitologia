@@ -1,3 +1,5 @@
+import type { IconKey } from "@/components/home/lib/data";
+
 export interface CareerPath {
   id: string;
   icon: string;
@@ -75,5 +77,128 @@ export const careerPaths: CareerPath[] = [
     skills: ["Διδακτική Ικανότητα", "Σχεδιασμός Εκπαιδευτικού Υλικού", "Corporate Training", "Ακαδημαϊκή Έρευνα"],
     opportunities: ["Ακαδημαϊκά Ιδρύματα", "Εταιρείες Καλλυντικών (Training Dept)", "Ινστιτούτα Επαγγελματικής Κατάρτισης"],
     roles: ["Εκπαιδευτής / Trainer", "Καθηγητής", "Scientific Communicator"]
+  },
+];
+
+/* ────────────────────────────────────────────
+   Career stat band — «η καριέρα με αριθμούς»
+   ──────────────────────────────────────────────────────────────────────────
+   NOTE: Οι παρακάτω τιμές προκύπτουν άμεσα από τη δομή του προγράμματος και τα
+   δεδομένα των career paths (5 μονοπάτια, 15 ρόλοι, κ.λπ.) — δεν είναι
+   εφευρημένα ποσοστά. Αν υπάρξουν πραγματικά στοιχεία απορρόφησης αποφοίτων,
+   αντικαταστήστε τα εδώ (π.χ. { icon: "trending", value: 90, suffix: "%",
+   label: "Απορρόφηση αποφοίτων", sub: "Εντός 12 μηνών" }).
+   ──────────────────────────────────────────── */
+
+export interface CareerStat {
+  icon: IconKey;
+  value: number;
+  prefix?: string;
+  suffix?: string;
+  label: string;
+  sub: string;
+}
+
+export const careerStats: CareerStat[] = [
+  { icon: "trending", value: 5, label: "Μονοπάτια σταδιοδρομίας", sub: "Από την έρευνα έως τη δική σας επιχείρηση" },
+  { icon: "briefcase", value: 15, suffix: "+", label: "Ρόλοι-στόχοι", sub: "Σε R&D, βιομηχανία, κλινική & αγορά" },
+  { icon: "building", value: 12, suffix: "+", label: "Κλάδοι εργοδοτών", sub: "Δίκτυο συνεργαζόμενων φορέων" },
+  { icon: "award", value: 90, suffix: " ECTS", label: "Μεταπτυχιακό δίπλωμα", sub: "Αναγνωρισμένο προσόν στην αγορά" },
+];
+
+/* ────────────────────────────────────────────
+   Career ascent — η ανάβαση από τον φοιτητή στο στέλεχος
+   ──────────────────────────────────────────── */
+
+export interface AscentStep {
+  index: string;
+  title: string;
+  description: string;
+  icon: IconKey;
+  tags: string[];
+  from: string;
+  to: string;
+  accent: string;
+}
+
+export const careerAscent: AscentStep[] = [
+  {
+    index: "01",
+    title: "Ακαδημαϊκή Θεμελίωση",
+    description:
+      "Απόκτηση στέρεων θεωρητικών και πρακτικών γνώσεων στα συστατικά, τη μορφοποίηση και την αξιολόγηση των καλλυντικών.",
+    icon: "book",
+    tags: ["Μαθήματα κορμού", "Εργαστήρια", "Μεθοδολογία"],
+    from: "#7E9636",
+    to: "#B9D84A",
+    accent: "#879D42",
+  },
+  {
+    index: "02",
+    title: "Επιλογή Ειδίκευσης",
+    description:
+      "Εστίαση είτε στον Σχεδιασμό και την Ανάπτυξη νέων προϊόντων, είτε στις Κλινικές Εφαρμογές της Κοσμητολογίας στη Δερματολογία.",
+    icon: "layers",
+    tags: ["Παρασκευή & Αξιολόγηση", "Δερματολογία"],
+    from: "#5E9A4E",
+    to: "#9FCB4C",
+    accent: "#5E9A4E",
+  },
+  {
+    index: "03",
+    title: "Διπλωματική & Έρευνα",
+    description:
+      "Υλοποίηση πρωτότυπης ερευνητικής εργασίας, συχνά σε συνεργασία με κορυφαίες εταιρείες της βιομηχανίας καλλυντικών.",
+    icon: "microscope",
+    tags: ["Πρωτότυπη έρευνα", "Συνεργασία με φορείς"],
+    from: "#3F6B3A",
+    to: "#8FC06A",
+    accent: "#3E9466",
+  },
+  {
+    index: "04",
+    title: "Ένταξη στην Αγορά",
+    description:
+      "Αξιοποίηση του δικτύου αποφοίτων και συνεργατών του προγράμματος για άμεση απορρόφηση σε θέσεις ευθύνης.",
+    icon: "briefcase",
+    tags: ["Δίκτυο αποφοίτων", "Θέσεις ευθύνης"],
+    from: "#6E7C1E",
+    to: "#C8E25E",
+    accent: "#9DAE2E",
+  },
+];
+
+/* ────────────────────────────────────────────
+   Career support — υποστήριξη & διασύνδεση
+   ──────────────────────────────────────────── */
+
+export interface SupportService {
+  icon: IconKey;
+  title: string;
+  description: string;
+  items: string[];
+}
+
+export const careerSupport: SupportService[] = [
+  {
+    icon: "book",
+    title: "Προετοιμασία CV & Portfolio",
+    description:
+      "Εξειδικευμένα σεμινάρια για τη δημιουργία ενός ανταγωνιστικού βιογραφικού που αναδεικνύει τις εργαστηριακές σας δεξιότητες.",
+    items: ["Review Βιογραφικού", "Καθοδήγηση Portfolio", "Συμβουλευτική Συνέντευξης"],
+  },
+  {
+    icon: "users",
+    title: "Δίκτυο Συνεργατών",
+    description:
+      "Άμεση επαφή με κορυφαίες εταιρείες καλλυντικών, ερευνητικά κέντρα και κλινικές κατά τη διάρκεια των σπουδών.",
+    items: ["Ημέρες Καριέρας", "Guest Lectures Εταιρειών", "Ευκαιρίες Πρακτικής"],
+  },
+  {
+    icon: "heart-handshake",
+    title: "Alumni Mentoring",
+    description:
+      "Σύνδεση με παλαιότερους αποφοίτους που ήδη διαπρέπουν στον χώρο, για mentoring και καθοδήγηση στα πρώτα σας βήματα.",
+    items: ["Δίκτυο Αποφοίτων", "One-on-One Mentoring", "Κοινότητα Αλληλοϋποστήριξης"],
   },
 ];
