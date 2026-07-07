@@ -2,9 +2,8 @@ import { Metadata } from "next";
 
 import { ScrollBackdrop } from "@/components/home/ScrollBackdrop";
 import { LachaniPageHeader } from "@/components/home/LachaniPageHeader";
+import { SpecializationTracks3D } from "@/components/home/SpecializationTracks3D";
 import { CurriculumScroll3D } from "@/components/home/CurriculumScroll3D";
-import { CourseExplorer3D } from "@/components/home/CourseExplorer3D";
-import { CompareTracks3D } from "@/components/home/CompareTracks3D";
 import { ProgramRhythm3D } from "@/components/home/ProgramRhythm3D";
 import { StudentLifecycle3D } from "@/components/home/StudentLifecycle3D";
 import { SkillsConstellation } from "@/components/home/SkillsConstellation";
@@ -14,7 +13,7 @@ import { PhotoCarousel3D } from "@/components/ui/PhotoCarousel3D";
 export const metadata: Metadata = {
   title: "Πρόγραμμα Σπουδών",
   description:
-    "Αναλυτικό πρόγραμμα σπουδών του ΠΜΣ Κοσμητολογία — μαθήματα, ECTS, κατευθύνσεις εξειδίκευσης, εβδομαδιαίος ρυθμός και δεξιότητες αποφοίτου.",
+    "Αναλυτικό πρόγραμμα σπουδών του ΠΜΣ Κοσμητολογία — δύο ειδικεύσεις, 11 μαθήματα, 90 ECTS. Αναλυτικά στοιχεία ανά μάθημα: περιεχόμενο, διδάσκοντες, βιβλιογραφία και τρόπος αξιολόγησης.",
 };
 
 export default function ProgrammaPage() {
@@ -24,20 +23,17 @@ export default function ProgrammaPage() {
 
       <div className="relative z-0">
         <LachaniPageHeader
-          eyebrow="Μαθήματα & Κατευθύνσεις"
+          eyebrow="Δύο Ειδικεύσεις · 90 ECTS"
           title="Πρόγραμμα"
           highlight="Σπουδών"
-          intro="Τρία εξάμηνα · 90 ECTS · 14 μαθήματα. Εξερευνήστε ολόκληρη τη διαδρομή — από τα μαθήματα κορμού και τις δύο κατευθύνσεις, μέχρι τον εβδομαδιαίο ρυθμό και τις δεξιότητες που αποκτά ο απόφοιτος."
+          intro="Τρία εξάμηνα · 90 ECTS · δύο ειδικεύσεις που μοιράζονται κοινό κορμό. Ακολουθήστε τη διαδρομή που χωρίζει στην «Παρασκευή & Αξιολόγηση Καλλυντικών» και στις «Εφαρμογές της Κοσμητολογίας στη Δερματολογία» — και ανοίξτε κάθε μάθημα για αναλυτικά, επίσημα στοιχεία."
         />
+
+        {/* The two specialisations as a branching, scroll-driven, clickable path */}
+        <SpecializationTracks3D />
 
         {/* Cinematic horizontal walk-through of the whole programme */}
         <CurriculumScroll3D />
-
-        {/* The detailed, filterable course browser (full data per course) */}
-        <CourseExplorer3D />
-
-        {/* The two specialisation tracks compared side by side */}
-        <CompareTracks3D />
 
         {/* How the programme runs week to week + semester by semester */}
         <ProgramRhythm3D />

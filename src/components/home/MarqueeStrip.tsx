@@ -47,8 +47,8 @@ export function MarqueeStrip() {
   return (
     <section aria-hidden className="relative w-full select-none py-6">
       {/* edge fades */}
-      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-[#AEC94A]/70 to-transparent md:w-40" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-[#AEC94A]/70 to-transparent md:w-40" />
+      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-[#E1EBB8]/80 to-transparent md:w-40" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-[#E1EBB8]/80 to-transparent md:w-40" />
 
       <div className="flex flex-col gap-3 border-y border-white/40 py-5 backdrop-blur-[2px]">
         <Row items={marqueePrimary} />

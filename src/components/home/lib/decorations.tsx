@@ -96,8 +96,13 @@ export function ParticleField({
   const particles = useScatter(reduced ? Math.ceil(count / 2) : count, seed);
 
   const { scrollYProgress } = useScroll();
-  const nearY = useTransform(scrollYProgress, [0, 1], [0, parallax && !reduced ? -160 : 0]);
-  const farY = useTransform(scrollYProgress, [0, 1], [0, parallax && !reduced ? -60 : 0]);
+  // Function-based — range-based scroll transforms desync via WAAPI (see CinematicScrollHero).
+  const nearY = useTransform(scrollYProgress, (p) =>
+    parallax && !reduced ? -160 * Math.min(1, Math.max(0, p)) : 0,
+  );
+  const farY = useTransform(scrollYProgress, (p) =>
+    parallax && !reduced ? -60 * Math.min(1, Math.max(0, p)) : 0,
+  );
 
   if (!mounted) return null;
 

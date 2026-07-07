@@ -17,12 +17,15 @@ import { TiltCard } from "./lib/primitives";
 import { SerumBottle, Droplet3D, Leaf3D, Molecule3D, OrbitRing } from "./lib/cosmetic3d";
 import { useReduced } from "./lib/hooks";
 
+const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
+
 export function CtaFinale3D() {
   const ref = useRef<HTMLElement>(null);
   const reduced = useReduced();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const propA = useTransform(scrollYProgress, [0, 1], [reduced ? 0 : 70, reduced ? 0 : -50]);
-  const propB = useTransform(scrollYProgress, [0, 1], [reduced ? 0 : -50, reduced ? 0 : 70]);
+  // Function-based — range-based scroll transforms desync via WAAPI (see CinematicScrollHero).
+  const propA = useTransform(scrollYProgress, (p) => (reduced ? 0 : 70 - 120 * clamp01(p)));
+  const propB = useTransform(scrollYProgress, (p) => (reduced ? 0 : -50 + 120 * clamp01(p)));
 
   return (
     <section ref={ref} id="cta" className="relative w-full overflow-hidden py-24 md:py-36">

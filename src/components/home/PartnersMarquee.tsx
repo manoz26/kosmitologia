@@ -28,8 +28,8 @@ export function PartnersMarquee() {
       </div>
 
       <div className="relative mt-10">
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-20 bg-gradient-to-r from-[#AEC94A]/55 to-transparent md:w-36" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-20 bg-gradient-to-l from-[#AEC94A]/55 to-transparent md:w-36" />
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-20 bg-gradient-to-r from-[#ECF2D6]/85 to-transparent md:w-36" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-20 bg-gradient-to-l from-[#ECF2D6]/85 to-transparent md:w-36" />
 
         <div className="group relative flex overflow-hidden">
           <div

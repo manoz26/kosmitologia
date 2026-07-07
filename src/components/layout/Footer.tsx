@@ -10,10 +10,11 @@ export function Footer() {
       <div className="section-container px-4 grid grid-cols-1 md:grid-cols-4 gap-12 relative z-10">
         <div className="md:col-span-2">
           <div className="relative w-56 h-14 mb-6">
-            <Image 
-              src="/logo.png" 
-              alt="ΔΙΠΑΕ Κοσμητολογία" 
+            <Image
+              src="/logo.png"
+              alt="ΔΙΠΑΕ Κοσμητολογία"
               fill
+              sizes="224px"
               className="object-contain object-left"
             />
           </div>

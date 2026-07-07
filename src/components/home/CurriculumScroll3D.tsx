@@ -71,13 +71,13 @@ function IntroPanel() {
         <GraduationCap size={14} /> Πρόγραμμα Σπουδών
       </span>
       <h2 className="mt-5 font-heading text-3xl font-extrabold leading-[1.08] text-text-primary sm:text-4xl md:text-5xl">
-        14 μαθήματα,
+        {courses.length} μαθήματα,
         <br />
-        <GradientText>μία διαδρομή</GradientText>
+        <GradientText>δύο ειδικεύσεις</GradientText>
       </h2>
       <p className="mt-4 text-base leading-relaxed text-text-secondary">
-        Τρία εξάμηνα · 90 ECTS. Κυλήστε για να δείτε ολόκληρο το πρόγραμμα να
-        ξεδιπλώνεται οριζόντια — από τα μαθήματα κορμού μέχρι τη διπλωματική.
+        Τρία εξάμηνα · 90 ECTS. Μια γρήγορη ματιά σε ολόκληρο το πρόγραμμα —
+        από τα κοινά μαθήματα κορμού μέχρι τα μαθήματα ειδίκευσης και τη διπλωματική.
       </p>
       <div className="mt-6 flex items-center gap-2 text-sm font-semibold text-ihu-green-dark">
         Κυλήστε
@@ -130,11 +130,9 @@ function CourseCard({ course }: { course: Course }) {
           <span className="inline-flex items-center gap-1.5 rounded-full bg-ihu-green/10 px-3 py-1 text-xs font-bold text-ihu-green-dark">
             {course.ects} ECTS
           </span>
-          {course.track && (
-            <span className="text-[11px] font-semibold uppercase tracking-wide" style={{ color: theme.accent }}>
-              {course.track === "preparation" ? "Παρασκευή" : "Δερματολογία"}
-            </span>
-          )}
+          <span className="text-[11px] font-semibold uppercase tracking-wide" style={{ color: theme.accent }}>
+            {course.stream === "core" ? "Κοινό" : course.track === "preparation" ? "Ειδίκευση Ι" : "Ειδίκευση ΙΙ"}
+          </span>
         </div>
       </div>
     </div>

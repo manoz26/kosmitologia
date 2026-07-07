@@ -3,7 +3,7 @@
    ──────────────────────────────────────────────────────────────────────────
    A self-contained "λαχανί band" used to host the transparent, glass-based 3D
    home sections when they live on a subpage built around the lighter PageShell
-   look. It paints a vivid λαχανί canvas (so `glass-lachani` cards read with the
+   look. It paints a light λαχανί canvas (so `glass-lachani` cards read with the
    right contrast) and softly fades at the top & bottom edges so the band blends
    into the neighbouring pale sections instead of cutting hard.
 
@@ -22,13 +22,13 @@ export function LachaniSurface({
 }) {
   return (
     <div className={cn("relative isolate w-full overflow-hidden", className)}>
-      {/* vivid λαχανί base */}
+      {/* light λαχανί base */}
       <div
         aria-hidden
         className="absolute inset-0 -z-10"
         style={{
           background:
-            "linear-gradient(168deg, #B9D84A 0%, #A8C24A 32%, #A5BA5F 60%, #B6CC6A 100%)",
+            "linear-gradient(168deg, #DFEBAC 0%, #DAE6A9 32%, #DEE8B6 60%, #E7F0C8 100%)",
         }}
       />
       {/* soft halftone texture */}

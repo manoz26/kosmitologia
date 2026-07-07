@@ -23,14 +23,17 @@ import {
 } from "./lib/primitives";
 import { Leaf3D, Molecule3D } from "./lib/cosmetic3d";
 
+const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
+
 export function IdentitySection() {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"],
   });
-  const propY = useTransform(scrollYProgress, [0, 1], [60, -60]);
-  const propY2 = useTransform(scrollYProgress, [0, 1], [-40, 80]);
+  // Function-based — range-based scroll transforms desync via WAAPI (see CinematicScrollHero).
+  const propY = useTransform(scrollYProgress, (p) => 60 - 120 * clamp01(p));
+  const propY2 = useTransform(scrollYProgress, (p) => -40 + 120 * clamp01(p));
 
   return (
     <section

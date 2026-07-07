@@ -81,8 +81,8 @@ export function FacultyShowcase() {
 
       {/* edge-fade marquee */}
       <div className="relative mt-14">
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-20 bg-gradient-to-r from-[#AEC94A]/60 to-transparent md:w-40" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-20 bg-gradient-to-l from-[#AEC94A]/60 to-transparent md:w-40" />
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-20 bg-gradient-to-r from-[#ECF2D6]/85 to-transparent md:w-40" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-20 bg-gradient-to-l from-[#ECF2D6]/85 to-transparent md:w-40" />
         <div className="flex flex-col gap-4">
           <Ribbon items={rowA} />
           <Ribbon items={rowB} reverse />

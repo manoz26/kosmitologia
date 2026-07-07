@@ -17,12 +17,15 @@ import { Icon, Reveal, SectionHeading } from "./lib/primitives";
 import { OrbitRing, Molecule3D } from "./lib/cosmetic3d";
 import { useReduced } from "./lib/hooks";
 
+const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
+
 export function StatsConstellation() {
   const ref = useRef<HTMLElement>(null);
   const reduced = useReduced();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const orbA = useTransform(scrollYProgress, [0, 1], [40, -40]);
-  const orbB = useTransform(scrollYProgress, [0, 1], [-30, 50]);
+  // Function-based — range-based scroll transforms desync via WAAPI (see CinematicScrollHero).
+  const orbA = useTransform(scrollYProgress, (p) => 40 - 80 * clamp01(p));
+  const orbB = useTransform(scrollYProgress, (p) => -30 + 80 * clamp01(p));
 
   return (
     <section ref={ref} id="stats" className="relative w-full overflow-hidden py-24 md:py-32">

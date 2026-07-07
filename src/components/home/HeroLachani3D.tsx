@@ -28,6 +28,8 @@ import {
 } from "./lib/cosmetic3d";
 import { usePointerField, useReduced, useViewport } from "./lib/hooks";
 
+const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
+
 /* A single parallax depth layer reacting to the global pointer field. */
 function DepthLayer({
   pointer,
@@ -60,12 +62,17 @@ export function HeroLachani3D() {
     offset: ["start start", "end start"],
   });
 
-  // Lift + fade the hero content as it scrolls away.
-  const contentY = useTransform(scrollYProgress, [0, 1], [0, reduced ? 0 : -120]);
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.6, 1], [1, 0.6, 0]);
-  const sceneScale = useTransform(scrollYProgress, [0, 1], [1, reduced ? 1 : 1.15]);
-  const sceneRotate = useTransform(scrollYProgress, [0, 1], [0, reduced ? 0 : 10]);
-  const cueOpacity = useTransform(scrollYProgress, [0, 0.08], [1, 0]);
+  // Lift + fade the hero content as it scrolls away. Function-based on
+  // purpose — range-based scroll transforms become WAAPI scroll animations
+  // that desync from the real scroll position (see CinematicScrollHero).
+  const contentY = useTransform(scrollYProgress, (p) => (reduced ? 0 : -120 * clamp01(p)));
+  const contentOpacity = useTransform(scrollYProgress, (p) => {
+    const t = clamp01(p);
+    return t < 0.6 ? 1 - (t / 0.6) * 0.4 : 0.6 - ((t - 0.6) / 0.4) * 0.6;
+  });
+  const sceneScale = useTransform(scrollYProgress, (p) => (reduced ? 1 : 1 + 0.15 * clamp01(p)));
+  const sceneRotate = useTransform(scrollYProgress, (p) => (reduced ? 0 : 4 * clamp01(p)));
+  const cueOpacity = useTransform(scrollYProgress, (p) => 1 - clamp01(p / 0.08));
 
   // Subtle scene tilt following the pointer.
   const sceneRotX = useTransform(pointer.y, [-1, 1], [8, -8]);
@@ -106,9 +113,9 @@ export function HeroLachani3D() {
             Η επιστήμη πίσω
             <br />
             από την{" "}
-            <GradientText className="animate-lh-shimmer-text">ομορφιά</GradientText>
+            <GradientText className="animate-lh-shimmer-text">ομορφιά</GradientText>.
             <br />
-            <span className="text-text-primary/90">σπουδάζουμε το</span>
+            <span className="text-text-primary/90">Σπουδάζουμε</span>
             <br className="hidden sm:block" />{" "}
             <span className="inline-block min-h-[1.1em] align-top">
               <Typewriter

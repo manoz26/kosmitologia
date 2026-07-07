@@ -18,11 +18,14 @@ import { labFeatures } from "./lib/data";
 import { Icon, Reveal, SectionHeading, Chip, TiltCard } from "./lib/primitives";
 import { useReduced } from "./lib/hooks";
 
+const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
+
 export function LabShowcase3D() {
   const ref = useRef<HTMLElement>(null);
   const reduced = useReduced();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const stackY = useTransform(scrollYProgress, [0, 1], [reduced ? 0 : 50, reduced ? 0 : -50]);
+  // Function-based — range-based scroll transforms desync via WAAPI (see CinematicScrollHero).
+  const stackY = useTransform(scrollYProgress, (p) => (reduced ? 0 : 50 - 100 * clamp01(p)));
 
   return (
     <section ref={ref} id="labs" className="relative w-full overflow-hidden py-24 md:py-32">

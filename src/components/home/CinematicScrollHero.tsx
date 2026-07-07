@@ -3,43 +3,29 @@
 /* ══════════════════════════════════════════════════════════════════════════
    CinematicScrollHero
    ──────────────────────────────────────────────────────────────────────────
-   The full-screen cinematic opener. A tall (250vh) container pins a <canvas>
-   to the viewport; as the visitor scrolls, we scrub through a pre-decoded image
-   sequence (Apple-style "scroll scrubbing"). This is deliberately a frame
-   sequence drawn to canvas rather than seeking a <video> element:
+   The full-screen cinematic opener of `/`. A tall (250vh) container pins the
+   viewport; as the visitor scrolls, <ScrollFilm/> scrubs through the lab
+   footage — 120 pre-extracted WebP frames eased onto a canvas (see
+   ui/scroll-film.tsx for the engine and why it beats <video>.currentTime).
 
-     • <video>.currentTime scrubbing stutters badly on most browsers (MP4 is
-       not frame-accurate unless every frame is a keyframe) and is effectively
-       broken on iOS Safari.
-     • Drawing pre-loaded frames to a canvas is smooth and reliable everywhere,
-       desktop and mobile alike.
+   The visitor lands on the crisp 2.8K poster (the footage's first frame);
+   the film only moves once they scroll. The copy lifts & fades on the way
+   in, and the dark footage melts into the λαχανί page below. Reduced-motion
+   visitors get the static poster. The CTAs live on <HeroLachani3D/> right
+   below, so this opener stays purely atmospheric.
 
-   A fallback poster (/leaf.jpg) shows until the first frame decodes, the copy
-   lifts & fades as you scroll in, and the dark footage melts into the λαχανί
-   page below. Users who prefer reduced motion get a static poster instead of
-   the scroll-driven scrub. The CTAs live on <HeroLachani3D/> right below, so
-   this opener stays purely atmospheric.
+   All scroll-linked styles are function-based on purpose: framer-motion
+   turns range-based scroll transforms into native scroll-linked WAAPI
+   animations, which we saw desync from the actual scroll position here.
    ══════════════════════════════════════════════════════════════════════════ */
 
-import { useEffect, useMemo, useRef, useState } from "react";
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useMotionValueEvent,
-  useReducedMotion,
-} from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { ChevronDown, MousePointer2, Sparkles } from "lucide-react";
 
-const FRAME_COUNT = 50;
-const FRAME_PREFIX =
-  "/hero-sequence/Wan_Video_Generate__Create a luxurious beauty brand video. First frame_ A breath_";
-const FRAME_EXT = ".jpg";
-const POSTER = "/leaf.jpg";
+import { ScrollFilm, HERO_FILM } from "@/components/ui/scroll-film";
 
-function frameSrc(i: number) {
-  return `${FRAME_PREFIX}${i.toString().padStart(3, "0")}${FRAME_EXT}`;
-}
+const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
 
 /* Shared overlay copy — atmospheric, no CTAs (the 3D hero below owns those). */
 function HeroCopy() {
@@ -65,93 +51,28 @@ function HeroCopy() {
 
 export function CinematicScrollHero() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const lastFrame = useRef(-1);
-  const [firstReady, setFirstReady] = useState(false);
   const reduced = useReducedMotion();
-
-  // Preload the sequence (skipped for reduced-motion visitors).
-  const images = useMemo<HTMLImageElement[]>(() => {
-    if (typeof window === "undefined" || reduced) return [];
-    return Array.from({ length: FRAME_COUNT }, (_, i) => {
-      const img = new Image();
-      img.src = frameSrc(i);
-      return img;
-    });
-  }, [reduced]);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"],
   });
 
-  /* Draw a frame with object-fit: cover math against the (DPR-scaled) canvas. */
-  const drawFrame = (index: number) => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    const img = images[index];
-    if (!ctx || !img || !img.complete || img.naturalWidth === 0) return;
-
-    const ratio = Math.max(canvas.width / img.naturalWidth, canvas.height / img.naturalHeight);
-    const w = img.naturalWidth * ratio;
-    const h = img.naturalHeight * ratio;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(img, (canvas.width - w) / 2, (canvas.height - h) / 2, w, h);
-  };
-
-  // Mark ready + paint frame 0 as soon as the first image decodes.
-  useEffect(() => {
-    if (reduced || images.length === 0) return;
-    const first = images[0];
-    const onFirst = () => {
-      setFirstReady(true);
-      lastFrame.current = 0;
-      requestAnimationFrame(() => drawFrame(0));
-    };
-    if (first.complete && first.naturalWidth > 0) onFirst();
-    else first.addEventListener("load", onFirst, { once: true });
-    return () => first.removeEventListener("load", onFirst);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [images, reduced]);
-
-  // Size the canvas to the viewport (capped DPR for crispness without waste).
-  useEffect(() => {
-    if (reduced) return;
-    const resize = () => {
-      const canvas = canvasRef.current;
-      if (!canvas) return;
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = Math.round(window.innerWidth * dpr);
-      canvas.height = Math.round(window.innerHeight * dpr);
-      drawFrame(lastFrame.current < 0 ? 0 : lastFrame.current);
-    };
-    resize();
-    window.addEventListener("resize", resize, { passive: true });
-    return () => window.removeEventListener("resize", resize);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [reduced, images]);
-
-  // Scrub: map scroll progress → frame index, redraw only on change.
-  useMotionValueEvent(scrollYProgress, "change", (p) => {
-    if (reduced) return;
-    const index = Math.min(FRAME_COUNT - 1, Math.max(0, Math.floor(p * FRAME_COUNT)));
-    if (index === lastFrame.current) return;
-    lastFrame.current = index;
-    requestAnimationFrame(() => drawFrame(index));
-  });
-
-  const copyOpacity = useTransform(scrollYProgress, [0, 0.08, 0.2, 1], [1, 1, 0, 0]);
-  const copyY = useTransform(scrollYProgress, [0, 0.2, 1], [0, -90, -90]);
-  const cueOpacity = useTransform(scrollYProgress, [0, 0.06], [1, 0]);
-  const blendOpacity = useTransform(scrollYProgress, [0.78, 1], [0, 1]);
+  const copyOpacity = useTransform(scrollYProgress, (p) => 1 - clamp01((p - 0.08) / 0.12));
+  const copyY = useTransform(scrollYProgress, (p) => -90 * clamp01(p / 0.2));
+  const cueOpacity = useTransform(scrollYProgress, (p) => 1 - clamp01(p / 0.06));
+  const blendOpacity = useTransform(scrollYProgress, (p) => clamp01((p - 0.78) / 0.22));
 
   /* ── Reduced motion: static poster, normal height, no scrub ── */
   if (reduced) {
     return (
       <section className="relative h-[100svh] w-full overflow-hidden bg-[#0a0a0a]">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={POSTER} alt="" className="absolute inset-0 h-full w-full object-cover" />
+        <img
+          src={HERO_FILM.poster}
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover"
+        />
         <div className="absolute inset-0 bg-black/45" />
         <div className="section-container absolute inset-0 flex flex-col items-center justify-center px-4 text-center">
           <HeroCopy />
@@ -164,15 +85,8 @@ export function CinematicScrollHero() {
   return (
     <div ref={containerRef} className="relative h-[250vh] w-full bg-[#0a0a0a]">
       <div className="sticky top-0 h-[100svh] w-full overflow-hidden">
-        {/* Fallback poster until the first frame decodes */}
-        <div
-          className="absolute inset-0 bg-cover bg-center transition-opacity duration-1000"
-          style={{ backgroundImage: `url('${POSTER}')`, opacity: firstReady ? 0 : 1 }}
-          aria-hidden
-        />
-
-        {/* Canvas that draws the scrubbed frames */}
-        <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" aria-hidden />
+        {/* Poster-first scroll-scrubbed footage */}
+        <ScrollFilm progress={scrollYProgress} {...HERO_FILM} />
 
         {/* Legibility scrim */}
         <div className="absolute inset-0 bg-black/40" aria-hidden />

@@ -4,9 +4,9 @@
    ScrollBackdrop
    ──────────────────────────────────────────────────────────────────────────
    The flagship colour engine of the homepage. A single fixed, full-viewport
-   layer that sits *behind* every section (-z-10). It starts as a vivid
-   "λαχανί" (chartreuse) and, as the visitor scrolls the page, gently fades
-   out toward a very soft, pale λαχανί — exactly the brief.
+   layer that sits *behind* every section (-z-10). It starts as a light,
+   airy "λαχανί" (chartreuse) and, as the visitor scrolls the page, gently
+   fades out toward an even softer, paler λαχανί — easy on the eye.
 
    How the fade works:
    • A static vivid λαχανί gradient is the base canvas.
@@ -42,7 +42,7 @@ export function ScrollBackdrop() {
   const veilOpacity = useTransform(
     progress,
     [0, 0.18, 0.5, 0.78, 1],
-    [0, 0.16, 0.52, 0.78, 0.9],
+    [0, 0.12, 0.42, 0.68, 0.82],
   );
 
   /* Aurora & decorative life recede as we scroll. */
@@ -64,12 +64,12 @@ export function ScrollBackdrop() {
       aria-hidden
       className="pointer-events-none fixed inset-0 -z-10 overflow-hidden"
     >
-      {/* ── Base vivid λαχανί canvas ── */}
+      {/* ── Base light λαχανί canvas ── */}
       <div
         className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(168deg, #B9D84A 0%, #A8C24A 32%, #A5BA5F 60%, #B6CC6A 100%)",
+            "linear-gradient(168deg, #E3EFB4 0%, #DEE9B4 30%, #E4EEC8 62%, #EEF4DC 100%)",
         }}
       />
 
@@ -79,7 +79,7 @@ export function ScrollBackdrop() {
         style={{
           opacity: topGlow,
           background:
-            "radial-gradient(120% 80% at 50% -12%, rgba(216,236,128,0.95) 0%, rgba(201,226,94,0.35) 38%, transparent 64%)",
+            "radial-gradient(120% 80% at 50% -12%, rgba(244,250,214,0.9) 0%, rgba(226,240,168,0.3) 38%, transparent 64%)",
         }}
       />
 
@@ -90,7 +90,7 @@ export function ScrollBackdrop() {
           style={{
             y: blobAY,
             background:
-              "radial-gradient(circle, rgba(216,236,128,0.85) 0%, rgba(165,186,95,0.2) 55%, transparent 72%)",
+              "radial-gradient(circle, rgba(232,244,170,0.6) 0%, rgba(198,217,140,0.16) 55%, transparent 72%)",
           }}
         />
         <motion.div
@@ -99,7 +99,7 @@ export function ScrollBackdrop() {
             y: blobBY,
             animationDelay: "-6s",
             background:
-              "radial-gradient(circle, rgba(135,157,66,0.7) 0%, rgba(95,113,42,0.18) 55%, transparent 72%)",
+              "radial-gradient(circle, rgba(174,201,74,0.28) 0%, rgba(141,166,66,0.08) 55%, transparent 72%)",
           }}
         />
         <motion.div
@@ -108,7 +108,7 @@ export function ScrollBackdrop() {
             y: blobCY,
             animationDelay: "-11s",
             background:
-              "radial-gradient(circle, rgba(185,216,74,0.55) 0%, rgba(165,186,95,0.12) 55%, transparent 72%)",
+              "radial-gradient(circle, rgba(208,229,120,0.35) 0%, rgba(180,201,110,0.1) 55%, transparent 72%)",
           }}
         />
       </motion.div>
@@ -118,11 +118,11 @@ export function ScrollBackdrop() {
         <motion.div className="absolute inset-0" style={{ opacity: decoOpacity }}>
           <div
             className="absolute left-[8%] top-[14%] h-40 w-40 opacity-40 blur-md animate-lh-blob-morph"
-            style={{ background: "radial-gradient(circle at 35% 30%, rgba(255,255,255,0.6), rgba(135,157,66,0.4))" }}
+            style={{ background: "radial-gradient(circle at 35% 30%, rgba(255,255,255,0.6), rgba(174,201,74,0.3))" }}
           />
           <div
             className="absolute right-[12%] top-[64%] h-52 w-52 opacity-30 blur-md animate-lh-blob-morph"
-            style={{ animationDelay: "-7s", background: "radial-gradient(circle at 35% 30%, rgba(216,236,128,0.6), rgba(95,113,42,0.35))" }}
+            style={{ animationDelay: "-7s", background: "radial-gradient(circle at 35% 30%, rgba(232,244,170,0.5), rgba(141,166,66,0.22))" }}
           />
         </motion.div>
       )}
@@ -145,7 +145,7 @@ export function ScrollBackdrop() {
                 height: m.size,
                 borderRadius: "50%",
                 background:
-                  "radial-gradient(circle at 32% 30%, rgba(255,255,255,0.85), rgba(135,157,66,0.5) 70%, transparent 74%)",
+                  "radial-gradient(circle at 32% 30%, rgba(255,255,255,0.85), rgba(160,183,80,0.4) 70%, transparent 74%)",
                 filter: `blur(${(1 - m.depth) * 2}px)`,
                 animationDelay: `${m.delay}s`,
                 animationDuration: `${m.duration}s`,
@@ -164,7 +164,7 @@ export function ScrollBackdrop() {
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(130% 110% at 50% 40%, transparent 55%, rgba(95,113,42,0.18) 100%)",
+            "radial-gradient(130% 110% at 50% 40%, transparent 55%, rgba(95,113,42,0.07) 100%)",
         }}
       />
 

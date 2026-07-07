@@ -21,14 +21,16 @@ const ROW_2_IMAGES = [
   "/images/IMG_1835.jpeg",
 ];
 
-// Duplicate arrays to create an infinite scroll effect
-const SCROLL_ROW_1 = [...ROW_1_IMAGES, ...ROW_1_IMAGES, ...ROW_1_IMAGES];
-const SCROLL_ROW_2 = [...ROW_2_IMAGES, ...ROW_2_IMAGES, ...ROW_2_IMAGES];
+// Duplicate arrays to create an infinite scroll effect — exactly two copies,
+// because the lh-marquee keyframes translate the track by -50% per loop.
+const SCROLL_ROW_1 = [...ROW_1_IMAGES, ...ROW_1_IMAGES];
+const SCROLL_ROW_2 = [...ROW_2_IMAGES, ...ROW_2_IMAGES];
+
+const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
 
 export function CommunityGallery() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const [isHovered, setIsHovered] = useState(false);
   
   // Prevent scrolling when modal is open
   useEffect(() => {
@@ -46,8 +48,10 @@ export function CommunityGallery() {
     offset: ["start end", "end start"],
   });
 
-  const opacityText = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0]);
-  const scaleText = useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1, 0.9]);
+  // Function-based — range-based scroll transforms desync via WAAPI (see
+  // CinematicScrollHero). Fade in on enter only; never fade out while visible.
+  const opacityText = useTransform(scrollYProgress, (p) => clamp01(p / 0.18));
+  const scaleText = useTransform(scrollYProgress, (p) => 0.92 + 0.08 * clamp01(p / 0.25));
 
   return (
     <section 
@@ -148,35 +152,19 @@ export function CommunityGallery() {
         </motion.div>
       </div>
 
-      {/* Marquee Galleries */}
-      <div 
-        className="relative z-10 w-full flex flex-col gap-6 md:gap-8 pb-10"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
-        
+      {/* Marquee Galleries — pure CSS marquee (as in MarqueeStrip) so the
+          hover-pause actually works and the loop stays butter-smooth. */}
+      <div className="relative z-10 w-full flex flex-col gap-6 md:gap-8 pb-10">
+
         {/* Left Gradient Mask */}
-        <div className="absolute left-0 top-0 bottom-0 w-24 md:w-48 bg-gradient-to-r from-[#F4F7ED] to-transparent z-20 pointer-events-none" />
-        
+        <div className="absolute left-0 top-0 bottom-0 w-24 md:w-48 bg-gradient-to-r from-[#E6EFC6]/90 to-transparent z-20 pointer-events-none" />
+
         {/* Right Gradient Mask */}
-        <div className="absolute right-0 top-0 bottom-0 w-24 md:w-48 bg-gradient-to-l from-[#F4F7ED] to-transparent z-20 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-24 md:w-48 bg-gradient-to-l from-[#E6EFC6]/90 to-transparent z-20 pointer-events-none" />
 
         {/* Row 1 - Scrolling Right to Left */}
         <div className="relative flex overflow-hidden group/row">
-          <motion.div
-            className="flex gap-6 md:gap-8 min-w-max"
-            animate={{
-              x: ["0%", "-33.333333%"],
-            }}
-            transition={{
-              duration: 40,
-              ease: "linear",
-              repeat: Infinity,
-            }}
-            style={{
-              animationPlayState: isHovered ? "paused" : "running"
-            }}
-          >
+          <div className="flex gap-6 md:gap-8 pr-6 md:pr-8 min-w-max shrink-0 animate-lh-marquee [animation-play-state:running] group-hover/row:[animation-play-state:paused]">
             {SCROLL_ROW_1.map((src, index) => (
               <div 
                 key={`row1-${index}`} 
@@ -201,25 +189,12 @@ export function CommunityGallery() {
                 />
               </div>
             ))}
-          </motion.div>
+          </div>
         </div>
 
         {/* Row 2 - Scrolling Left to Right */}
         <div className="relative flex overflow-hidden group/row">
-          <motion.div
-            className="flex gap-6 md:gap-8 min-w-max"
-            animate={{
-              x: ["-33.333333%", "0%"],
-            }}
-            transition={{
-              duration: 45,
-              ease: "linear",
-              repeat: Infinity,
-            }}
-            style={{
-              animationPlayState: isHovered ? "paused" : "running"
-            }}
-          >
+          <div className="flex gap-6 md:gap-8 pr-6 md:pr-8 min-w-max shrink-0 animate-lh-marquee-rev [animation-play-state:running] group-hover/row:[animation-play-state:paused]">
             {SCROLL_ROW_2.map((src, index) => (
               <div 
                 key={`row2-${index}`} 
@@ -244,10 +219,10 @@ export function CommunityGallery() {
                 />
               </div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </div>
-      
+
     </section>
   );
 }

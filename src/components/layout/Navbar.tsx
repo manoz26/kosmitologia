@@ -47,10 +47,11 @@ export function Navbar() {
       <div className="section-container px-4 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-3 group relative z-10">
           <div className="relative w-56 h-14">
-            <Image 
-              src="/logo.png" 
-              alt="ΔΙΠΑΕ Κοσμητολογία" 
+            <Image
+              src="/logo.png"
+              alt="ΔΙΠΑΕ Κοσμητολογία"
               fill
+              sizes="224px"
               className="object-contain object-left"
               priority
             />
