@@ -87,7 +87,9 @@
   --input: #CBD5E1;
   --ring: #2A427F;
   --radius: 0.75rem; /* A good middle ground, 12px */
-  --font-heading: "Montserrat", system-ui, sans-serif;
+  /* --font-heading is provided by next/font (Commissioner, full Greek glyphs)
+     via the @theme inline block above — do not re-declare it here or the Greek
+     face is lost (this is what broke ω/ώ in headings). */
 }
 
 /* ══════════════════

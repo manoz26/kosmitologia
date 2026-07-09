@@ -11,7 +11,8 @@
    teach — a still, interactive disclosure (no looping motion).
    ══════════════════════════════════════════════════════════════════════════ */
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -19,7 +20,6 @@ import { courses } from "@/data/courses";
 import {
   CONTAINER,
   FadeIn,
-  Kicker,
   SectionHead,
   MoreLink,
   PrimaryLink,
@@ -112,8 +112,29 @@ function InstructorCard({ ins }: { ins: Instructor }) {
   );
 }
 
+/* ── Scroll signature: sticky roster header with a progress rail ──
+   The section head stays pinned beside the roster while a thin rail fills as
+   you move through the teaching body — quiet, scroll-driven orientation. */
+function RosterProgress({ listRef }: { listRef: React.RefObject<HTMLDivElement | null> }) {
+  const { scrollYProgress } = useScroll({
+    target: listRef,
+    offset: ["start 72%", "end 72%"],
+  });
+  const fill = useTransform(scrollYProgress, (p) => `${Math.round(p * 100)}%`);
+
+  return (
+    <div className="mt-8 hidden lg:block">
+      <div className="h-1.5 w-full max-w-[220px] overflow-hidden rounded-full bg-slate-200">
+        <motion.div className="h-full rounded-full bg-ihu-green-dark" style={{ width: fill }} />
+      </div>
+      <p className="mt-2.5 text-xs text-text-muted">Κυλήστε για όλο το διδακτικό σώμα</p>
+    </div>
+  );
+}
+
 export function DidaskotesLight() {
   const instructors = useInstructors();
+  const listRef = useRef<HTMLDivElement>(null);
 
   return (
     <>
@@ -146,25 +167,26 @@ export function DidaskotesLight() {
         </div>
       </section>
 
-      {/* Teaching staff — signature disclosure */}
+      {/* Teaching staff — sticky header, progress rail & disclosure cards */}
       <section className="border-t border-slate-200/70 bg-[#F4F7ED] py-20 md:py-24">
-        <div className={CONTAINER}>
-          <div className="flex flex-wrap items-end justify-between gap-4">
+        <div className={cn(CONTAINER, "lg:grid lg:grid-cols-[minmax(0,300px)_1fr] lg:gap-14")}>
+          <div className="lg:sticky lg:top-28 lg:self-start">
             <SectionHead
               kicker="Διδακτικό σώμα"
               title="Οι διδάσκοντες των μαθημάτων"
               description="Το σώμα διδασκόντων όπως προκύπτει από τα επίσημα περιγράμματα. Πατήστε ένα όνομα για να δείτε τα μαθήματα που διδάσκει."
             />
-            <FadeIn>
+            <FadeIn className="mt-6">
               <span className="rounded-full bg-white px-3.5 py-1.5 text-xs font-bold text-ihu-green-dark ring-1 ring-slate-200">
                 {instructors.length} διδάσκοντες
               </span>
             </FadeIn>
+            <RosterProgress listRef={listRef} />
           </div>
 
-          <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          <div ref={listRef} className="mt-10 grid gap-4 sm:grid-cols-2 lg:mt-0">
             {instructors.map((ins, i) => (
-              <FadeIn key={ins.name} delay={(i % 3) * 0.05}>
+              <FadeIn key={ins.name} delay={(i % 2) * 0.05}>
                 <InstructorCard ins={ins} />
               </FadeIn>
             ))}

@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
-import { Montserrat, Inter } from "next/font/google";
+import { Commissioner, Inter } from "next/font/google";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import "./globals.css";
 
-const montserrat = Montserrat({
-  subsets: ["latin", "latin-ext"],
+// Heading face — Commissioner ships full Greek glyphs (proper ω/ώ), unlike
+// Montserrat which lacked them and broke on Greek titles.
+const commissioner = Commissioner({
+  subsets: ["latin", "latin-ext", "greek"],
   variable: "--font-heading",
   display: "swap",
   weight: ["400", "500", "600", "700", "800"],
@@ -53,7 +55,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="el" className={`${montserrat.variable} ${inter.variable}`}>
+    <html lang="el" className={`${commissioner.variable} ${inter.variable}`}>
       <body className="min-h-dvh flex flex-col antialiased bg-gradient-to-b from-[#E0F2FE] via-[#E8F5E9] to-[#F4F7ED]">
         <Navbar />
         <main className="flex-1">{children}</main>

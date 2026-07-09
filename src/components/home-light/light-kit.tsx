@@ -152,6 +152,18 @@ export function IconChip({
 }
 
 /* ────────────────────────────────────────────
+   Scroll progress helper — every /light/* page
+   drives its single signature moment through a
+   function-based transform of a 0..1 progress
+   (range-based transforms desync here — see the
+   HistoryTimeline note in SxetikaLight).
+   ──────────────────────────────────────────── */
+
+/** Map overall progress `p` (0..1) to a 0..1 sub-span between `a` and `b`. */
+export const spanOf = (p: number, a: number, b: number) =>
+  Math.min(1, Math.max(0, (p - a) / (b - a)));
+
+/* ────────────────────────────────────────────
    Motion — one-shot fade-rise, the only ambient
    animation below a page header
    ──────────────────────────────────────────── */
@@ -244,10 +256,19 @@ export function PrimaryLink({
   );
 }
 
-export function GhostLink({ href, children }: { href: string; children: React.ReactNode }) {
+export function GhostLink({
+  href,
+  children,
+  external,
+}: {
+  href: string;
+  children: React.ReactNode;
+  external?: boolean;
+}) {
   return (
     <a
       href={href}
+      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
       className="inline-flex items-center rounded-full bg-white px-6 py-3 text-sm font-bold text-text-primary ring-1 ring-slate-300 transition-colors hover:bg-slate-50"
     >
       {children}

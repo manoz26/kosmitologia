@@ -11,7 +11,8 @@
    otherwise.
    ══════════════════════════════════════════════════════════════════════════ */
 
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
 
 import { cn } from "@/lib/utils";
 import { careerPaths } from "@/data/careers";
@@ -21,6 +22,7 @@ import {
   LightIcon,
   SectionHead,
   PrimaryLink,
+  spanOf,
 } from "@/components/home-light/light-kit";
 
 /* Graduate profile — study guide, «Γενική Περιγραφή του Προγράμματος». */
@@ -123,6 +125,92 @@ function CareerExplorer() {
   );
 }
 
+/* ── Scroll signature: the ascent after graduation ──
+   A stepped path that draws itself as you scroll, with four grounded
+   milestones — no fabricated statistics, just the trajectory the study guide
+   describes (profession, specialisation, doctoral continuation). */
+
+const ascentSteps: { title: string; text: string }[] = [
+  { title: "Δίπλωμα ΜΣ", text: "«Κοσμητολογία» — 90 ECTS, μία από τις δύο ειδικεύσεις" },
+  { title: "Είσοδος στον κλάδο", text: "Έρευνα & ανάπτυξη, ποιοτικός έλεγχος, κλινική κοσμητολογία" },
+  { title: "Εξέλιξη", text: "Εξειδικευμένα στελέχη, σύμβουλοι, δικά σας σκευάσματα" },
+  { title: "Διδακτορικό", text: "Συνέχιση σπουδών σε ελληνικά ή ξένα πανεπιστήμια" },
+];
+
+/* Milestone dot positions along the staircase (720×260 viewBox). */
+const ascentDots = [
+  { x: 90, y: 240 },
+  { x: 270, y: 178 },
+  { x: 450, y: 116 },
+  { x: 630, y: 54 },
+];
+
+function AscentDot({
+  progress,
+  index,
+  x,
+  y,
+}: {
+  progress: MotionValue<number>;
+  index: number;
+  x: number;
+  y: number;
+}) {
+  const t = useTransform(progress, (p) => spanOf(p, 0.14 + index * 0.19, 0.26 + index * 0.19));
+  return (
+    <>
+      <motion.circle cx={x} cy={y} r="7" fill="#5F712A" style={{ opacity: t, scale: t }} />
+      <motion.circle cx={x} cy={y} r="3" fill="#F4F7ED" style={{ opacity: t }} />
+    </>
+  );
+}
+
+function AscentPath() {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start 78%", "end 52%"],
+  });
+
+  const line = useTransform(scrollYProgress, (p) => spanOf(p, 0.04, 0.9));
+  const labelsIn = useTransform(scrollYProgress, (p) => spanOf(p, 0.3, 0.75));
+
+  const stair = "M 10 240 H 180 V 178 H 360 V 116 H 540 V 54 H 710";
+
+  return (
+    <div ref={ref} className="mt-12">
+      <svg viewBox="0 0 720 260" fill="none" aria-hidden className="block w-full">
+        <path d={stair} stroke="#E2E8F0" strokeWidth="2.5" strokeLinecap="round" />
+        <motion.path
+          d={stair}
+          stroke="#5F712A"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          style={{ pathLength: line }}
+        />
+        {ascentDots.map((d, i) => (
+          <AscentDot key={d.x} progress={scrollYProgress} index={i} x={d.x} y={d.y} />
+        ))}
+      </svg>
+
+      <motion.ol
+        style={{ opacity: labelsIn }}
+        className="mt-6 grid grid-cols-2 gap-x-4 gap-y-6 md:grid-cols-4"
+      >
+        {ascentSteps.map((s, i) => (
+          <li key={s.title}>
+            <p className="text-xs font-bold uppercase tracking-[0.14em] text-ihu-green-dark">
+              {String(i + 1).padStart(2, "0")}
+            </p>
+            <p className="mt-1 font-heading text-sm font-bold text-text-primary">{s.title}</p>
+            <p className="mt-1 text-xs leading-relaxed text-text-secondary">{s.text}</p>
+          </li>
+        ))}
+      </motion.ol>
+    </div>
+  );
+}
+
 export function KarieresLight() {
   return (
     <>
@@ -158,6 +246,19 @@ export function KarieresLight() {
             description="Από την έρευνα και τη βιομηχανία μέχρι την κλινική αισθητική, την επιχειρηματικότητα και την εκπαίδευση. Επιλέξτε ένα πεδίο."
           />
           <CareerExplorer />
+        </div>
+      </section>
+
+      {/* Scroll signature: the ascent */}
+      <section className="border-t border-slate-200/70 bg-white py-20 md:py-24">
+        <div className={cn(CONTAINER, "max-w-4xl")}>
+          <SectionHead
+            center
+            kicker="Η εξέλιξη"
+            title="Βήμα βήμα μετά την αποφοίτηση"
+            description="Από το δίπλωμα στον πρώτο ρόλο, και από εκεί στην εξειδίκευση ή στη συνέχιση για διδακτορικό — η πορεία που ανοίγει το πρόγραμμα."
+          />
+          <AscentPath />
         </div>
       </section>
 

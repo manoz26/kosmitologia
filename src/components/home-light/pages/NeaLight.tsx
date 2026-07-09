@@ -11,7 +11,8 @@
    we're currently in. Still otherwise.
    ══════════════════════════════════════════════════════════════════════════ */
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
 import { ExternalLink } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -21,6 +22,7 @@ import {
   LightIcon,
   SectionHead,
   MoreLink,
+  spanOf,
 } from "@/components/home-light/light-kit";
 
 /* Annual cycle — months are 0-based (Jan = 0). Every phase is verified. */
@@ -55,10 +57,31 @@ const phases: { icon: string; window: string; title: string; text: string; month
   },
 ];
 
+/* ── Scroll signature: the cycle rail ──
+   A thin line above the four phases that fills with scroll; each phase's dot
+   lights up as the fill passes it, walking the visitor through the year. */
+function CycleDot({ progress, pos }: { progress: MotionValue<number>; pos: number }) {
+  const t = useTransform(progress, (p) => spanOf(p, pos - 0.06, pos + 0.06));
+  const bg = useTransform(t, (v) => (v > 0.5 ? "#5F712A" : "#CBD5E1"));
+  return (
+    <motion.span
+      className="absolute top-1/2 h-3 w-3 -translate-y-1/2 rounded-full ring-4 ring-white"
+      style={{ left: `${pos * 100}%`, x: "-50%", backgroundColor: bg, scale: useTransform(t, (v) => 0.8 + 0.35 * v) }}
+    />
+  );
+}
+
 export function NeaLight() {
   // Which phase we're in now — computed after mount to avoid hydration drift.
   const [activeMonth, setActiveMonth] = useState<number | null>(null);
   useEffect(() => setActiveMonth(new Date().getMonth()), []);
+
+  const cycleRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: cycleRef,
+    offset: ["start 72%", "end 58%"],
+  });
+  const fill = useTransform(scrollYProgress, (p) => `${spanOf(p, 0.04, 0.92) * 100}%`);
 
   return (
     <>
@@ -70,7 +93,20 @@ export function NeaLight() {
             title="Τι να περιμένετε, και πότε"
             description="Το πρόγραμμα ακολουθεί έναν σταθερό ετήσιο ρυθμό. Οι ζωντανές ανακοινώσεις δημοσιεύονται στον επίσημο ιστότοπο."
           />
-          <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+
+          <div ref={cycleRef}>
+            {/* the scroll-filled rail (desktop) */}
+            <div className="relative mt-12 hidden h-[3px] rounded-full bg-slate-200 lg:block">
+              <motion.div
+                className="absolute inset-y-0 left-0 rounded-full bg-ihu-green-dark"
+                style={{ width: fill }}
+              />
+              {[0.125, 0.375, 0.625, 0.875].map((pos) => (
+                <CycleDot key={pos} progress={scrollYProgress} pos={pos} />
+              ))}
+            </div>
+
+            <div className="mt-12 grid gap-4 md:grid-cols-2 lg:mt-9 lg:grid-cols-4">
             {phases.map((p, i) => {
               const active = activeMonth !== null && p.months.includes(activeMonth);
               return (
@@ -104,6 +140,7 @@ export function NeaLight() {
                 </FadeIn>
               );
             })}
+            </div>
           </div>
         </div>
       </section>

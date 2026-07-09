@@ -9,7 +9,8 @@
    course outlines (περιγράμματα μαθημάτων). No looping motion.
    ══════════════════════════════════════════════════════════════════════════ */
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { X } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -27,6 +28,7 @@ import {
   SectionHead,
   PrimaryLink,
   MoreLink,
+  spanOf,
 } from "@/components/home-light/light-kit";
 
 type TrackId = "preparation" | "dermatology";
@@ -171,6 +173,125 @@ function ModalBlock({ title, children }: { title: string; children: React.ReactN
   );
 }
 
+/* ── Scroll signature: the common core splitting into the two tracks ──
+   A calm, scroll-drawn diagram: one stem (the shared core) that branches into
+   the two specialisations as the section passes through the viewport. All
+   transforms are function-based on purpose (see light-kit note). */
+function TrackSplit() {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start 78%", "end 52%"],
+  });
+
+  const stem = useTransform(scrollYProgress, (p) => spanOf(p, 0, 0.32));
+  const branchL = useTransform(scrollYProgress, (p) => spanOf(p, 0.28, 0.76));
+  const branchR = useTransform(scrollYProgress, (p) => spanOf(p, 0.34, 0.82));
+  const nodeIn = useTransform(scrollYProgress, (p) => spanOf(p, 0.22, 0.36));
+  const cardsIn = useTransform(scrollYProgress, (p) => spanOf(p, 0.55, 0.9));
+  const cardsY = useTransform(scrollYProgress, (p) => 18 * (1 - spanOf(p, 0.55, 0.9)));
+
+  return (
+    <div ref={ref} className="mt-12">
+      {/* the shared start */}
+      <div className="mx-auto w-fit rounded-full bg-white px-4 py-2 text-xs font-bold text-text-secondary ring-1 ring-slate-200">
+        Α' εξάμηνο · κοινός κορμός & πρώτο μάθημα ειδίκευσης
+      </div>
+
+      {/* the branching paths */}
+      <svg
+        viewBox="0 0 720 300"
+        fill="none"
+        aria-hidden
+        className="mx-auto mt-2 block w-full max-w-3xl"
+      >
+        {/* base rails */}
+        <path d="M 360 10 V 120" stroke="#E2E8F0" strokeWidth="2.5" strokeLinecap="round" />
+        <path
+          d="M 360 120 C 360 200 150 180 150 290"
+          stroke="#E2E8F0"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+        />
+        <path
+          d="M 360 120 C 360 200 570 180 570 290"
+          stroke="#E2E8F0"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+        />
+        {/* scroll-drawn fills */}
+        <motion.path
+          d="M 360 10 V 120"
+          stroke="#5F712A"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          style={{ pathLength: stem }}
+        />
+        <motion.path
+          d="M 360 120 C 360 200 150 180 150 290"
+          stroke="#5F712A"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          style={{ pathLength: branchL }}
+        />
+        <motion.path
+          d="M 360 120 C 360 200 570 180 570 290"
+          stroke="#5F712A"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          style={{ pathLength: branchR }}
+        />
+        {/* the split node */}
+        <motion.circle
+          cx="360"
+          cy="120"
+          r="7"
+          fill="#5F712A"
+          style={{ opacity: nodeIn, scale: nodeIn }}
+        />
+        <circle cx="360" cy="120" r="3" fill="#F4F7ED" />
+      </svg>
+
+      {/* the two destinations */}
+      <motion.div
+        style={{ opacity: cardsIn, y: cardsY }}
+        className="mx-auto grid max-w-3xl gap-4 sm:grid-cols-2"
+      >
+        {specializations.map((s) => {
+          const diff =
+            s.id === "preparation"
+              ? ["Συστατικά Καλλυντικών — Α'", "Ποιοτικός Έλεγχος Καλλυντικών — Β'"]
+              : ["Ειδικά Θέματα Κοσμητολογίας — Α'", "Παθοφυσιολογία Αντιγήρανσης — Β'"];
+          return (
+            <div key={s.id} className="rounded-2xl bg-white p-5 ring-1 ring-slate-200">
+              <div className="flex items-center gap-3">
+                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-lachani-mist font-heading text-sm font-extrabold text-ihu-green-dark">
+                  {s.numeral}
+                </span>
+                <p className="font-heading text-sm font-bold leading-snug text-text-primary">
+                  {s.nameGr}
+                </p>
+              </div>
+              <ul className="mt-4 space-y-1.5">
+                {diff.map((d) => (
+                  <li key={d} className="flex gap-2 text-xs leading-relaxed text-text-secondary">
+                    <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-ihu-green-dark" />
+                    {d}
+                  </li>
+                ))}
+                <li className="flex gap-2 text-xs leading-relaxed text-text-secondary">
+                  <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-ihu-green-dark" />
+                  Γ' εξάμηνο: Διπλωματική ή Πρακτική Άσκηση
+                </li>
+              </ul>
+            </div>
+          );
+        })}
+      </motion.div>
+    </div>
+  );
+}
+
 /* ── Signature: the explorer ── */
 function CurriculumExplorer() {
   const [track, setTrack] = useState<TrackId>("preparation");
@@ -290,21 +411,34 @@ export function ProgrammaLight() {
         </div>
       </section>
 
-      {/* Signature: curriculum explorer */}
+      {/* Scroll signature: common core → two tracks */}
       <section className="py-20 md:py-24">
+        <div className={CONTAINER}>
+          <SectionHead
+            center
+            kicker="Η δομή"
+            title="Κοινός κορμός, δύο κατευθύνσεις"
+            description="Οι δύο ειδικεύσεις μοιράζονται επτά κοινά μαθήματα και διαφέρουν σε ένα μάθημα ανά διδακτικό εξάμηνο — η διαδρομή χωρίζει, ο πυρήνας μένει κοινός."
+          />
+          <TrackSplit />
+        </div>
+      </section>
+
+      {/* Signature: curriculum explorer */}
+      <section className="border-t border-slate-200/70 bg-[#F4F7ED] py-20 md:py-24">
         <div className={CONTAINER}>
           <SectionHead
             center
             kicker="Τα μαθήματα"
             title="Το πρόγραμμα, μάθημα προς μάθημα"
-            description={`Οι δύο ειδικεύσεις μοιράζονται επτά κοινά μαθήματα και διαφέρουν σε ένα μάθημα ανά εξάμηνο — ${total} μαθήματα συνολικά. Επιλέξτε ειδίκευση και ανοίξτε όποιο μάθημα θέλετε.`}
+            description={`${total} μαθήματα συνολικά, το καθένα με πλήρες επίσημο περίγραμμα. Επιλέξτε ειδίκευση και ανοίξτε όποιο μάθημα θέλετε.`}
           />
           <CurriculumExplorer />
         </div>
       </section>
 
       {/* Third semester note */}
-      <section className="border-t border-slate-200/70 bg-[#F4F7ED] py-20 md:py-24">
+      <section className="border-t border-slate-200/70 bg-white py-20 md:py-24">
         <div className={cn(CONTAINER, "grid items-center gap-10 lg:grid-cols-[1fr_1.1fr] lg:gap-16")}>
           <SectionHead
             kicker="Γ' Εξάμηνο"
