@@ -13,8 +13,11 @@
    • Scroll only sets a TARGET frame. A rAF loop eases the shown frame toward
      it (exponential smoothing, ~90ms time constant), so a wheel click or a
      fast flick GLIDES through the footage instead of jump-cutting.
-   • 120 WebP frames (every 2nd frame of the 10s/24fps footage, ~28KB each) —
-     2.4× the temporal resolution of the old sequence.
+   • The eased position is FRACTIONAL and the canvas paints both neighbouring
+     frames — the upper one at the fractional alpha — so motion dissolves
+     continuously between frames instead of stepping on whole-frame
+     boundaries. Reads as gentle motion blur, like real footage.
+   • 120 WebP frames (every 2nd frame of the 10s/24fps footage, ~34KB each).
    • Frames preload progressively — coarse passes first (every 8th, 4th, 2nd,
      then the rest) and pre-decode via img.decode(). Until the exact frame
      arrives, the nearest loaded neighbour is drawn, so scrubbing right after
@@ -56,7 +59,10 @@ type EngineState = {
   loaded: boolean[];
   target: number;
   current: number;
-  drawn: number;
+  /** `${lo}:${hi}:${alpha}` of the last blend painted — skip repaints. */
+  drawnKey: string;
+  /** True once any footage frame has hit the canvas (stops poster mirroring). */
+  hasFrame: boolean;
   raf: number;
   running: boolean;
   lastT: number;
@@ -91,7 +97,8 @@ export function ScrollFilm({
     loaded: [],
     target: 0,
     current: 0,
-    drawn: -1,
+    drawnKey: "",
+    hasFrame: false,
     raf: 0,
     running: false,
     lastT: 0,
@@ -115,7 +122,8 @@ export function ScrollFilm({
     s.images = new Array(frameCount);
     s.loaded = new Array(frameCount).fill(false);
     s.target = s.current = frameFor(progress.get(), frameCount, endAt);
-    s.drawn = -1;
+    s.drawnKey = "";
+    s.hasFrame = false;
 
     const coverDraw = (img: HTMLImageElement) => {
       const cw = canvas.width;
@@ -132,7 +140,7 @@ export function ScrollFilm({
        scroll during the poster's fade never reveals a black backdrop. */
     const drawPoster = () => {
       const el = posterRef.current;
-      if (s.drawn === -1 && el && el.naturalWidth > 0) coverDraw(el);
+      if (!s.hasFrame && el && el.naturalWidth > 0) coverDraw(el);
     };
 
     const nearestLoaded = (i: number) => {
@@ -144,23 +152,47 @@ export function ScrollFilm({
       return -1;
     };
 
+    /* Paint the fractional position as a dissolve between its two
+       neighbouring frames: base frame at full alpha, next frame at the
+       fractional alpha. Adjacent frames are 1/12s of footage apart, so the
+       blend reads as an in-between frame — the scrub never visibly steps.
+       While the exact neighbours are still downloading, fall back to the
+       nearest loaded frame (progressive preload fills the gaps quickly). */
     const render = () => {
-      const want = nearestLoaded(
-        Math.round(Math.min(frameCount - 1, Math.max(0, s.current))),
-      );
-      if (want >= 0 && want !== s.drawn) {
-        const img = s.images[want];
-        if (img) {
-          coverDraw(img);
-          s.drawn = want;
+      const pos = Math.min(frameCount - 1, Math.max(0, s.current));
+      let lo = Math.floor(pos);
+      let hi = Math.min(frameCount - 1, lo + 1);
+      let alpha = pos - lo;
+      if (!s.loaded[lo] || !s.loaded[hi]) {
+        const near = nearestLoaded(Math.round(pos));
+        if (near < 0) return;
+        lo = hi = near;
+        alpha = 0;
+      }
+      const key = `${lo}:${hi}:${alpha.toFixed(2)}`;
+      if (key === s.drawnKey) return;
+      const base = s.images[lo];
+      if (!base) return;
+      coverDraw(base);
+      if (hi !== lo && alpha > 0) {
+        const over = s.images[hi];
+        if (over) {
+          ctx.globalAlpha = alpha;
+          coverDraw(over);
+          ctx.globalAlpha = 1;
         }
       }
+      s.drawnKey = key;
+      s.hasFrame = true;
     };
 
     const tick = (t: number) => {
       const dt = s.lastT ? Math.min(64, t - s.lastT) : 16.7;
       s.lastT = t;
-      if (Math.abs(s.target - s.current) < 0.35) s.current = s.target;
+      /* Snap only once the remaining distance is invisible (<2% of a blend
+         step) — a coarser snap would land as a tiny visible alpha jump now
+         that sub-frame positions actually paint differently. */
+      if (Math.abs(s.target - s.current) < 0.02) s.current = s.target;
       else s.current += (s.target - s.current) * (1 - Math.exp(-dt / 90));
       render();
       if (s.current === s.target) {
@@ -229,7 +261,8 @@ export function ScrollFilm({
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       canvas.width = Math.max(1, Math.round(rect.width * dpr));
       canvas.height = Math.max(1, Math.round(rect.height * dpr));
-      s.drawn = -1;
+      s.drawnKey = "";
+      s.hasFrame = false;
       drawPoster();
       kick();
     };
