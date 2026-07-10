@@ -25,7 +25,7 @@ import {
 } from "framer-motion";
 
 import { featuredProfessors, type FeaturedProfessor } from "./lib/data";
-import { Reveal, SectionHeading, SectionLabel, GradientText } from "./lib/primitives";
+import { Reveal, SectionLabel, GradientText } from "./lib/primitives";
 import { useReduced, useViewport } from "./lib/hooks";
 
 const clamp = (v: number, min: number, max: number) => Math.min(max, Math.max(min, v));

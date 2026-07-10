@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "Νέα & Ανακοινώσεις",
   description:
     "Τελευταίες ανακοινώσεις, προκηρύξεις, εκδηλώσεις και νέα του ΠΜΣ Κοσμητολογία.",
+  alternates: { canonical: "/nea" },
 };
 
 export default function NeaPage() {

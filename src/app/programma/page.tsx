@@ -14,6 +14,7 @@ export const metadata: Metadata = {
   title: "Πρόγραμμα Σπουδών",
   description:
     "Αναλυτικό πρόγραμμα σπουδών του ΠΜΣ Κοσμητολογία — δύο ειδικεύσεις, 11 μαθήματα, 90 ECTS. Αναλυτικά στοιχεία ανά μάθημα: περιεχόμενο, διδάσκοντες, βιβλιογραφία και τρόπος αξιολόγησης.",
+  alternates: { canonical: "/programma" },
 };
 
 export default function ProgrammaPage() {

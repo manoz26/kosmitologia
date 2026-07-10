@@ -150,7 +150,7 @@ export function ErgastiriaLight() {
           <FadeIn delay={0.1}>
             <div className="relative aspect-[4/3] overflow-hidden rounded-3xl ring-1 ring-slate-200">
               <Image
-                src="/lab.png"
+                src="/images/lab-wide.webp"
                 alt="Εργαστήριο του ΠΜΣ Κοσμητολογία"
                 fill
                 className="object-cover"

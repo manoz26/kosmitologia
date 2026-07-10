@@ -575,3 +575,40 @@
     animation: none !important;
   }
 }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   PERF-LITE — jank guards for phones & weak machines
+   ──────────────────────────────────────────────────────────────────────────
+   `html.perf-lite` is set by <PerfLite/> on weak TOUCH devices only (≤4
+   cores/GB phones & tablets — computers always keep the full experience, per
+   the client). The heaviest paint work — viewport-sized blurred layers that
+   animate forever, and border-radius morphs that re-rasterize every frame —
+   freezes into its resting pose: the design keeps its glow, it just stops
+   burning the GPU. Small screens get the same freeze via media query, since
+   even recent phones throttle on the huge aurora blurs while scrolling.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+html.perf-lite .animate-lh-aurora,
+html.perf-lite .animate-lh-blob-morph,
+html.perf-lite .animate-drift-a,
+html.perf-lite .animate-drift-b,
+html.perf-lite .animate-drift-c,
+html.perf-lite .animate-conic-sweep,
+html.perf-lite .animate-grid-pan {
+  animation: none !important;
+}
+
+/* Deep frosted glass is the other big compositor cost on old GPUs. */
+html.perf-lite .glass-lachani,
+html.perf-lite .glass-lachani-deep {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* pointer:coarse keeps this off desktops even in narrow browser windows. */
+@media (max-width: 768px) and (pointer: coarse) {
+  .animate-lh-aurora,
+  .animate-lh-blob-morph {
+    animation: none !important;
+  }
+}

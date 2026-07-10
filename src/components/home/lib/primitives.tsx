@@ -7,7 +7,7 @@
    3D tilt cards, glass panels, chips) shared by every λαχανί section.
    ══════════════════════════════════════════════════════════════════════════ */
 
-import React from "react";
+import React, { createElement } from "react";
 import {
   motion,
   useMotionTemplate,
@@ -144,8 +144,11 @@ export function Icon({
   className?: string;
   strokeWidth?: number;
 }) {
-  const Cmp = getIcon(name);
-  return <Cmp size={size} className={className} strokeWidth={strokeWidth} />;
+  /* createElement: getIcon returns stable module-level components from the
+     ICONS map, so nothing is "created during render" — this just keeps the
+     react-hooks/static-components rule from misreading the lookup as a new
+     component definition. */
+  return createElement(getIcon(name), { size, className, strokeWidth });
 }
 
 /* ────────────────────────────────────────────

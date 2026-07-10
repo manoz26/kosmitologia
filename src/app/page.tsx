@@ -19,6 +19,8 @@
      • NewsSection ......... latest news (teaser → /nea)
    ══════════════════════════════════════════════════════════════════════════ */
 
+import type { Metadata } from "next";
+
 import { ScrollBackdrop } from "@/components/home/ScrollBackdrop";
 import { HomeChrome } from "@/components/home/HomeChrome";
 import { CinematicScrollHero } from "@/components/home/CinematicScrollHero";
@@ -29,6 +31,10 @@ import { BeforeAfterSkin } from "@/components/home/BeforeAfterSkin";
 import { FacultyHighlight3D } from "@/components/home/FacultyHighlight3D";
 import { CareerPaths3D } from "@/components/home/CareerPaths3D";
 import { NewsSection } from "@/components/home/NewsSection";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 export default function Home() {
   return (

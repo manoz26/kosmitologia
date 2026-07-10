@@ -14,7 +14,6 @@ import Link from "next/link";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { ArrowRight, GraduationCap } from "lucide-react";
 
-import { cn } from "@/lib/utils";
 import { courses, semesters, type Course } from "@/data/courses";
 import { Icon, GradientText } from "./lib/primitives";
 import type { IconKey } from "./lib/data";

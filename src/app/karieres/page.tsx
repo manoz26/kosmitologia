@@ -15,6 +15,7 @@ export const metadata: Metadata = {
   title: "Επαγγελματικές Προοπτικές",
   description:
     "Καριέρα μετά το ΠΜΣ Κοσμητολογία — Ε&Α, βιομηχανία, κλινική αισθητική, επιχειρηματικότητα και εκπαίδευση. Πέντε μονοπάτια σταδιοδρομίας, δεξιότητες αποφοίτου και δίκτυο υποστήριξης.",
+  alternates: { canonical: "/karieres" },
 };
 
 export default function KarieresPage() {

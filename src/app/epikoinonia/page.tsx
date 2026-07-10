@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "Επικοινωνία",
   description:
     "Στοιχεία επικοινωνίας Γραμματείας ΠΜΣ Κοσμητολογία — τηλέφωνο, email, διεύθυνση, συχνές ερωτήσεις και ενημέρωση.",
+  alternates: { canonical: "/epikoinonia" },
 };
 
 export default function EpikoinoniaPage() {

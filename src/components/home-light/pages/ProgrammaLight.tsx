@@ -195,7 +195,7 @@ function TrackSplit() {
     <div ref={ref} className="mt-12">
       {/* the shared start */}
       <div className="mx-auto w-fit rounded-full bg-white px-4 py-2 text-xs font-bold text-text-secondary ring-1 ring-slate-200">
-        Α' εξάμηνο · κοινός κορμός & πρώτο μάθημα ειδίκευσης
+        Α’ εξάμηνο · κοινός κορμός & πρώτο μάθημα ειδίκευσης
       </div>
 
       {/* the branching paths */}
@@ -281,7 +281,7 @@ function TrackSplit() {
                 ))}
                 <li className="flex gap-2 text-xs leading-relaxed text-text-secondary">
                   <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-ihu-green-dark" />
-                  Γ' εξάμηνο: Διπλωματική ή Πρακτική Άσκηση
+                  Γ’ εξάμηνο: Διπλωματική ή Πρακτική Άσκηση
                 </li>
               </ul>
             </div>

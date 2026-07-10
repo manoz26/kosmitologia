@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Beaker, BookOpen, Clock, ChevronRight } from "lucide-react";
+import { Beaker, BookOpen, Clock } from "lucide-react";
 import Image from "next/image";
 
 export function AboutHeroSection() {

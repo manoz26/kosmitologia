@@ -11,7 +11,7 @@
    we're currently in. Still otherwise.
    ══════════════════════════════════════════════════════════════════════════ */
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useSyncExternalStore } from "react";
 import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
 import { ExternalLink } from "lucide-react";
 
@@ -71,10 +71,16 @@ function CycleDot({ progress, pos }: { progress: MotionValue<number>; pos: numbe
   );
 }
 
+const noopSubscribe = () => () => {};
+
 export function NeaLight() {
-  // Which phase we're in now — computed after mount to avoid hydration drift.
-  const [activeMonth, setActiveMonth] = useState<number | null>(null);
-  useEffect(() => setActiveMonth(new Date().getMonth()), []);
+  // Which phase we're in now — null on the server render (avoids hydration
+  // drift), the real month right after mount, with no cascading re-render.
+  const activeMonth = useSyncExternalStore<number | null>(
+    noopSubscribe,
+    () => new Date().getMonth(),
+    () => null,
+  );
 
   const cycleRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({

@@ -23,7 +23,7 @@ import {
 } from "framer-motion";
 
 import { careerPaths, type CareerPath } from "@/data/careers";
-import { Icon, Reveal, SectionHeading } from "./lib/primitives";
+import { Icon, SectionHeading } from "./lib/primitives";
 import { useReduced } from "./lib/hooks";
 import type { IconKey } from "./lib/data";
 

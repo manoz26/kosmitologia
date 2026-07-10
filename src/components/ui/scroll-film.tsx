@@ -22,8 +22,8 @@
      then the rest) and pre-decode via img.decode(). Until the exact frame
      arrives, the nearest loaded neighbour is drawn, so scrubbing right after
      page load never blanks or freezes.
-   • The footage is 720p; the poster (its first frame exported at 2.8K from
-     lab.png, cropped to the same 16:9) sits ON TOP of the canvas at rest and
+   • The footage is 720p; the poster (its first frame exported at 2.8K,
+     cropped to the same 16:9) sits ON TOP of the canvas at rest and
      fades over the first ~3% of scroll. Visitors land on the crisp photo —
      the soft footage only ever shows in motion.
 
@@ -32,7 +32,7 @@
    the real scroll position on these pages.
    ══════════════════════════════════════════════════════════════════════════ */
 
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   motion,
   useMotionValueEvent,
@@ -40,12 +40,40 @@ import {
   type MotionValue,
 } from "framer-motion";
 
+import { isSlowConnection } from "@/lib/perf";
+
 /* The hero footage manifest — assets generated in /public/hero-film. */
 export const HERO_FILM = {
   frameCount: 120,
   frameSrc: (i: number) => `/hero-film/f_${i.toString().padStart(3, "0")}.webp`,
   poster: "/hero-film/poster.webp",
 };
+
+/* Data-saver/2G connections get every 4th frame (~1MB — the visitor asked to
+   save data), small screens every 2nd (~2MB), and every computer the full 120
+   (~4MB) regardless of age — the client wants the desktop experience
+   untouched. The dissolve blending bridges the wider gaps, so thinner films
+   still scrub smoothly — they just have less true motion between blends. */
+function filmStride(): number {
+  if (isSlowConnection()) return 4;
+  /* pointer:coarse keeps narrow desktop windows on the full film. */
+  return window.matchMedia("(max-width: 820px) and (pointer: coarse)").matches ? 2 : 1;
+}
+
+/* Device-appropriate variant of HERO_FILM. The stride is resolved once on the
+   client (lazy initializer — never during SSR, where it stays at 1; the frames
+   only ever load client-side so no hydration mismatch is possible). */
+export function useHeroFilm(): typeof HERO_FILM {
+  const [stride] = useState(() => (typeof window === "undefined" ? 1 : filmStride()));
+  return useMemo(() => {
+    if (stride === 1) return HERO_FILM;
+    return {
+      frameCount: Math.ceil(HERO_FILM.frameCount / stride),
+      frameSrc: (i: number) => HERO_FILM.frameSrc(Math.min(i * stride, HERO_FILM.frameCount - 1)),
+      poster: HERO_FILM.poster,
+    };
+  }, [stride]);
+}
 
 const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
 
@@ -258,7 +286,11 @@ export function ScrollFilm({
     /* ── Canvas buffer sized to the element × DPR (capped for sanity) ── */
     const resize = () => {
       const rect = root.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      /* Phones cap at 1.5×: the 720p footage can't feed more pixels anyway,
+         and painting ~half the buffer keeps old phones at 60fps. Computers
+         (fine pointer) always keep the full 2× cap. */
+      const phone = window.matchMedia("(max-width: 820px) and (pointer: coarse)").matches;
+      const dpr = Math.min(window.devicePixelRatio || 1, phone ? 1.5 : 2);
       canvas.width = Math.max(1, Math.round(rect.width * dpr));
       canvas.height = Math.max(1, Math.round(rect.height * dpr));
       s.drawnKey = "";

@@ -18,7 +18,6 @@ import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { X } from "lucide-react";
 
-import { cn } from "@/lib/utils";
 import {
   curriculum,
   specializations,

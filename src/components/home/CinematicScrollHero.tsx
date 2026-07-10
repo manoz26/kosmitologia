@@ -23,7 +23,7 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { ChevronDown, MousePointer2, Sparkles } from "lucide-react";
 
-import { ScrollFilm, HERO_FILM } from "@/components/ui/scroll-film";
+import { ScrollFilm, HERO_FILM, useHeroFilm } from "@/components/ui/scroll-film";
 
 const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
 
@@ -52,6 +52,7 @@ function HeroCopy() {
 export function CinematicScrollHero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
+  const film = useHeroFilm();
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -86,7 +87,7 @@ export function CinematicScrollHero() {
     <div ref={containerRef} className="relative h-[250vh] w-full bg-[#0a0a0a]">
       <div className="sticky top-0 h-[100svh] w-full overflow-hidden">
         {/* Poster-first scroll-scrubbed footage */}
-        <ScrollFilm progress={scrollYProgress} {...HERO_FILM} />
+        <ScrollFilm progress={scrollYProgress} {...film} />
 
         {/* Legibility scrim */}
         <div className="absolute inset-0 bg-black/40" aria-hidden />

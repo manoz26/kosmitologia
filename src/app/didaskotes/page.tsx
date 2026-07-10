@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   title: "Διδάσκοντες",
   description:
     "Η ακαδημαϊκή ομάδα του ΠΜΣ Κοσμητολογία — διδάσκοντες, ερευνητές, ειδικοί επιστήμονες και το δίκτυο συνεργατών του προγράμματος.",
+  alternates: { canonical: "/didaskotes" },
 };
 
 export default function DidaskotesPage() {

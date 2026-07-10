@@ -8,7 +8,14 @@
    hydration bugs and keeps each section component focused on its visuals.
    ══════════════════════════════════════════════════════════════════════════ */
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react";
 import {
   useMotionValue,
   useSpring,
@@ -77,10 +84,17 @@ export function useViewport(): Viewport {
    Mounted flag — guards browser-only renders
    ──────────────────────────────────────────── */
 
+/* useSyncExternalStore instead of the classic setState-in-effect pattern:
+   same hydration-safe behaviour (false on the server render, true right
+   after), without the extra cascading re-render the lint rule flags. */
+const noopSubscribe = () => () => {};
+
 export function useMounted(): boolean {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-  return mounted;
+  return useSyncExternalStore(
+    noopSubscribe,
+    () => true,
+    () => false,
+  );
 }
 
 /* ────────────────────────────────────────────

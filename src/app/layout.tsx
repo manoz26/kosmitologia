@@ -1,7 +1,11 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Commissioner, Inter } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { PerfLite } from "@/components/PerfLite";
+import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 // Heading face — Commissioner ships full Greek glyphs (proper ω/ώ), unlike
@@ -20,6 +24,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "ΠΜΣ Κοσμητολογία | Διεθνές Πανεπιστήμιο της Ελλάδος",
     template: "%s | ΠΜΣ Κοσμητολογία",
@@ -42,10 +47,40 @@ export const metadata: Metadata = {
     title: "ΠΜΣ Κοσμητολογία | Διεθνές Πανεπιστήμιο της Ελλάδος",
     description:
       "Μεταπτυχιακό Πρόγραμμα Σπουδών στην Κοσμητολογία. Σχεδιασμός, ανάπτυξη και αξιολόγηση καινοτόμων καλλυντικών. 90 ECTS, 3 εξάμηνα, €2.400.",
-    url: "https://cosm.ihu.gr",
+    url: SITE_URL,
     siteName: "ΠΜΣ Κοσμητολογία",
     locale: "el_GR",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "ΠΜΣ Κοσμητολογία | Διεθνές Πανεπιστήμιο της Ελλάδος",
+    description:
+      "Μεταπτυχιακό Πρόγραμμα Σπουδών στην Κοσμητολογία — MSc in Cosmetology, ΔιΠΑΕ.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#DCE8AF",
+};
+
+/* Verified facts only (Γραμματεία contact details from /eggrafes). */
+const JSON_LD = {
+  "@context": "https://schema.org",
+  "@type": "EducationalOrganization",
+  name: "ΠΜΣ Κοσμητολογία — Διεθνές Πανεπιστήμιο της Ελλάδος",
+  url: SITE_URL,
+  logo: `${SITE_URL}/logo.png`,
+  email: "pms.cosm@nutr.ihu.gr",
+  telephone: "+302310013444",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Σίνδος, Θεσσαλονίκη",
+    addressCountry: "GR",
   },
 };
 
@@ -57,9 +92,16 @@ export default function RootLayout({
   return (
     <html lang="el" className={`${commissioner.variable} ${inter.variable}`}>
       <body className="min-h-dvh flex flex-col antialiased bg-gradient-to-b from-[#E0F2FE] via-[#E8F5E9] to-[#F4F7ED]">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }}
+        />
+        <PerfLite />
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

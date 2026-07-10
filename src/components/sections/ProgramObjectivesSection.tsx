@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Target, Lightbulb, Users, Building, ShieldCheck, Microscope } from "lucide-react";
+import { Lightbulb, Users, Building, ShieldCheck, Microscope } from "lucide-react";
 
 const objectives = [
   {

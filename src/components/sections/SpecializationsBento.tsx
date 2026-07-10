@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { FlaskConical, Stethoscope, ChevronRight } from "lucide-react";
+import { FlaskConical, Stethoscope } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const specializations = [

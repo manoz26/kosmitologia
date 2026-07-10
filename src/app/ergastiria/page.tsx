@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   title: "Εργαστήρια & Υποδομές",
   description:
     "Τα εργαστήρια του ΠΜΣ Κοσμητολογία — παρασκευή, ενόργανη ανάλυση, αξιολόγηση δέρματος, ερευνητικές περιοχές και η επιστημονική μεθοδολογία του προγράμματος.",
+  alternates: { canonical: "/ergastiria" },
 };
 
 export default function ErgastiriaPage() {

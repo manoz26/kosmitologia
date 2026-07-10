@@ -1,4 +1,4 @@
-"use client";
+import { Metadata } from "next";
 
 import { PageShell } from "@/components/PageShell";
 import { AboutHeroSection } from "@/components/sections/AboutHeroSection";
@@ -12,6 +12,13 @@ import { SkinScience3D } from "@/components/home/SkinScience3D";
 import { SustainabilitySection } from "@/components/home/SustainabilitySection";
 import { CampusMap3D } from "@/components/home/CampusMap3D";
 import { CommunityGallery } from "@/components/sections/CommunityGallery";
+
+export const metadata: Metadata = {
+  title: "Η Σχολή & το Τμήμα",
+  description:
+    "Το ΠΜΣ Κοσμητολογία στο Διεθνές Πανεπιστήμιο της Ελλάδος — όραμα, στόχοι, ιστορία, ειδικεύσεις και οι εγκαταστάσεις του Τμήματος Επιστημών Διατροφής & Διαιτολογίας στη Σίνδο.",
+  alternates: { canonical: "/sxetika" },
+};
 
 export default function SxetikaPage() {
   return (

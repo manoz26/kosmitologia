@@ -63,7 +63,7 @@ export function ResearchSpotlight3D() {
           <div className="mt-12 overflow-hidden rounded-[2rem] glass-lachani-deep p-7 md:p-9">
             <div className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
               <h3 className="font-heading text-xl font-bold text-text-primary">Η πορεία μιας διπλωματικής</h3>
-              <span className="rounded-full bg-ihu-green/12 px-3 py-1 text-xs font-bold text-ihu-green-dark">Γ' Εξάμηνο · 30 ECTS</span>
+              <span className="rounded-full bg-ihu-green/12 px-3 py-1 text-xs font-bold text-ihu-green-dark">Γ’ Εξάμηνο · 30 ECTS</span>
             </div>
 
             <div className="relative mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">

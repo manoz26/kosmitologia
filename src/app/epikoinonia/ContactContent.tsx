@@ -2,19 +2,14 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { 
-  MapPin, 
-  Phone, 
-  Mail, 
-  Clock, 
-  Send, 
-  CheckCircle2, 
-  MessageSquare, 
-  ChevronDown, 
-  User,
+import {
+  MapPin,
+  Phone,
+  Mail,
+  Clock,
+  CheckCircle2,
+  ChevronDown,
   Building,
-  AtSign,
-  Info,
   ArrowRight
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -119,7 +114,7 @@ const abstractShapeVariants = {
 
 // --- Sub-components ---
 
-function InfoCard({ card, index }: { card: typeof INFO_CARDS[0], index: number }) {
+function InfoCard({ card }: { card: typeof INFO_CARDS[0] }) {
   const Icon = card.icon;
   
   const colorStyles = {
@@ -426,8 +421,8 @@ export default function ContactContent() {
     >
       {/* Top Grid: Info Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {INFO_CARDS.map((card, index) => (
-          <InfoCard key={card.id} card={card} index={index} />
+        {INFO_CARDS.map((card) => (
+          <InfoCard key={card.id} card={card} />
         ))}
       </div>
 

@@ -103,7 +103,7 @@ export function CommitteeSection() {
           {/* Decorative background element connecting the directors */}
           <div className="hidden md:block absolute top-1/2 left-1/4 right-1/4 h-0.5 bg-gradient-to-r from-lavender/0 via-lavender/30 to-mint/0 -translate-y-1/2 z-0" />
           
-          {directors.map((member, i) => (
+          {directors.map((member) => (
             <motion.div
               key={member.name}
               variants={itemVariants}
@@ -193,7 +193,7 @@ export function CommitteeSection() {
 
         {/* Members Row */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {members.map((member, i) => (
+          {members.map((member) => (
             <motion.div
               key={member.name}
               variants={itemVariants}

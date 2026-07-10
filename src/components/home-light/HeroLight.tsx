@@ -22,7 +22,7 @@ import Link from "next/link";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { ArrowRight, ChevronDown } from "lucide-react";
 
-import { ScrollFilm, HERO_FILM } from "@/components/ui/scroll-film";
+import { ScrollFilm, HERO_FILM, useHeroFilm } from "@/components/ui/scroll-film";
 
 /* Must match the light page background so the footage melts into the page. */
 const PAGE_BG = "#FAFBFE";
@@ -67,6 +67,7 @@ function HeroCopy() {
 export function HeroLight() {
   const containerRef = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
+  const film = useHeroFilm();
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -111,7 +112,7 @@ export function HeroLight() {
     <div ref={containerRef} className="relative h-[250vh] w-full bg-[#0a0a0a]">
       <div className="sticky top-0 h-[100svh] w-full overflow-hidden">
         {/* Poster-first scroll-scrubbed footage */}
-        <ScrollFilm progress={scrollYProgress} {...HERO_FILM} />
+        <ScrollFilm progress={scrollYProgress} {...film} />
 
         {/* Legibility scrim */}
         <div className="absolute inset-0 bg-black/40" aria-hidden />
