@@ -9,6 +9,18 @@
    orbits, depth particles and a soft floor. Native CSS 3D + framer-motion only,
    re-themed to the λαχανί palette and rendered transparently over the page
    backdrop.
+
+   Sizing contract — the section must survive ANY viewport:
+     • The ring measures the box the layout actually gives it (ResizeObserver)
+       and scales its whole 3D scene (radius, cards, perspective) to fit, so
+       side cards can never poke past the screen edge.
+     • Card faces are designed once at 250×340 and shrunk with a transform,
+       so their type scales with the card instead of overflowing it.
+     • Type & spacing use vh-based clamp()s, so the column compresses smoothly
+       on short laptop screens.
+     • A last-resort fit scale shrinks the entire pinned stage uniformly when
+       the measured content still exceeds the pinned viewport, so nothing is
+       ever clipped by the sticky container's overflow-hidden.
    ══════════════════════════════════════════════════════════════════════════ */
 
 import { useRef, useState, useMemo, useCallback } from "react";
@@ -28,7 +40,14 @@ import { ArrowRight, ArrowUpRight, ChevronDown, Atom } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { journeyStages, type JourneyStage } from "./lib/data";
 import { Icon, GradientText } from "./lib/primitives";
-import { useViewport, useReduced, useScatter, type Viewport } from "./lib/hooks";
+import {
+  useViewport,
+  useReduced,
+  useScatter,
+  useBoxSize,
+  type BoxSize,
+  type Viewport,
+} from "./lib/hooks";
 
 const STAGE_COUNT = journeyStages.length;
 const ANGLE_STEP = 360 / STAGE_COUNT;
@@ -38,18 +57,44 @@ const VH_PER_STAGE = 62;
    Geometry helpers
    ──────────────────────────────────────────── */
 
+/* The design-size card face; everything else scales off it. */
+const CARD_W = 250;
+const CARD_H = 340;
+const RING_RADIUS = 316;
+const RING_PERSPECTIVE = 1600;
+/* Projected footprint of the whole ring at scale 1 (incl. side cards):
+   horizontal reach ≈ ±335px, active card ≈ 311×424px. The width divisor is
+   smaller than the true footprint to allow a gentle, safe bleed. */
+const RING_FIT_W = 625;
+const RING_FIT_H = 470;
+
+/* Shared length for the progress rail track & its label column. */
+const RAIL_LEN = "clamp(7.5rem,17vh,11rem)";
+
 interface RingGeometry {
+  /** Uniform scale of the 3D scene relative to the design size. */
+  k: number;
   radius: number;
   cardWidth: number;
   cardHeight: number;
+  perspective: number;
 }
 
-function useRingGeometry(viewport: Viewport): RingGeometry {
+/* Fits the ring into the measured box; falls back to breakpoint guesses
+   until the first measurement (and during SSR). */
+function useRingGeometry(box: BoxSize, viewport: Viewport): RingGeometry {
   return useMemo(() => {
-    if (viewport.isMobile) return { radius: 150, cardWidth: 158, cardHeight: 216 };
-    if (viewport.isTablet) return { radius: 244, cardWidth: 202, cardHeight: 276 };
-    return { radius: 316, cardWidth: 250, cardHeight: 340 };
-  }, [viewport.isMobile, viewport.isTablet]);
+    const w = box.w || (viewport.isMobile ? 330 : viewport.isTablet ? 520 : 580);
+    const h = box.h || (viewport.isMobile ? 260 : 470);
+    const k = Math.min(1.12, Math.max(0.36, Math.min(w / RING_FIT_W, h / RING_FIT_H)));
+    return {
+      k,
+      radius: RING_RADIUS * k,
+      cardWidth: CARD_W * k,
+      cardHeight: CARD_H * k,
+      perspective: RING_PERSPECTIVE * k,
+    };
+  }, [box.w, box.h, viewport.isMobile, viewport.isTablet]);
 }
 
 function circularDelta(index: number, active: number, count: number): number {
@@ -108,7 +153,7 @@ function JourneyParticles({
    Molecule orbits
    ──────────────────────────────────────────── */
 
-function MoleculeOrbits({ accent }: { accent: string }) {
+function MoleculeOrbits({ accent, size }: { accent: string; size: number }) {
   const dots = (n: number, r: number) =>
     Array.from({ length: n }, (_, i) => {
       const a = (i / n) * Math.PI * 2;
@@ -125,7 +170,11 @@ function MoleculeOrbits({ accent }: { accent: string }) {
   ];
 
   return (
-    <div aria-hidden className="pointer-events-none absolute left-1/2 top-1/2 h-[120%] w-[120%] -translate-x-1/2 -translate-y-1/2">
+    <div
+      aria-hidden
+      className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+      style={{ width: size, height: size }}
+    >
       {rings.map((ring, idx) => (
         <div key={idx} className={cn("absolute inset-0", ring.spin)} style={idx === 2 ? { animationDuration: "70s" } : undefined}>
           <svg viewBox="0 0 100 100" className="absolute inset-0 h-full w-full" style={{ opacity: ring.op }}>
@@ -176,51 +225,61 @@ function StageCard({
       }}
     >
       <motion.div
-        className="relative h-full w-full overflow-hidden rounded-[1.6rem] border border-white/30 shadow-2xl"
+        className="relative h-full w-full"
         animate={{ opacity: targetOpacity, scale: targetScale, filter: `blur(${targetBlur}px)` }}
         transition={{ type: "spring", stiffness: 120, damping: 24 }}
-        style={{
-          background: `linear-gradient(155deg, ${stage.from} 0%, ${stage.to} 100%)`,
-          boxShadow: isActive
-            ? `0 30px 60px -20px ${stage.glow}, inset 0 0 0 1px rgba(255,255,255,0.3)`
-            : "0 20px 40px -24px rgba(63,79,24,0.6)",
-        }}
       >
-        <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-black/15" />
-        <div className="absolute -left-1/3 top-0 h-full w-1/2 -skew-x-12 bg-white/15 blur-md" style={{ opacity: isActive ? 0.7 : 0.3 }} />
-        <span className="absolute -right-2 -top-6 select-none font-heading text-[7rem] font-black leading-none text-white/10">
-          {stage.index}
-        </span>
-        <div className="relative z-10 flex h-full flex-col justify-between p-5 md:p-6">
-          <div className="flex items-center justify-between">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/20 text-white ring-1 ring-white/30 backdrop-blur-md">
-              <Icon name={stage.icon} size={24} />
+        {/* The face is designed once at 250×340 and shrunk as a whole, so its
+            type scales with the card instead of overflowing small cards. */}
+        <div
+          className="relative overflow-hidden rounded-[1.6rem] border border-white/30"
+          style={{
+            width: CARD_W,
+            height: CARD_H,
+            transform: `scale(${geometry.k})`,
+            transformOrigin: "top left",
+            background: `linear-gradient(155deg, ${stage.from} 0%, ${stage.to} 100%)`,
+            boxShadow: isActive
+              ? `0 30px 60px -20px ${stage.glow}, inset 0 0 0 1px rgba(255,255,255,0.3)`
+              : "0 20px 40px -24px rgba(63,79,24,0.6)",
+          }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-black/15" />
+          <div className="absolute -left-1/3 top-0 h-full w-1/2 -skew-x-12 bg-white/15 blur-md" style={{ opacity: isActive ? 0.7 : 0.3 }} />
+          <span className="absolute -right-2 -top-6 select-none font-heading text-[7rem] font-black leading-none text-white/10">
+            {stage.index}
+          </span>
+          <div className="relative z-10 flex h-full flex-col justify-between p-6">
+            <div className="flex items-center justify-between">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/20 text-white ring-1 ring-white/30 backdrop-blur-md">
+                <Icon name={stage.icon} size={24} />
+              </div>
+              <span className="rounded-full bg-black/20 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-white/90 backdrop-blur-md">
+                {stage.index} / 0{STAGE_COUNT}
+              </span>
             </div>
-            <span className="rounded-full bg-black/20 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-white/90 backdrop-blur-md">
-              {stage.index} / 0{STAGE_COUNT}
-            </span>
-          </div>
-          <div>
-            <h3 className="font-heading text-lg font-bold leading-tight text-white drop-shadow md:text-xl">
-              {stage.title}
-            </h3>
-            <p className="mt-1 text-xs text-white/80 md:text-sm">{stage.subtitle}</p>
-            <div className="mt-3 flex flex-wrap gap-1.5">
-              {stage.tags.map((tag) => (
-                <span key={tag} className="rounded-full bg-white/15 px-2 py-0.5 text-[10px] font-medium text-white/90 ring-1 ring-white/20">
-                  {tag}
-                </span>
-              ))}
+            <div>
+              <h3 className="font-heading text-xl font-bold leading-tight text-white drop-shadow">
+                {stage.title}
+              </h3>
+              <p className="mt-1 text-sm text-white/80">{stage.subtitle}</p>
+              <div className="mt-3 flex flex-wrap gap-1.5">
+                {stage.tags.map((tag) => (
+                  <span key={tag} className="rounded-full bg-white/15 px-2 py-0.5 text-[10px] font-medium text-white/90 ring-1 ring-white/20">
+                    {tag}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
+          {isActive && (
+            <motion.div
+              layoutId="journey-active-ring"
+              className="pointer-events-none absolute inset-0 rounded-[1.6rem] ring-2 ring-white/60"
+              transition={{ type: "spring", stiffness: 200, damping: 26 }}
+            />
+          )}
         </div>
-        {isActive && (
-          <motion.div
-            layoutId="journey-active-ring"
-            className="pointer-events-none absolute inset-0 rounded-[1.6rem] ring-2 ring-white/60"
-            transition={{ type: "spring", stiffness: 200, damping: 26 }}
-          />
-        )}
       </motion.div>
     </div>
   );
@@ -245,13 +304,13 @@ function StageRing3D({
 }) {
   return (
     <div className="relative flex h-full w-full items-center justify-center">
-      <MoleculeOrbits accent={accent} />
+      <MoleculeOrbits accent={accent} size={620 * geometry.k} />
       <div
         aria-hidden
-        className="absolute left-1/2 top-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl animate-halo-pulse transition-[background] duration-700"
-        style={{ background: glow }}
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl animate-halo-pulse transition-[background] duration-700"
+        style={{ background: glow, width: 256 * geometry.k, height: 256 * geometry.k }}
       />
-      <div className="relative" style={{ width: geometry.cardWidth, height: geometry.cardHeight, perspective: 1600 }}>
+      <div className="relative" style={{ width: geometry.cardWidth, height: geometry.cardHeight, perspective: geometry.perspective }}>
         <motion.div
           className="preserve-3d relative h-full w-full"
           style={{ transformStyle: "preserve-3d" }}
@@ -284,10 +343,10 @@ const panelVariants: Variants = {
 
 function StageDetailPanel({ stage }: { stage: JourneyStage }) {
   return (
-    <div className="relative min-h-[20rem]" style={{ perspective: 1200 }}>
+    <div className="relative min-h-[clamp(13rem,34vh,20rem)]" style={{ perspective: 1200 }}>
       <AnimatePresence mode="wait">
         <motion.div key={stage.id} variants={panelVariants} initial="enter" animate="center" exit="exit" style={{ transformStyle: "preserve-3d" }}>
-          <div className="mb-4 flex items-center gap-3">
+          <div className="mb-[clamp(0.6rem,1.4vh,1rem)] flex items-center gap-3">
             <span className="flex h-11 w-11 items-center justify-center rounded-xl text-white shadow-lg" style={{ background: `linear-gradient(135deg, ${stage.from}, ${stage.to})` }}>
               <Icon name={stage.icon} size={22} />
             </span>
@@ -295,14 +354,17 @@ function StageDetailPanel({ stage }: { stage: JourneyStage }) {
               {stage.kicker}
             </span>
           </div>
-          <h3 className="font-heading text-2xl font-extrabold leading-tight text-text-primary md:text-4xl">
+          <h3 className="font-heading text-[clamp(1.35rem,3.4vh,2.25rem)] font-extrabold leading-tight text-text-primary">
             {stage.title}
           </h3>
-          <div className="mt-3 h-1 w-16 rounded-full" style={{ background: `linear-gradient(90deg, ${stage.from}, ${stage.to})` }} />
-          <p className="mt-5 max-w-xl text-base leading-relaxed text-text-secondary md:text-lg">
+          <div className="mt-[clamp(0.5rem,1vh,0.75rem)] h-1 w-16 rounded-full" style={{ background: `linear-gradient(90deg, ${stage.from}, ${stage.to})` }} />
+          {/* In stacked (below-lg) and very short layouts the card + bullet
+              points carry the story; the prose would only add height and
+              force a heavy uniform shrink of the pinned stage. */}
+          <p className="mt-[clamp(0.6rem,1.6vh,1.25rem)] hidden max-w-xl text-[clamp(0.875rem,1.75vh,1.125rem)] leading-relaxed text-text-secondary lg:[@media(min-height:701px)]:block">
             {stage.description}
           </p>
-          <ul className="mt-6 space-y-3">
+          <ul className="mt-[clamp(0.7rem,1.8vh,1.5rem)] space-y-[clamp(0.45rem,1.2vh,0.75rem)]">
             {stage.points.map((point, i) => (
               <motion.li
                 key={i}
@@ -314,7 +376,7 @@ function StageDetailPanel({ stage }: { stage: JourneyStage }) {
                 <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-white/70 ring-1 ring-ihu-green-dark/15" style={{ color: stage.accent }}>
                   <Icon name={point.icon} size={16} />
                 </span>
-                <span className="text-sm leading-relaxed text-text-primary/90 md:text-base">{point.text}</span>
+                <span className="text-[clamp(0.8rem,1.6vh,1rem)] leading-relaxed text-text-primary/90">{point.text}</span>
               </motion.li>
             ))}
           </ul>
@@ -332,46 +394,75 @@ function ProgressRail({
   activeIndex,
   progress,
   onSelect,
+  horizontal = false,
 }: {
   activeIndex: number;
   progress: MotionValue<number>;
   onSelect: (i: number) => void;
+  horizontal?: boolean;
 }) {
   const fillScale = useTransform(progress, [0, 1], [0, 1]);
+
+  const dot = (stage: JourneyStage, i: number) => {
+    const isActive = i === activeIndex;
+    const isPast = i < activeIndex;
+    return (
+      <span
+        className={cn(
+          "block rounded-full border-2 transition-all duration-300",
+          isActive ? "h-4 w-4 border-ihu-green-dark" : isPast ? "h-3 w-3 border-ihu-green-dark/70" : "h-3 w-3 border-ihu-green-dark/30",
+        )}
+        style={{
+          background: isActive ? stage.accent : isPast ? "rgba(95,113,42,0.7)" : "transparent",
+          boxShadow: isActive ? `0 0 14px ${stage.glow}` : "none",
+        }}
+      />
+    );
+  };
+
+  /* Compact horizontal rail for stacked (non-desktop) layouts. */
+  if (horizontal) {
+    return (
+      <div className="relative h-1 w-44 rounded-full bg-ihu-green-dark/15">
+        <motion.div
+          className="absolute inset-y-0 left-0 w-full origin-left rounded-full bg-gradient-to-r from-ihu-green-light to-ihu-green-dark"
+          style={{ scaleX: fillScale }}
+        />
+        {journeyStages.map((stage, i) => (
+          <button
+            key={stage.id}
+            onClick={() => onSelect(i)}
+            className="absolute top-1/2 -translate-x-1/2 -translate-y-1/2 p-1.5 focus:outline-none"
+            style={{ left: `${(i / (STAGE_COUNT - 1)) * 100}%` }}
+            aria-label={`Μετάβαση στο ${stage.title}`}
+          >
+            {dot(stage, i)}
+          </button>
+        ))}
+      </div>
+    );
+  }
+
   return (
     <div className="flex items-center gap-4">
-      <div className="relative h-44 w-1 rounded-full bg-ihu-green-dark/15">
+      <div className="relative w-1 rounded-full bg-ihu-green-dark/15" style={{ height: RAIL_LEN }}>
         <motion.div
           className="absolute left-0 top-0 w-full origin-top rounded-full bg-gradient-to-b from-ihu-green-light to-ihu-green-dark"
           style={{ scaleY: fillScale, height: "100%" }}
         />
-        {journeyStages.map((stage, i) => {
-          const top = (i / (STAGE_COUNT - 1)) * 100;
-          const isActive = i === activeIndex;
-          const isPast = i < activeIndex;
-          return (
-            <button
-              key={stage.id}
-              onClick={() => onSelect(i)}
-              className="absolute -left-1.5 -translate-y-1/2 focus:outline-none"
-              style={{ top: `${top}%` }}
-              aria-label={`Μετάβαση στο ${stage.title}`}
-            >
-              <span
-                className={cn(
-                  "block rounded-full border-2 transition-all duration-300",
-                  isActive ? "h-4 w-4 border-ihu-green-dark" : isPast ? "h-3 w-3 border-ihu-green-dark/70" : "h-3 w-3 border-ihu-green-dark/30",
-                )}
-                style={{
-                  background: isActive ? stage.accent : isPast ? "rgba(95,113,42,0.7)" : "transparent",
-                  boxShadow: isActive ? `0 0 14px ${stage.glow}` : "none",
-                }}
-              />
-            </button>
-          );
-        })}
+        {journeyStages.map((stage, i) => (
+          <button
+            key={stage.id}
+            onClick={() => onSelect(i)}
+            className="absolute -left-1.5 -translate-y-1/2 focus:outline-none"
+            style={{ top: `${(i / (STAGE_COUNT - 1)) * 100}%` }}
+            aria-label={`Μετάβαση στο ${stage.title}`}
+          >
+            {dot(stage, i)}
+          </button>
+        ))}
       </div>
-      <div className="hidden flex-col justify-between sm:flex" style={{ height: "11rem" }}>
+      <div className="hidden flex-col justify-between sm:flex" style={{ height: RAIL_LEN }}>
         {journeyStages.map((stage, i) => {
           const isActive = i === activeIndex;
           return (
@@ -405,13 +496,13 @@ function StageCounter({ activeIndex, accent }: { activeIndex: number; accent: st
           animate={{ opacity: 1, y: 0, rotateX: 0 }}
           exit={{ opacity: 0, y: -24, rotateX: 40 }}
           transition={{ duration: 0.4 }}
-          className="font-heading text-6xl font-black leading-none md:text-7xl"
+          className="font-heading text-[clamp(2.75rem,7vh,4.5rem)] font-black leading-none"
           style={{ color: accent }}
         >
           {stage.index}
         </motion.span>
       </AnimatePresence>
-      <span className="mb-2 font-heading text-2xl font-bold text-ihu-green-dark/30">/ 0{STAGE_COUNT}</span>
+      <span className="mb-2 font-heading text-[clamp(1.1rem,2.6vh,1.5rem)] font-bold text-ihu-green-dark/30">/ 0{STAGE_COUNT}</span>
     </div>
   );
 }
@@ -432,10 +523,10 @@ function Heading() {
       <span className="inline-flex items-center gap-2 rounded-full border border-ihu-green-dark/15 bg-white/55 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-ihu-green-dark backdrop-blur-md">
         <Atom size={14} /> Το ταξίδι ενός καλλυντικού
       </span>
-      <h2 className="mt-6 font-heading text-3xl font-extrabold leading-tight text-text-primary md:text-5xl">
+      <h2 className="mt-[clamp(0.75rem,1.8vh,1.5rem)] font-heading text-[clamp(1.6rem,4.2vh,3rem)] font-extrabold leading-tight text-text-primary">
         Από το <GradientText>συστατικό</GradientText> στο <GradientText variant="fresh">προϊόν</GradientText>
       </h2>
-      <p className="mt-4 text-base text-text-secondary md:text-lg">
+      <p className="mt-[clamp(0.5rem,1.2vh,1rem)] hidden text-[clamp(0.875rem,1.8vh,1.125rem)] text-text-secondary sm:block">
         Κάθε στάδιο του προγράμματος αντιστοιχεί σε ένα βήμα της πραγματικής
         διαδρομής ενός καλλυντικού. Κυλήστε για να το ζήσετε σε τρεις διαστάσεις.
       </p>
@@ -446,7 +537,7 @@ function Heading() {
 function ScrollHint({ progress }: { progress: MotionValue<number> }) {
   const opacity = useTransform(progress, [0, 0.06], [1, 0]);
   return (
-    <motion.div style={{ opacity }} className="pointer-events-none absolute bottom-6 left-1/2 z-30 -translate-x-1/2 text-center">
+    <motion.div style={{ opacity }} className="pointer-events-none absolute bottom-3 left-1/2 z-30 -translate-x-1/2 text-center">
       <span className="mb-1 block text-[10px] font-bold uppercase tracking-[0.3em] text-ihu-green-dark/60">Κυλήστε</span>
       <ChevronDown size={18} className="mx-auto animate-scroll-hint text-ihu-green-dark/70" />
     </motion.div>
@@ -457,12 +548,14 @@ function JourneyCta({ progress }: { progress: MotionValue<number> }) {
   const opacity = useTransform(progress, [0.82, 0.95], [0, 1]);
   const y = useTransform(progress, [0.82, 0.95], [30, 0]);
   return (
-    <motion.div style={{ opacity, y }} className="flex flex-col items-center gap-3 sm:flex-row">
+    <motion.div style={{ opacity, y }} className="flex flex-col items-stretch gap-3">
       <Link href="/programma" className="group inline-flex items-center justify-center gap-2 rounded-full bg-ihu-green-dark px-6 py-3 text-sm font-bold text-white shadow-lg transition-all hover:gap-3">
         Δείτε όλο το Πρόγραμμα Σπουδών
         <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
       </Link>
-      <Link href="/eggrafes" className="inline-flex items-center justify-center gap-2 rounded-full border border-ihu-green-dark/25 bg-white/50 px-6 py-3 text-sm font-bold text-ihu-green-dark backdrop-blur-md transition-all hover:bg-white/70">
+      {/* On phones one conversion path is enough — the second button costs
+          ~60px of pinned height that the panel text needs more. */}
+      <Link href="/eggrafes" className="hidden items-center justify-center gap-2 rounded-full border border-ihu-green-dark/25 bg-white/50 px-6 py-3 text-sm font-bold text-ihu-green-dark backdrop-blur-md transition-all hover:bg-white/70 sm:inline-flex">
         Αιτήσεις Εισαγωγής
         <ArrowUpRight size={16} />
       </Link>
@@ -477,9 +570,24 @@ function JourneyCta({ progress }: { progress: MotionValue<number> }) {
 export function JourneyRing3D() {
   const containerRef = useRef<HTMLDivElement>(null);
   const viewport = useViewport();
-  const geometry = useRingGeometry(viewport);
   const reduced = useReduced();
   const [activeIndex, setActiveIndex] = useState(0);
+
+  /* Measured boxes: the padded pinned frame, the stage content inside it,
+     and the column the ring lives in. */
+  const [frameRef, frameBox] = useBoxSize<HTMLDivElement>();
+  const [stageRef, stageBox] = useBoxSize<HTMLDivElement>();
+  const [ringBoxRef, ringBox] = useBoxSize<HTMLDivElement>();
+  const geometry = useRingGeometry(ringBox, viewport);
+
+  /* Last-resort uniform shrink: the stage wrapper has min-h-full, so its
+     measured height only exceeds the frame when content genuinely overflows.
+     No practical floor — a miniature composition beats a clipped one. */
+  const fit = useMemo(() => {
+    if (!frameBox.h || !stageBox.h) return 1;
+    const f = frameBox.h / stageBox.h;
+    return f >= 0.995 ? 1 : Math.max(0.3, f);
+  }, [frameBox.h, stageBox.h]);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -513,7 +621,7 @@ export function JourneyRing3D() {
       className="relative w-full text-text-primary"
       style={{ height: `${STAGE_COUNT * VH_PER_STAGE}vh` }}
     >
-      <div className="sticky top-0 h-screen w-full overflow-hidden">
+      <div className="sticky top-0 h-screen w-full overflow-hidden supports-[height:100dvh]:h-dvh">
         <JourneyParticles progress={smoothProgress} glow={activeStage.glow} reduced={reduced} />
 
         {/* light floor grid */}
@@ -523,27 +631,49 @@ export function JourneyRing3D() {
           style={{ maskImage: "linear-gradient(to top, black, transparent)", WebkitMaskImage: "linear-gradient(to top, black, transparent)" }}
         />
 
-        <div className="section-container relative z-30 flex h-full flex-col px-4 py-8 md:px-8">
-          <div className="shrink-0 pt-10 md:pt-14">
-            <Heading />
-          </div>
-
-          <div className="grid flex-1 grid-cols-1 items-center gap-6 lg:grid-cols-2 lg:gap-10">
-            <div className="order-2 flex flex-col justify-center lg:order-1">
-              <div className="mb-6 hidden lg:block">
-                <StageCounter activeIndex={activeIndex} accent={activeStage.accent} />
-              </div>
-              <div className="glass-lachani rounded-3xl p-6 md:p-7">
-                <StageDetailPanel stage={activeStage} />
-              </div>
-              <div className="mt-8 flex flex-col gap-8">
-                <ProgressRail activeIndex={activeIndex} progress={smoothProgress} onSelect={handleSelect} />
-                <JourneyCta progress={smoothProgress} />
-              </div>
+        {/* pt clears the fixed navbar (~5rem when condensed) on every page. */}
+        <div
+          ref={frameRef}
+          className="section-container relative z-30 h-full px-4 pb-[clamp(0.75rem,2.5vh,2rem)] pt-[calc(4.75rem+1vh)] md:px-8"
+        >
+          <div
+            ref={stageRef}
+            className="flex min-h-full flex-col"
+            style={fit < 1 ? { transform: `scale(${fit})`, transformOrigin: "top center" } : undefined}
+          >
+            <div className="shrink-0">
+              <Heading />
             </div>
 
-            <div className="order-1 flex h-[42vh] items-center justify-center lg:order-2 lg:h-full">
-              <StageRing3D activeIndex={activeIndex} glow={activeStage.glow} accent={activeStage.accent} geometry={geometry} reduced={reduced} />
+            <div className="mt-[clamp(0.75rem,2vh,1.75rem)] grid flex-1 grid-cols-1 items-center gap-[clamp(1rem,2.5vh,1.5rem)] lg:grid-cols-2 lg:gap-10">
+              <div className="order-2 flex flex-col justify-center lg:order-1">
+                {/* Purely decorative; on short screens its ~70px are better
+                    spent keeping the panel text at full size. */}
+                {viewport.height >= 900 && (
+                  <div className="mb-[clamp(0.5rem,1.4vh,1.5rem)] hidden lg:block">
+                    <StageCounter activeIndex={activeIndex} accent={activeStage.accent} />
+                  </div>
+                )}
+                <div className="glass-lachani rounded-3xl p-[clamp(1.1rem,2.4vh,1.75rem)]">
+                  <StageDetailPanel stage={activeStage} />
+                </div>
+                <div className="mt-[clamp(0.9rem,2.2vh,2rem)] flex flex-wrap items-center gap-x-10 gap-y-[clamp(0.9rem,2.2vh,1.5rem)]">
+                  <ProgressRail
+                    activeIndex={activeIndex}
+                    progress={smoothProgress}
+                    onSelect={handleSelect}
+                    horizontal={!viewport.isDesktop}
+                  />
+                  <JourneyCta progress={smoothProgress} />
+                </div>
+              </div>
+
+              <div
+                ref={ringBoxRef}
+                className="order-1 flex h-[clamp(9rem,26vh,16rem)] w-full items-center justify-center lg:order-2 lg:h-[clamp(20rem,56vh,34rem)]"
+              >
+                <StageRing3D activeIndex={activeIndex} glow={activeStage.glow} accent={activeStage.accent} geometry={geometry} reduced={reduced} />
+              </div>
             </div>
           </div>
         </div>

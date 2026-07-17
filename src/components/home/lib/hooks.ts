@@ -11,6 +11,7 @@
 import {
   useCallback,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -23,6 +24,9 @@ import {
   type MotionValue,
   type SpringOptions,
 } from "framer-motion";
+
+/* Layout effect that is safe to import in SSR'd client components. */
+const useIsoLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 /* ────────────────────────────────────────────
    Breakpoints
@@ -46,38 +50,96 @@ const DEFAULT_VIEWPORT: Viewport = {
   isWide: false,
 };
 
-/** Tracks the live viewport and exposes convenient breakpoints. */
+/** Tracks the live viewport and exposes convenient breakpoints.
+    Measures synchronously before first paint — never inside rAF, so the
+    first client frame already uses the real viewport (rAF can be throttled
+    to a standstill in hidden tabs, and a guessed first frame flashes). */
 export function useViewport(): Viewport {
   const [viewport, setViewport] = useState<Viewport>(DEFAULT_VIEWPORT);
 
-  useEffect(() => {
-    let raf = 0;
+  useIsoLayoutEffect(() => {
     const compute = () => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
-        const width = window.innerWidth;
-        const height = window.innerHeight;
-        setViewport({
-          width,
-          height,
-          isMobile: width < 640,
-          isTablet: width >= 640 && width < 1024,
-          isDesktop: width >= 1024,
-          isWide: width >= 1440,
-        });
-      });
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      setViewport((prev) =>
+        prev.width === width && prev.height === height
+          ? prev
+          : {
+              width,
+              height,
+              isMobile: width < 640,
+              isTablet: width >= 640 && width < 1024,
+              isDesktop: width >= 1024,
+              isWide: width >= 1440,
+            },
+      );
     };
     compute();
     window.addEventListener("resize", compute, { passive: true });
     window.addEventListener("orientationchange", compute);
     return () => {
-      cancelAnimationFrame(raf);
       window.removeEventListener("resize", compute);
       window.removeEventListener("orientationchange", compute);
     };
   }, []);
 
   return viewport;
+}
+
+/* ────────────────────────────────────────────
+   Box size — live content-box of an element
+   ──────────────────────────────────────────────
+   Measurement used by the pinned 3D sections to fit their scene into
+   whatever space the layout actually gives them, instead of trusting
+   breakpoint guesses. The first measure happens synchronously before
+   paint, so the very first client frame is already correctly fitted.
+   Layout metrics (clientWidth/Height minus padding) rather than
+   getBoundingClientRect: they ignore transforms — the fit scale a caller
+   applies from these numbers must not feed back into them — and they
+   stay readable when rendering callbacks are throttled (hidden tabs).
+   Returns {0,0} until mounted (and on the server), so callers must keep
+   a sensible fallback for SSR markup.
+   ──────────────────────────────────────────── */
+
+export interface BoxSize {
+  w: number;
+  h: number;
+}
+
+export function useBoxSize<T extends HTMLElement = HTMLDivElement>(): [
+  React.RefObject<T | null>,
+  BoxSize,
+] {
+  const ref = useRef<T>(null);
+  const [box, setBox] = useState<BoxSize>({ w: 0, h: 0 });
+
+  useIsoLayoutEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const measure = () => {
+      const cs = getComputedStyle(el);
+      const w = Math.round(
+        el.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight),
+      );
+      const h = Math.round(
+        el.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom),
+      );
+      setBox((prev) => (prev.w === w && prev.h === h ? prev : { w, h }));
+    };
+    measure();
+    /* ResizeObserver catches layout-driven size changes; the resize
+       listener is the belt-and-braces path for environments where RO
+       delivery is suspended along with rendering. */
+    const obs = new ResizeObserver(measure);
+    obs.observe(el);
+    window.addEventListener("resize", measure, { passive: true });
+    return () => {
+      obs.disconnect();
+      window.removeEventListener("resize", measure);
+    };
+  }, []);
+
+  return [ref, box];
 }
 
 /* ────────────────────────────────────────────
