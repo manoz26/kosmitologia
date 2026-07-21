@@ -19,10 +19,10 @@
 
 import { useRef } from "react";
 import Link from "next/link";
-import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, ChevronDown } from "lucide-react";
 
-import { ScrollFilm, HERO_FILM, useHeroFilm } from "@/components/ui/scroll-film";
+import { ScrollFilm, HERO_FILM, useHeroFilm, useStaticFilm } from "@/components/ui/scroll-film";
 
 /* Must match the light page background so the footage melts into the page. */
 const PAGE_BG = "#FAFBFE";
@@ -66,7 +66,7 @@ function HeroCopy() {
 
 export function HeroLight() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const reduced = useReducedMotion();
+  const staticFilm = useStaticFilm();
   const film = useHeroFilm();
 
   const { scrollYProgress } = useScroll({
@@ -86,8 +86,10 @@ export function HeroLight() {
   const cueOpacity = useTransform(scrollYProgress, (p) => 1 - clamp01(p / 0.06));
   const blendOpacity = useTransform(scrollYProgress, (p) => clamp01((p - 0.78) / 0.22));
 
-  /* ── Reduced motion: static poster, normal height, no scrub ── */
-  if (reduced) {
+  /* ── Touch device or reduced motion: static poster, normal height, no
+     scrub. The crash guard — phones never mount the frame canvas, so the
+     ~210MB of decoded footage that reloaded the tab on scroll is gone. ── */
+  if (staticFilm) {
     return (
       <section className="relative h-[100svh] w-full overflow-hidden bg-[#0a0a0a]">
         {/* eslint-disable-next-line @next/next/no-img-element */}

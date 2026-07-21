@@ -36,11 +36,12 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import {
   motion,
   useMotionValueEvent,
+  useReducedMotion,
   useTransform,
   type MotionValue,
 } from "framer-motion";
 
-import { isSlowConnection } from "@/lib/perf";
+import { isSlowConnection, isTouchDevice } from "@/lib/perf";
 
 /* The hero footage manifest — assets generated in /public/hero-film. */
 export const HERO_FILM = {
@@ -73,6 +74,22 @@ export function useHeroFilm(): typeof HERO_FILM {
       poster: HERO_FILM.poster,
     };
   }, [stride]);
+}
+
+/* True when the frame-scrub must be swapped for a static poster instead of the
+   canvas: any TOUCH device (phones/tablets — where holding ~60 decoded 720p
+   frames resident, ~210MB, pushes WebKit past its per-tab budget and reloads
+   the page on scroll) or a reduced-motion request. Resolves after mount
+   (client-only matchMedia via isTouchDevice); SSR and the first client render
+   stay identical to desktop, so no hydration mismatch is possible. Computers
+   (fine pointer, motion allowed) keep the full 120-frame canvas scrub. */
+export function useStaticFilm(): boolean {
+  const reduced = useReducedMotion();
+  const [coarse, setCoarse] = useState(false);
+  useEffect(() => {
+    setCoarse(isTouchDevice());
+  }, []);
+  return !!reduced || coarse;
 }
 
 const clamp01 = (v: number) => Math.min(1, Math.max(0, v));

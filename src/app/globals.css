@@ -594,7 +594,13 @@ html.perf-lite .animate-drift-a,
 html.perf-lite .animate-drift-b,
 html.perf-lite .animate-drift-c,
 html.perf-lite .animate-conic-sweep,
-html.perf-lite .animate-grid-pan {
+html.perf-lite .animate-grid-pan,
+/* Perpetual per-section decorative loops (molecule orbits, halo glow) — these
+   run forever on every mounted section, so on phones they keep the GPU busy
+   even when off-screen. Freeze them into their resting pose site-wide. */
+html.perf-lite .animate-orbit-spin,
+html.perf-lite .animate-orbit-spin-rev,
+html.perf-lite .animate-halo-pulse {
   animation: none !important;
 }
 

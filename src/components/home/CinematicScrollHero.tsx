@@ -20,10 +20,10 @@
    ══════════════════════════════════════════════════════════════════════════ */
 
 import { useRef } from "react";
-import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { ChevronDown, MousePointer2, Sparkles } from "lucide-react";
 
-import { ScrollFilm, HERO_FILM, useHeroFilm } from "@/components/ui/scroll-film";
+import { ScrollFilm, HERO_FILM, useHeroFilm, useStaticFilm } from "@/components/ui/scroll-film";
 
 const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
 
@@ -51,7 +51,7 @@ function HeroCopy() {
 
 export function CinematicScrollHero() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const reduced = useReducedMotion();
+  const staticFilm = useStaticFilm();
   const film = useHeroFilm();
 
   const { scrollYProgress } = useScroll({
@@ -64,8 +64,10 @@ export function CinematicScrollHero() {
   const cueOpacity = useTransform(scrollYProgress, (p) => 1 - clamp01(p / 0.06));
   const blendOpacity = useTransform(scrollYProgress, (p) => clamp01((p - 0.78) / 0.22));
 
-  /* ── Reduced motion: static poster, normal height, no scrub ── */
-  if (reduced) {
+  /* ── Touch device or reduced motion: static poster, normal height, no
+     scrub. This is the crash guard — phones never mount the frame canvas, so
+     the ~210MB of decoded footage that made WebKit reload the tab is gone. ── */
+  if (staticFilm) {
     return (
       <section className="relative h-[100svh] w-full overflow-hidden bg-[#0a0a0a]">
         {/* eslint-disable-next-line @next/next/no-img-element */}
