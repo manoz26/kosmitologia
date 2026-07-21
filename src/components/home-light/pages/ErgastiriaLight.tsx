@@ -162,7 +162,7 @@ export function ErgastiriaLight() {
       </section>
 
       {/* Three lab domains */}
-      <section className="border-t border-slate-200/70 py-20 md:py-24">
+      <section className="py-20 md:py-24">
         <div className={CONTAINER}>
           <SectionHead
             kicker="Οι εγκαταστάσεις"
@@ -189,7 +189,7 @@ export function ErgastiriaLight() {
       </section>
 
       {/* Signature: analysis pipeline */}
-      <section className="border-t border-slate-200/70 bg-[#F4F7ED] py-20 md:py-24">
+      <section className="py-20 md:py-24">
         <div className={CONTAINER}>
           <SectionHead
             kicker="Ενόργανη ανάλυση"

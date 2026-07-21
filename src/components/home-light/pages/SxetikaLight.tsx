@@ -130,7 +130,7 @@ export function SxetikaLight() {
   return (
     <>
       {/* Institution facts strip */}
-      <section className="border-b border-slate-200/70 bg-[#FAFBFE]">
+      <section>
         <div className={cn(CONTAINER, "grid gap-8 py-14 sm:grid-cols-2 lg:grid-cols-4")}>
           {institutionFacts.map((f, i) => (
             <FadeIn key={f.value} delay={i * 0.06}>
@@ -200,7 +200,7 @@ export function SxetikaLight() {
       </section>
 
       {/* Signature: history timeline */}
-      <section className="border-t border-slate-200/70 bg-[#F4F7ED] py-20 md:py-24">
+      <section className="py-20 md:py-24">
         <div className={CONTAINER}>
           <SectionHead
             kicker="Η διαδρομή"

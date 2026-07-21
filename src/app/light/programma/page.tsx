@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { LightPageHeader, BackToTop, DraftTag } from "@/components/home-light/light-kit";
+import { ChemistryBackdrop } from "@/components/home-light/ChemistryBackdrop";
 import { ProgrammaLight } from "@/components/home-light/pages/ProgrammaLight";
 
 export const metadata: Metadata = {
@@ -12,8 +13,10 @@ export const metadata: Metadata = {
 
 export default function ProgrammaLightPage() {
   return (
-    <div className="bg-[#FAFBFE]">
+    <div className="relative isolate bg-[#F5F8E8]">
+      <ChemistryBackdrop variant="method" />
       <LightPageHeader
+        transparent
         eyebrow="Δύο Ειδικεύσεις · 90 ECTS"
         title="Πρόγραμμα"
         highlight="Σπουδών"

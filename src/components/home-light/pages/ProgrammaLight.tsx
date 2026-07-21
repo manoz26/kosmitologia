@@ -396,7 +396,7 @@ export function ProgrammaLight() {
   return (
     <>
       {/* At-a-glance facts */}
-      <section className="border-b border-slate-200/70 bg-[#FAFBFE]">
+      <section>
         <div className={cn(CONTAINER, "grid grid-cols-2 gap-8 py-14 lg:grid-cols-4")}>
           {programmeFacts.map((f, i) => (
             <FadeIn key={f.label} delay={i * 0.06} className="text-center">
@@ -425,7 +425,7 @@ export function ProgrammaLight() {
       </section>
 
       {/* Signature: curriculum explorer */}
-      <section className="border-t border-slate-200/70 bg-[#F4F7ED] py-20 md:py-24">
+      <section className="py-20 md:py-24">
         <div className={CONTAINER}>
           <SectionHead
             center
@@ -438,7 +438,7 @@ export function ProgrammaLight() {
       </section>
 
       {/* Third semester note */}
-      <section className="border-t border-slate-200/70 bg-white py-20 md:py-24">
+      <section className="py-20 md:py-24">
         <div className={cn(CONTAINER, "grid items-center gap-10 lg:grid-cols-[1fr_1.1fr] lg:gap-16")}>
           <SectionHead
             kicker="Γ' Εξάμηνο"

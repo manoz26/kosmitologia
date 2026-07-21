@@ -303,21 +303,31 @@ export function LightPageHeader({
   highlight,
   intro,
   children,
+  transparent = false,
 }: {
   eyebrow: string;
   title: string;
   highlight?: string;
   intro?: string;
   children?: React.ReactNode;
+  /** Drop the band's own fill/border so a page-level backdrop shows through. */
+  transparent?: boolean;
 }) {
   return (
-    <header className="relative overflow-hidden border-b border-slate-200/70 bg-[#F4F7ED]">
+    <header
+      className={cn(
+        "relative overflow-hidden",
+        !transparent && "border-b border-slate-200/70 bg-[#F4F7ED]",
+      )}
+    >
       {/* one faint λαχανί wash, top-right — the only decoration */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full opacity-60 blur-3xl"
-        style={{ background: "radial-gradient(circle, rgba(185,216,74,0.28), transparent 70%)" }}
-      />
+      {!transparent && (
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full opacity-60 blur-3xl"
+          style={{ background: "radial-gradient(circle, rgba(185,216,74,0.28), transparent 70%)" }}
+        />
+      )}
       <div className={cn(CONTAINER, "relative pt-32 pb-16 md:pt-36 md:pb-20")}>
         <FadeIn>
           <Kicker>{eyebrow}</Kicker>
