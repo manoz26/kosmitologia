@@ -1,3 +1,5 @@
+import { contact, program, telHref } from "./program";
+
 export interface NavItem {
   label: string;
   href: string;
@@ -49,22 +51,21 @@ export const footerGroups: NavGroup[] = [
   {
     label: "Επικοινωνία",
     items: [
-      { label: "pms.cosm@nutr.ihu.gr", href: "mailto:pms.cosm@nutr.ihu.gr" },
-      { label: "2310 013444", href: "tel:+302310013444" },
-      { label: "2310 791176", href: "tel:+302310791176" },
+      { label: contact.email.value, href: `mailto:${contact.email.value}` },
+      { label: contact.phone.value, href: telHref(contact.phone.value) },
     ],
   },
 ];
 
 export const contactInfo = {
-  email: "pms.cosm@nutr.ihu.gr",
-  phone1: "2310 013444",
-  phone2: "2310 791176",
-  address: "Γραμματεία ΠΜΣ «Κοσμητολογία»",
-  building: "Κτήριο Διατροφής, 1ος Όροφος",
-  university: "Διεθνές Πανεπιστήμιο της Ελλάδος",
-  campus: "Αλεξάνδρεια Πανεπιστημιούπολη",
-  postalCode: "57400 Σίνδος, Θεσσαλονίκη",
+  email: contact.email.value,
+  phone1: contact.phone.value,
+  fax: contact.fax.value,
+  address: contact.office.value,
+  building: contact.building.value,
+  university: program.university.value,
+  campus: contact.campus.value,
+  postalCode: contact.postalCode.value,
   mapEmbedUrl:
     "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3026.5!2d22.9874!3d40.6844!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDQxJzAzLjgiTiAyMsKwNTknMTQuNiJF!5e0!3m2!1sel!2sgr!4v1",
 };

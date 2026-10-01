@@ -6,6 +6,8 @@
    through `getIcon` in primitives.tsx.
    ══════════════════════════════════════════════════════════════════════════ */
 
+import { admissions, formatEuro, formatNumber, program } from "@/data/program";
+
 export type IconKey =
   | "sprout"
   | "flask"
@@ -131,7 +133,7 @@ export const identityHighlights: IdentityHighlight[] = [
     title: "ΔΙΠΑΕ",
     value: "Αλεξάνδρεια Πανεπιστημιούπολη",
     description:
-      "Το ΠΜΣ λειτουργεί στις ιδιόκτητες εγκαταστάσεις της Σίνδου Θεσσαλονίκης, σε ένα campus 1.600 στρεμμάτων.",
+      `Το ΠΜΣ λειτουργεί στις ιδιόκτητες εγκαταστάσεις της Σίνδου Θεσσαλονίκης, σε ένα campus ${formatNumber(program.campusArea.value)} στρεμμάτων.`,
   },
   {
     icon: "microscope",
@@ -143,14 +145,14 @@ export const identityHighlights: IdentityHighlight[] = [
   {
     icon: "calendar",
     title: "Διάρκεια",
-    value: "3 εξάμηνα · 90 ECTS",
+    value: `${program.semesters.value.min} εξάμηνα · ${program.ects.value} ECTS`,
     description:
-      "Πλήρης φοίτηση τριών εξαμήνων, με δυνατότητα μερικής φοίτησης έως πέντε εξάμηνα για εργαζόμενους.",
+      `Ελάχιστη διάρκεια ${program.semesters.value.min} διδακτικά εξάμηνα· ο μέγιστος χρόνος φοίτησης είναι ${program.semesters.value.max} εξάμηνα.`,
   },
   {
     icon: "euro",
     title: "Δίδακτρα",
-    value: "€2.400",
+    value: formatEuro(program.tuition.value),
     description:
       "Συνολικά δίδακτρα για ολόκληρο το πρόγραμμα.",
   },
@@ -337,77 +339,6 @@ export const journeyStages: JourneyStage[] = [
 ];
 
 /* ────────────────────────────────────────────
-   Programme statistics (constellation)
-   ──────────────────────────────────────────── */
-
-export interface ProgramStat {
-  icon: IconKey;
-  value: number;
-  suffix?: string;
-  prefix?: string;
-  label: string;
-  sub: string;
-}
-
-export const programStats: ProgramStat[] = [
-  { icon: "calendar", value: 3, label: "Εξάμηνα", sub: "Ελάχιστη διάρκεια σπουδών" },
-  { icon: "award", value: 90, suffix: " ECTS", label: "Πιστωτικές μονάδες", sub: "Πλήρες πρόγραμμα" },
-  { icon: "layers", value: 2, label: "Κατευθύνσεις", sub: "Εξειδικευμένη γνώση" },
-  { icon: "users", value: 40, label: "Φοιτητές / έτος", sub: "Μικρά, εστιασμένα τμήματα" },
-  { icon: "book", value: 11, label: "Μαθήματα", sub: "9 ανά ειδίκευση (7 κοινά)" },
-  { icon: "euro", value: 2400, prefix: "€", label: "Δίδακτρα", sub: "Για ολόκληρο το πρόγραμμα" },
-];
-
-/* ────────────────────────────────────────────
-   Why choose us
-   ──────────────────────────────────────────── */
-
-export interface Reason {
-  icon: IconKey;
-  title: string;
-  description: string;
-}
-
-export const reasons: Reason[] = [
-  {
-    icon: "flask-round",
-    title: "Εργαστηριακή Πρακτική",
-    description:
-      "Πραγματική παρασκευή και ενόργανη ανάλυση καλλυντικών σε σύγχρονα εργαστήρια — όχι μόνο θεωρία.",
-  },
-  {
-    icon: "users",
-    title: "Διεπιστημονικό Σώμα ΔΕΠ",
-    description:
-      "Καθηγητές από ΔΙΠΑΕ, ΑΠΘ, ΠΑΔΑ και τη βιομηχανία, που γεφυρώνουν χημεία, δερματολογία και επιχειρηματικότητα.",
-  },
-  {
-    icon: "scale",
-    title: "Κανονιστική Επάρκεια",
-    description:
-      "Βαθιά γνώση του Ευρωπαϊκού Κανονισμού 1223/2009, GMP και του φακέλου ασφάλειας προϊόντος.",
-  },
-  {
-    icon: "trending",
-    title: "Επαγγελματική Απορρόφηση",
-    description:
-      "Προφίλ αποφοίτου έτοιμο για R&D, ποιοτικό έλεγχο, κλινική κοσμητολογία και δική του επιχείρηση.",
-  },
-  {
-    icon: "clock",
-    title: "Ευέλικτο Πρόγραμμα",
-    description:
-      "Δυνατότητα μερικής φοίτησης για εργαζόμενους φοιτητές.",
-  },
-  {
-    icon: "globe",
-    title: "Δίκτυο & Διασυνδέσεις",
-    description:
-      "Συνεργασίες με εταιρείες του κλάδου για πρακτική άσκηση, διπλωματικές και ευκαιρίες σταδιοδρομίας.",
-  },
-];
-
-/* ────────────────────────────────────────────
    Labs & infrastructure
    ──────────────────────────────────────────── */
 
@@ -466,7 +397,7 @@ export const admissionSteps: AdmissionStep[] = [
     icon: "calendar",
     title: "Πρόσκληση Εκδήλωσης Ενδιαφέροντος",
     description:
-      "Παρακολουθήστε τις ανακοινώσεις για την έναρξη υποβολής αιτήσεων του νέου ακαδημαϊκού κύκλου.",
+      `Η Συντονιστική Επιτροπή ανακοινώνει κάθε άνοιξη τον νέο κύκλο. Για τον κύκλο ${admissions.cycle} οι αιτήσεις αναμένονται από 10 Ιουνίου έως 10 Ιουλίου.`,
   },
   {
     index: "02",
@@ -487,7 +418,7 @@ export const admissionSteps: AdmissionStep[] = [
     icon: "scale",
     title: "Αξιολόγηση Υποψηφιότητας",
     description:
-      "Χωρίς γραπτές εξετάσεις — αξιολόγηση φακέλου με μόρια σε συνάφεια πτυχίου, βαθμό και εμπειρία.",
+      "Χωρίς γραπτές εξετάσεις: αξιολόγηση φακέλου με μόρια (συνάφεια πτυχίου, βαθμός, εμπειρία) και προσωπική συνέντευξη.",
   },
   {
     index: "05",
@@ -499,9 +430,10 @@ export const admissionSteps: AdmissionStep[] = [
 ];
 
 export const evaluationCriteria: { label: string; weight: number }[] = [
-  { label: "Συνάφεια πτυχίου", weight: 10 },
-  { label: "Βαθμός πτυχίου", weight: 20 },
-  { label: "Βαθμοί σε σχετικά μαθήματα", weight: 10 },
+  { label: "Συνάφεια πτυχίου", weight: program.selectionWeights.value.relevance },
+  { label: "Βαθμός πτυχίου", weight: program.selectionWeights.value.degreeGrade },
+  { label: "Βαθμοί σε σχετικά μαθήματα", weight: program.selectionWeights.value.relevantCourses },
+  /* ΑΝΕΠΙΒΕΒΑΙΩΤΑ ποσοστά — εκκρεμεί απόφαση (βλ. program.ts). */
   { label: "Επαγγελματική / ερευνητική εμπειρία", weight: 35 },
   { label: "Συστατικές επιστολές & συνέντευξη", weight: 25 },
 ];
@@ -812,9 +744,9 @@ export interface CampusFact {
 }
 
 export const campusFacts: CampusFact[] = [
-  { icon: "building", label: "Ίδρυμα", value: "Διεθνές Πανεπιστήμιο της Ελλάδος" },
+  { icon: "building", label: "Ίδρυμα", value: program.university.value },
   { icon: "map-pin", label: "Διεύθυνση", value: "Αλεξάνδρεια Πανεπιστημιούπολη, 57400 Σίνδος" },
-  { icon: "globe", label: "Έκταση", value: "1.600 στρέμματα ιδιόκτητων εγκαταστάσεων" },
+  { icon: "globe", label: "Έκταση", value: `${formatNumber(program.campusArea.value)} στρέμματα ιδιόκτητων εγκαταστάσεων` },
   { icon: "graduation", label: "Τμήμα", value: "Επιστημών Διατροφής & Διαιτολογίας" },
 ];
 
@@ -840,42 +772,8 @@ export const navTargets: NavTarget[] = [
 ];
 
 /* ────────────────────────────────────────────
-   Value highlights (intro band)
+   Learning formats (ProgramRhythm3D)
    ──────────────────────────────────────────── */
-
-export interface ValueHighlight {
-  icon: IconKey;
-  title: string;
-  text: string;
-}
-
-export const valueHighlights: ValueHighlight[] = [
-  { icon: "flask-round", title: "Πρακτική", text: "Hands-on εργαστήρια" },
-  { icon: "users", title: "Μέντορες", text: "19 μέλη ΔΕΠ" },
-  { icon: "scale", title: "Νομοθεσία", text: "EU 1223/2009" },
-  { icon: "trending", title: "Καριέρα", text: "5 μονοπάτια" },
-];
-
-/* ────────────────────────────────────────────
-   Programme spec sheet — "με μια ματιά"
-   ──────────────────────────────────────────── */
-
-export interface ProgramFact {
-  icon: IconKey;
-  label: string;
-  value: string;
-  note: string;
-}
-
-export const programFacts: ProgramFact[] = [
-  { icon: "graduation", label: "Τίτλος", value: "MSc Κοσμητολογία", note: "Μεταπτυχιακό Δίπλωμα Ειδίκευσης" },
-  { icon: "calendar", label: "Διάρκεια", value: "3 εξάμηνα", note: "Πλήρης φοίτηση (έως 5 μερική)" },
-  { icon: "award", label: "Πιστωτικές", value: "90 ECTS", note: "30 + 30 + 30 ανά εξάμηνο" },
-  { icon: "euro", label: "Δίδακτρα", value: "€2.400", note: "Για ολόκληρο το πρόγραμμα" },
-  { icon: "layers", label: "Κατευθύνσεις", value: "2", note: "Παρασκευή & Δερματολογία" },
-  { icon: "users", label: "Εισακτέοι", value: "40 / έτος", note: "Μικρά, εστιασμένα τμήματα" },
-  { icon: "globe", label: "Γλώσσα", value: "Ελληνικά", note: "Αγγλική βιβλιογραφία" },
-];
 
 export interface LearningFormat {
   icon: IconKey;
@@ -964,67 +862,6 @@ export const thesisSteps: ThesisStep[] = [
   { index: "02", title: "Βιβλιογραφική & πειραματική έρευνα", icon: "search" },
   { index: "03", title: "Συγγραφή & τεκμηρίωση", icon: "book" },
   { index: "04", title: "Δημόσια υποστήριξη", icon: "graduation" },
-];
-
-/* ────────────────────────────────────────────
-   Useful downloads / documents
-   ──────────────────────────────────────────── */
-
-export interface DownloadItem {
-  icon: IconKey;
-  title: string;
-  description: string;
-  href: string;
-  type: string;
-  external?: boolean;
-}
-
-export const downloads: DownloadItem[] = [
-  {
-    icon: "book",
-    title: "Έντυπο Αίτησης",
-    description: "Συμπληρώστε και υποβάλετε την αίτηση υποψηφιότητας.",
-    href: "/aitisi.docx",
-    type: "DOCX",
-  },
-  {
-    icon: "layers",
-    title: "Πρόγραμμα Σπουδών",
-    description: "Αναλυτικά μαθήματα, ECTS και μαθησιακά αποτελέσματα.",
-    href: "/programma",
-    type: "Σελίδα",
-  },
-  {
-    icon: "users",
-    title: "Διδάσκοντες",
-    description: "Το σώμα ΔΕΠ και οι επιστημονικοί συνεργάτες του ΠΜΣ.",
-    href: "/didaskotes",
-    type: "Σελίδα",
-  },
-  {
-    icon: "scale",
-    title: "Εισαγωγή & Δικαιολογητικά",
-    description: "Προϋποθέσεις, κριτήρια και απαιτούμενα δικαιολογητικά.",
-    href: "/eggrafes",
-    type: "Σελίδα",
-  },
-];
-
-/* ────────────────────────────────────────────
-   Accreditation / quality badges
-   ──────────────────────────────────────────── */
-
-export interface Accreditation {
-  icon: IconKey;
-  title: string;
-  subtitle: string;
-}
-
-export const accreditations: Accreditation[] = [
-  { icon: "award", title: "90 ECTS", subtitle: "Πλήρως πιστοποιημένες μονάδες" },
-  { icon: "globe", title: "Bologna", subtitle: "Εναρμόνιση με τον Ευρωπαϊκό Χώρο" },
-  { icon: "scale", title: "EU 1223/2009", subtitle: "Κανονιστικό πλαίσιο καλλυντικών" },
-  { icon: "shield", title: "Ν. 4957/2022", subtitle: "Θεσμικό πλαίσιο ΠΜΣ" },
 ];
 
 /* ────────────────────────────────────────────
@@ -1279,16 +1116,6 @@ export const methodSteps: MethodStep[] = [
     description: "Τεκμηριώνουμε, παρουσιάζουμε και δημοσιεύουμε τα ευρήματα — η γνώση γίνεται κοινό αγαθό.",
     icon: "graduation",
   },
-];
-
-/* ────────────────────────────────────────────
-   Pull quotes
-   ──────────────────────────────────────────── */
-
-export const pullQuotes: string[] = [
-  "Η ομορφιά που έχει βάση ξεκινά πάντα από την επιστήμη.",
-  "Κάθε ισχυρισμός χρειάζεται απόδειξη — κι εδώ μαθαίνουμε να τη χτίζουμε.",
-  "Από το μόριο στο ράφι: γεφυρώνουμε το εργαστήριο με την αγορά.",
 ];
 
 /* ────────────────────────────────────────────

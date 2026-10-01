@@ -6,6 +6,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { PerfLite } from "@/components/PerfLite";
 import { SITE_URL } from "@/lib/site";
+import { contact, telHref } from "@/data/program";
 import "./globals.css";
 
 // Heading face — Commissioner ships full Greek glyphs (proper ω/ώ), unlike
@@ -68,15 +69,15 @@ export const viewport: Viewport = {
   themeColor: "#DCE8AF",
 };
 
-/* Verified facts only (Γραμματεία contact details from /eggrafes). */
+/* Verified facts only — from src/data/program.ts (Οδηγός Σπουδών σ.2). */
 const JSON_LD = {
   "@context": "https://schema.org",
   "@type": "EducationalOrganization",
   name: "ΠΜΣ Κοσμητολογία — Διεθνές Πανεπιστήμιο της Ελλάδος",
   url: SITE_URL,
   logo: `${SITE_URL}/logo.png`,
-  email: "pms.cosm@nutr.ihu.gr",
-  telephone: "+302310013444",
+  email: contact.email.value,
+  telephone: telHref(contact.phone.value).slice(4),
   address: {
     "@type": "PostalAddress",
     addressLocality: "Σίνδος, Θεσσαλονίκη",

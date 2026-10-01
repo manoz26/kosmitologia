@@ -16,6 +16,7 @@ import { ArrowRight, Mail, Phone, MapPin, Sparkles } from "lucide-react";
 import { TiltCard } from "./lib/primitives";
 import { SerumBottle, Droplet3D, Leaf3D, Molecule3D, OrbitRing } from "./lib/cosmetic3d";
 import { useReduced } from "./lib/hooks";
+import { contact, telHref } from "@/data/program";
 
 const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
 
@@ -95,11 +96,11 @@ export function CtaFinale3D() {
 
           {/* contact line */}
           <div className="mt-10 flex flex-col flex-wrap items-center justify-center gap-3 border-t border-ihu-green-dark/10 pt-8 text-sm text-text-secondary sm:flex-row sm:gap-7">
-            <a href="mailto:pms.cosm@nutr.ihu.gr" className="inline-flex items-center gap-2 transition-colors hover:text-ihu-green-dark">
-              <Mail size={16} className="text-ihu-green" /> pms.cosm@nutr.ihu.gr
+            <a href={`mailto:${contact.email.value}`} className="inline-flex items-center gap-2 transition-colors hover:text-ihu-green-dark">
+              <Mail size={16} className="text-ihu-green" /> {contact.email.value}
             </a>
-            <a href="tel:+302310013444" className="inline-flex items-center gap-2 transition-colors hover:text-ihu-green-dark">
-              <Phone size={16} className="text-ihu-green" /> 2310 013444
+            <a href={telHref(contact.phone.value)} className="inline-flex items-center gap-2 transition-colors hover:text-ihu-green-dark">
+              <Phone size={16} className="text-ihu-green" /> {contact.phone.value}
             </a>
             <span className="inline-flex items-center gap-2">
               <MapPin size={16} className="text-ihu-green" /> Σίνδος, Θεσσαλονίκη

@@ -4,13 +4,14 @@ import { motion } from "framer-motion";
 import { Mail, Phone, MapPin, Send, Clock, Bus, TrainFront, Car } from "lucide-react";
 import { SectionWrapper } from "@/components/ui/SectionWrapper";
 import { contactInfo } from "@/data/navigation";
+import { contact } from "@/data/program";
 import { GlassCard } from "@/components/ui/GlassCard";
 
 const contactCards = [
   {
     icon: Phone,
     title: "Τηλέφωνο",
-    lines: [contactInfo.phone1, contactInfo.phone2],
+    lines: [contactInfo.phone1, `Fax ${contactInfo.fax}`],
     href: `tel:+30${contactInfo.phone1.replace(/\s/g, "")}`,
     color: "from-ihu-green to-ihu-green-dark",
   },
@@ -68,7 +69,7 @@ export function ContactSection() {
           <div className="flex items-center gap-3 border border-border-soft shadow-sm bg-white rounded-md px-4 py-3">
             <Clock className="h-4 w-4 text-ihu-green flex-shrink-0" />
             <p className="text-xs text-text-muted">
-              Ωράριο Γραμματείας: <span className="font-medium text-text-secondary">Δευτ-Παρ 09:00-15:00</span>
+              Ωράριο Γραμματείας: <span className="font-medium text-text-secondary">{contact.hours.value}</span>
             </p>
           </div>
         </div>
@@ -118,7 +119,7 @@ export function ContactSection() {
                   <option>Γενική Ερώτηση</option>
                   <option>Αίτηση Εγγραφής</option>
                   <option>Πρόγραμμα Σπουδών</option>
-                  <option>Δίδακτρα & Απαλλαγές</option>
+                  <option>Δίδακτρα</option>
                   <option>Άλλο</option>
                 </select>
               </div>

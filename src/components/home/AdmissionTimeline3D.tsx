@@ -13,6 +13,7 @@ import Link from "next/link";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { ArrowRight, FileText } from "lucide-react";
 
+import { formatEuro, program } from "@/data/program";
 import { admissionSteps, evaluationCriteria } from "./lib/data";
 import { Icon, Reveal, SectionHeading } from "./lib/primitives";
 
@@ -90,8 +91,8 @@ function CriteriaPanel() {
 
       <div className="mt-7 grid grid-cols-3 gap-3 border-t border-ihu-green-dark/10 pt-6 text-center">
         {[
-          { value: "€2.400", label: "Δίδακτρα" },
-          { value: "40", label: "Εισακτέοι" },
+          { value: formatEuro(program.tuition.value), label: "Δίδακτρα" },
+          { value: String(program.intake.value), label: "Εισακτέοι" },
           { value: "0", label: "Εξετάσεις" },
         ].map((f) => (
           <div key={f.label}>

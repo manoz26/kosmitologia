@@ -2,6 +2,8 @@ import Link from "next/link";
 import { Mail, MapPin, Phone } from "lucide-react";
 import Image from "next/image";
 
+import { contact, program, telHref } from "@/data/program";
+
 export function Footer() {
   return (
     <footer className="bg-[#F4F7ED] pt-16 pb-8 relative overflow-hidden border-t-[8px] border-secondary">
@@ -28,16 +30,16 @@ export function Footer() {
           <ul className="space-y-4">
             <li className="flex items-start gap-3 text-text-secondary text-sm">
               <MapPin className="text-secondary shrink-0 mt-0.5" size={18} />
-              <span>Διεθνές Πανεπιστήμιο της Ελλάδος<br />Αλεξάνδρεια Πανεπιστημιούπολη<br />Τ.Θ. 141, 57400, Σίνδος, Θεσσαλονίκη</span>
+              <span>{program.university.value}<br />{contact.campus.value}<br />{contact.poBox.value}, {contact.postalCode.value}</span>
             </li>
             <li className="flex items-center gap-3 text-text-secondary text-sm">
               <Phone className="text-secondary shrink-0" size={18} />
-              <span>2310 013444</span>
+              <a href={telHref(contact.phone.value)} className="hover:text-primary transition-colors">{contact.phone.value}</a>
             </li>
             <li className="flex items-center gap-3 text-text-secondary text-sm">
               <Mail className="text-secondary shrink-0" size={18} />
-              <a href="mailto:pms.cosm@nutr.ihu.gr" className="hover:text-primary transition-colors">
-                pms.cosm@nutr.ihu.gr
+              <a href={`mailto:${contact.email.value}`} className="hover:text-primary transition-colors">
+                {contact.email.value}
               </a>
             </li>
           </ul>

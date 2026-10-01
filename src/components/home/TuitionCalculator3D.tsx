@@ -15,9 +15,10 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, Wallet } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import { formatEuro, program } from "@/data/program";
 import { Reveal, SectionHeading } from "./lib/primitives";
 
-const BASE = 2400;
+const BASE = program.tuition.value;
 
 function euro(n: number) {
   return n.toLocaleString("el-GR", { style: "currency", currency: "EUR", maximumFractionDigits: 0 });
@@ -37,7 +38,7 @@ export function TuitionCalculator3D() {
           labelIcon="euro"
           title="Υπολογίστε τα"
           highlight="δίδακτρά σας"
-          description="Τα συνολικά δίδακτρα είναι €2.400 για όλο το πρόγραμμα."
+          description={`Τα συνολικά δίδακτρα είναι ${formatEuro(BASE)} για όλο το πρόγραμμα.`}
         />
 
         <Reveal direction="scale">

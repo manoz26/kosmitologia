@@ -12,66 +12,26 @@ import { AdmissionTimeline3D } from "@/components/home/AdmissionTimeline3D";
 import { TuitionCalculator3D } from "@/components/home/TuitionCalculator3D";
 import { ScrollBackdrop } from "@/components/home/ScrollBackdrop";
 import { DownloadsSection } from "@/components/home/DownloadsSection";
+import {
+  admissions, contact, formatDate, requiredDocuments, telHref,
+} from "@/data/program";
+import { ADMISSIONS_STATUS_LABEL, useAdmissionsStatus } from "@/lib/use-admissions-status";
 
-const DOCUMENTS = [
-  {
-    title: "Έντυπο Αίτησης",
-    desc: "Έντυπο της αίτησης συμπληρωμένο και υπογεγραμμένο.",
-    icon: FileText,
-  },
-  {
-    title: "Αντίγραφο Πτυχίου",
-    desc: "(στην περίπτωση που ο τίτλος έχει αποκτηθεί στην αλλοδαπή, θα πρέπει να συνοδεύεται από αντίγραφο πιστοποιητικού ισοτιμίας και αντιστοιχίας από τον ΔΟΑΤΑΠ) ή βεβαίωση της γραμματείας του Τμήματος στο οποίο φοιτούν η οποία θα αναφέρει ότι ο υποψήφιος έχει περατώσει τις σπουδές του και εκκρεμεί μόνο η διαδικασία της ορκωμοσίας",
-    icon: GraduationCap,
-  },
-  {
-    title: "Αναλυτική Βαθμολογία",
-    desc: "Πιστοποιητικό αναλυτικής βαθμολογίας.",
-    icon: BookOpen,
-  },
-  {
-    title: "Λοιποί Τίτλοι Σπουδών",
-    desc: "Αντίγραφα επιπλέον τίτλων σπουδών.",
-    icon: Award,
-    optional: true,
-  },
-  {
-    title: "Βιογραφικό Σημείωμα",
-    desc: "Σύντομο βιογραφικό σημείωμα (και σε CD)",
-    icon: User,
-  },
-  {
-    title: "Πιστοποιητικά Γλωσσών",
-    desc: "Πιστοποιητικά τεκμηρίωσης καλής γνώσης της Αγγλικής γλώσσας ή /και άλλων ξένων γλωσσών (και για τους αλλοδαπούς επάρκεια γνώσης της Ελληνικής γλώσσας)",
-    icon: Languages,
-  },
-  {
-    title: "Επιστημονικές Δημοσιεύσεις",
-    desc: "Επιστημονικές δημοσιεύσεις ή διακρίσεις.",
-    icon: FileText,
-    optional: true,
-  },
-  {
-    title: "Επαγγελματική Εμπειρία",
-    desc: "Αποδεικτικά επαγγελματικής ή/και ερευνητικής εμπειρίας.",
-    icon: Briefcase,
-    optional: true,
-  },
-  {
-    title: "Αστυνομική Ταυτότητα",
-    desc: "Φωτοαντίγραφο αστυνομικού δελτίου ταυτότητας ή διαβατηρίου",
-    icon: ShieldCheck,
-  },
-  {
-    title: "Συστατικές Επιστολές",
-    desc: "Δύο (2) συστατικές επιστολές σε φάκελο σφραγισμένο και υπογεγραμμένο από τον συντάκτη της επιστολής. Οι συστατικές επιστολές μπορεί να προέρχονται είτε από τον ακαδημαϊκό χώρο, είτε από τον επαγγελματικό χώρο.",
-    icon: Mail,
-  }
-];
+const DOC_ICONS: Record<string, React.ComponentType<{ size?: number }>> = {
+  aitisi: FileText,
+  ptyxio: GraduationCap,
+  vathmologia: BookOpen,
+  titloi: Award,
+  cv: User,
+  glosses: Languages,
+  dimosieuseis: FileText,
+  empeiria: Briefcase,
+  taytotita: ShieldCheck,
+  systatikes: Mail,
+};
 
 export function EggrafesContent() {
-  const currentYear = new Date().getFullYear();
-  const nextYear = currentYear + 1;
+  const status = useAdmissionsStatus();
 
   return (
     <main className="relative min-h-screen flex flex-col pt-24">
@@ -82,7 +42,7 @@ export function EggrafesContent() {
       <section className="py-16 lg:py-24">
         <div className="section-container px-4 max-w-4xl mx-auto text-center">
           <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-            <span className="text-secondary font-bold text-sm tracking-widest uppercase mb-4 block" suppressHydrationWarning>Κύκλος Σπουδών {currentYear}-{nextYear}</span>
+            <span className="text-secondary font-bold text-sm tracking-widest uppercase mb-4 block">Κύκλος Σπουδών {admissions.cycle}</span>
             <h1 className="font-heading text-4xl md:text-5xl font-extrabold text-text-primary mb-6">
               Εγγραφές & Αιτήσεις
             </h1>
@@ -112,13 +72,20 @@ export function EggrafesContent() {
               <div className="space-y-6">
                 <div className="flex items-center justify-between border-b border-border-soft pb-6">
                   <p className="text-text-secondary text-lg font-medium">Έναρξη</p>
-                  <p className="text-text-primary font-bold text-xl bg-surface px-4 py-1.5 rounded-md border border-border-soft" suppressHydrationWarning>10/06/{currentYear}</p>
+                  <p className="text-text-primary font-bold text-xl bg-surface px-4 py-1.5 rounded-md border border-border-soft">{formatDate(admissions.opens)}</p>
                 </div>
                 <div className="flex items-center justify-between">
                   <p className="text-text-secondary text-lg font-medium">Λήξη</p>
-                  <p className="text-text-primary font-bold text-xl bg-surface px-4 py-1.5 rounded-md border border-border-soft" suppressHydrationWarning>10/07/{currentYear}</p>
+                  <p className="text-text-primary font-bold text-xl bg-surface px-4 py-1.5 rounded-md border border-border-soft">{formatDate(admissions.closes)}</p>
                 </div>
               </div>
+
+              <p className="mt-6 text-sm leading-relaxed text-text-secondary">
+                {status && <strong className="text-text-primary">{ADMISSIONS_STATUS_LABEL[status]}. </strong>}
+                {admissions.indicative
+                  ? "Ενδεικτικές ημερομηνίες: ο Οδηγός Σπουδών ορίζει υποβολή από 10 Ιουνίου έως 10 Ιουλίου κάθε έτους. Η επίσημη ανακοίνωση βγαίνει την άνοιξη."
+                  : "Σύμφωνα με την επίσημη ανακοίνωση."}
+              </p>
             </motion.div>
 
             {/* DOWNLOAD CARD */}
@@ -163,10 +130,10 @@ export function EggrafesContent() {
           </div>
 
           <div className="bg-white rounded-md border border-border-soft overflow-hidden shadow-lg shadow-black/5">
-            {DOCUMENTS.map((doc, idx) => {
-              const Icon = doc.icon;
+            {requiredDocuments.map((doc) => {
+              const Icon = DOC_ICONS[doc.id] ?? FileText;
               return (
-                <div key={idx} className="group border-b border-border-soft last:border-0 p-6 sm:p-8 flex items-start gap-6 hover:bg-primary/5 transition-colors">
+                <div key={doc.id}className="group border-b border-border-soft last:border-0 p-6 sm:p-8 flex items-start gap-6 hover:bg-primary/5 transition-colors">
                   <div className="w-12 h-12 bg-surface border border-border-soft text-text-secondary rounded-md flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-white group-hover:border-primary transition-colors">
                     <Icon size={24} />
                   </div>
@@ -180,7 +147,7 @@ export function EggrafesContent() {
                       )}
                     </h3>
                     <p className="text-text-secondary text-sm sm:text-base leading-relaxed">
-                      {doc.desc}
+                      {doc.description}
                     </p>
                   </div>
                 </div>
@@ -212,9 +179,10 @@ export function EggrafesContent() {
                 Διεύθυνση Γραμματείας
               </h3>
               <address className="not-italic text-text-secondary leading-relaxed font-medium mt-auto">
-                ΔΙ.ΠΑ.Ε Σίνδος<br/>
-                Κτήριο Σχολής Επιστημών Υγείας, Ισόγειο<br/>
-                Τηλ. 2310 013444
+                {contact.office.value}<br/>
+                {contact.building.value}<br/>
+                {contact.campus.value}, {contact.postalCode.value}<br/>
+                Τηλ. <a href={telHref(contact.phone.value)} className="hover:underline">{contact.phone.value}</a>
               </address>
             </div>
 
@@ -227,12 +195,11 @@ export function EggrafesContent() {
                 Για αποστολή δικαιολογητικών ή πληροφορίες:
               </p>
               <div className="flex flex-col gap-3 mt-auto">
-                <a href="mailto:pms.cosm@nutr.ihu.gr" className="text-primary font-bold text-lg hover:underline inline-flex items-center gap-2">
-                  pms.cosm@nutr.ihu.gr
-                </a>
-                <a href="mailto:pms.cosm@gmail.com" className="text-primary font-bold text-lg hover:underline inline-flex items-center gap-2">
-                  pms.cosm@gmail.com
-                </a>
+                {[contact.email.value, contact.emailAlt.value].map((email) => (
+                  <a key={email} href={`mailto:${email}`} className="text-primary font-bold text-lg hover:underline inline-flex items-center gap-2 break-all">
+                    {email}
+                  </a>
+                ))}
               </div>
             </div>
           </div>
