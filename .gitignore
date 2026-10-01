@@ -50,3 +50,6 @@ next-env.d.ts
 /update_courses.js
 node_modules/
 **/node_modules/
+
+# skill script caches
+__pycache__/
