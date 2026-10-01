@@ -15,6 +15,7 @@
    ══════════════════════════════════════════════════════════════════════════ */
 
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { AnimatePresence, motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { X } from "lucide-react";
 
@@ -305,6 +306,10 @@ function SplitBanner() {
 
 /* ────────────────────────────────────────────
    Course detail modal
+   Rendered through a portal into <body>: inside the section it sat under
+   3D-transformed ancestors, so `position: fixed` was relative to them (not
+   the viewport) and the navbar covered its top. A compact header + a body
+   that scrolls on its own keep the whole card on screen at any height.
    ──────────────────────────────────────────── */
 
 function CourseModal({ course, onClose }: { course: Course; onClose: () => void }) {
@@ -324,9 +329,9 @@ function CourseModal({ course, onClose }: { course: Course; onClose: () => void 
     };
   }, [onClose]);
 
-  return (
+  return createPortal(
     <motion.div
-      className="fixed inset-0 z-[70] flex items-end justify-center p-0 sm:items-center sm:p-6"
+      className="fixed inset-0 z-[80] flex items-end justify-center p-0 sm:items-center sm:p-8"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -342,22 +347,22 @@ function CourseModal({ course, onClose }: { course: Course; onClose: () => void 
         animate={{ y: 0, opacity: 1, scale: 1 }}
         exit={{ y: 30, opacity: 0, scale: 0.98 }}
         transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-        className="relative z-10 max-h-[92vh] w-full max-w-2xl overflow-hidden rounded-t-3xl glass-lachani-deep shadow-2xl sm:rounded-3xl"
+        className="relative z-10 flex max-h-[88dvh] w-full max-w-xl flex-col overflow-hidden rounded-t-3xl glass-lachani-deep shadow-2xl sm:max-h-[min(80dvh,680px)] sm:rounded-3xl"
       >
         {/* header band */}
-        <div className="relative overflow-hidden p-6 md:p-7" style={{ background: `linear-gradient(140deg, ${from}, ${to})` }}>
+        <div className="relative shrink-0 overflow-hidden px-5 pb-4 pt-5 md:px-6" style={{ background: `linear-gradient(140deg, ${from}, ${to})` }}>
           <div className="pointer-events-none absolute -inset-y-3 -left-1/3 w-1/2 -skew-x-12 bg-white/20 blur-md animate-lh-sheen" />
           <button
             onClick={onClose}
             aria-label="Κλείσιμο"
-            className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-white/25 text-white ring-1 ring-white/40 backdrop-blur-md transition-colors hover:bg-white/40"
+            className="absolute right-3.5 top-3.5 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white/25 text-white ring-1 ring-white/40 backdrop-blur-md transition-colors hover:bg-white/40"
           >
             <X size={18} />
           </button>
-          <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/20 text-white ring-1 ring-white/30 backdrop-blur-md">
-            <Icon name={iconOf(course)} size={26} />
-          </span>
-          <div className="mt-4 flex flex-wrap items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2 pr-10">
+            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/20 text-white ring-1 ring-white/30 backdrop-blur-md">
+              <Icon name={iconOf(course)} size={18} />
+            </span>
             <span className="rounded-full bg-black/20 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide text-white/90 backdrop-blur-md">
               {course.code}
             </span>
@@ -371,15 +376,15 @@ function CourseModal({ course, onClose }: { course: Course; onClose: () => void 
               {course.type}
             </span>
           </div>
-          <h3 className="mt-3 font-heading text-2xl font-extrabold leading-tight text-white">{course.nameGr}</h3>
-          <p className="mt-1 text-sm italic text-white/80">{course.nameEn}</p>
-          <p className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-black/15 px-3 py-1 text-[11px] font-bold text-white/90 backdrop-blur-md">
+          <h3 className="mt-3 font-heading text-xl font-extrabold leading-tight text-white md:text-2xl">{course.nameGr}</h3>
+          <p className="mt-0.5 text-sm italic text-white/80">{course.nameEn}</p>
+          <p className="mt-2.5 inline-flex items-center gap-1.5 rounded-full bg-black/15 px-3 py-1 text-[11px] font-bold text-white/90 backdrop-blur-md">
             {course.stream === "core" ? "Κοινό και στις δύο ειδικεύσεις" : `Ειδίκευση ${meta!.numeral} · ${meta!.nameGr}`}
           </p>
         </div>
 
         {/* scrollable body */}
-        <div className="max-h-[calc(92vh-15rem)] overflow-y-auto p-6 md:p-7">
+        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-5 md:p-6">
           <p className="text-sm leading-relaxed text-text-secondary">{course.description}</p>
 
           {course.content && course.content.length > 0 && (
@@ -453,7 +458,8 @@ function CourseModal({ course, onClose }: { course: Course; onClose: () => void 
           )}
         </div>
       </motion.div>
-    </motion.div>
+    </motion.div>,
+    document.body,
   );
 }
 
