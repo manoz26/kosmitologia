@@ -22,7 +22,7 @@ import {
   type MotionValue,
 } from "framer-motion";
 
-import { careerPaths, type CareerPath } from "@/data/careers";
+import { careerPaths, careerStats, type CareerPath } from "@/data/careers";
 import { Icon, SectionHeading } from "./lib/primitives";
 import { useReduced } from "./lib/hooks";
 import type { IconKey } from "./lib/data";
@@ -133,7 +133,7 @@ export function CareerPaths3D() {
   const platformOpacity = useTransform(smooth, [0, 0.4], [reduced ? 1 : 0.2, 1]);
 
   return (
-    <section id="careers" className="relative w-full overflow-hidden py-24 md:py-32">
+    <section id="karieres" className="relative w-full overflow-hidden py-24 md:py-32">
       <div className="section-container relative z-10 px-4">
         <SectionHeading
           label="Καριέρα"
@@ -155,21 +155,30 @@ export function CareerPaths3D() {
               </CardRiser>
             ))}
 
-            {/* CTA tile to balance the 5-card grid */}
+            {/* Sixth tile: the career numbers (15+ / 12+) and the way in */}
             <CardRiser progress={smooth} index={careerPaths.length} total={careerPaths.length + 1}>
               <div className="flex h-[23rem] flex-col justify-center rounded-3xl glass-lachani-deep p-8 text-center">
-                <h3 className="font-heading text-2xl font-extrabold text-text-primary">
-                  Δείτε όλες τις προοπτικές
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-text-secondary">
-                  Αναλυτικές δεξιότητες, τομείς και ρόλοι για κάθε επαγγελματικό
-                  μονοπάτι των αποφοίτων.
+                <dl className="grid grid-cols-2 gap-4">
+                  {careerStats
+                    .filter((s) => s.suffix === "+")
+                    .map((s) => (
+                      <div key={s.label}>
+                        <dd className="font-heading text-4xl font-extrabold text-ihu-green-dark">
+                          {s.value}
+                          {s.suffix}
+                        </dd>
+                        <dt className="mt-1 text-xs leading-snug text-text-secondary">{s.label}</dt>
+                      </div>
+                    ))}
+                </dl>
+                <p className="mt-5 text-sm leading-relaxed text-text-secondary">
+                  Ρόλοι σε Ε&Α, βιομηχανία, κλινική πράξη και αγορά, σε κλάδους εργοδοτών με τους οποίους συνεργάζεται το πρόγραμμα.
                 </p>
                 <Link
-                  href="/karieres"
+                  href="/eggrafes"
                   className="group mx-auto mt-6 inline-flex items-center gap-2 rounded-full bg-ihu-green-dark px-6 py-3 text-sm font-bold text-white shadow-lg transition-all hover:gap-3"
                 >
-                  Καριέρα & Απόφοιτοι
+                  Κάνε αίτηση
                   <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
                 </Link>
               </div>

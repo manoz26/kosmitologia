@@ -27,3 +27,23 @@ export const faculty: FacultyMember[] = [
   { name: "Τζίμας Γεώργιος", email: "gtzimas@tzimas-cosmetics.gr", role: "Ειδικός Παρασκευής Καλλυντικών", institution: "Βιομηχανία", initials: "ΤΓ" },
   { name: "Χασαπίδου Μαρία", email: "mnhas@ihu.gr", role: "Καθηγήτρια Διατροφής", institution: "ΔιΠΑΕ", initials: "ΧΜ" },
 ];
+
+/* "ΔιΠΑΕ, ΑΠΘ, ΠΑΔΑ, UNIC και τη βιομηχανία" — the home institution first,
+   industry last, in the order they appear otherwise. */
+export function facultyInstitutionsText(): string {
+  const all = Array.from(new Set(faculty.map((f) => f.institution)));
+  const academic = all.filter((i) => i !== "Βιομηχανία").sort((a, b) => (a === "ΔιΠΑΕ" ? -1 : b === "ΔιΠΑΕ" ? 1 : 0));
+  const hasIndustry = all.includes("Βιομηχανία");
+  return hasIndustry ? `${academic.join(", ")} και τη βιομηχανία` : academic.join(", ");
+}
+
+/** Initials without Greek accents: "Άννα Γιαννακουδάκη" → "ΑΓ". */
+export function initialsOf(name: string): string {
+  return name
+    .split(" ")
+    .map((w) => w[0])
+    .slice(0, 2)
+    .join("")
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "");
+}

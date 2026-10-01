@@ -12,6 +12,7 @@ import { AdmissionTimeline3D } from "@/components/home/AdmissionTimeline3D";
 import { TuitionCalculator3D } from "@/components/home/TuitionCalculator3D";
 import { ScrollBackdrop } from "@/components/home/ScrollBackdrop";
 import { DownloadsSection } from "@/components/home/DownloadsSection";
+import { FaqSection } from "@/components/home/FaqSection";
 import {
   admissions, contact, formatDate, requiredDocuments, telHref,
 } from "@/data/program";
@@ -207,11 +208,12 @@ export function EggrafesContent() {
         </div>
       </section>
 
-      {/* ── Λαχανί band: admission timeline, tuition & downloads ── */}
+      {/* ── Λαχανί band: admission timeline, tuition, documents & FAQ ── */}
       <LachaniSurface>
         <AdmissionTimeline3D />
         <TuitionCalculator3D />
         <DownloadsSection />
+        <FaqSection />
       </LachaniSurface>
 
     </main>

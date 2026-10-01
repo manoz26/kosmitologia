@@ -6,7 +6,7 @@
    through `getIcon` in primitives.tsx.
    ══════════════════════════════════════════════════════════════════════════ */
 
-import { admissions, formatEuro, formatNumber, program } from "@/data/program";
+import { admissions, formatNumber, program } from "@/data/program";
 
 export type IconKey =
   | "sprout"
@@ -127,34 +127,32 @@ export interface IdentityHighlight {
   description: string;
 }
 
+/* Στοιχεία για το Ίδρυμα και το Τμήμα από τον Οδηγό Σπουδών (σ.3–6). Οι
+   αριθμοί του προγράμματος (ECTS, δίδακτρα) ζουν στις Σπουδές / Εισαγωγή. */
 export const identityHighlights: IdentityHighlight[] = [
   {
     icon: "building",
-    title: "ΔΙΠΑΕ",
-    value: "Αλεξάνδρεια Πανεπιστημιούπολη",
-    description:
-      `Το ΠΜΣ λειτουργεί στις ιδιόκτητες εγκαταστάσεις της Σίνδου Θεσσαλονίκης, σε ένα campus ${formatNumber(program.campusArea.value)} στρεμμάτων.`,
+    title: "Σχολή Επιστημών Υγείας",
+    value: "ΔΙΠΑΕ · Σίνδος",
+    description: "Μία από τις 9 σχολές του Διεθνούς Πανεπιστημίου της Ελλάδος, με έδρα την Αλεξάνδρεια Πανεπιστημιούπολη.",
+  },
+  {
+    icon: "users",
+    title: "Πανεπιστημιούπολη",
+    value: "~20.000 φοιτητές",
+    description: "Μια ζωντανή πανεπιστημιούπολη με συγκοινωνία από και προς το κέντρο της Θεσσαλονίκης.",
   },
   {
     icon: "microscope",
     title: "Εργαστήρια",
-    value: "Σύγχρονος εξοπλισμός",
-    description:
-      "Πλήρως εξοπλισμένα εργαστήρια χημείας, ενόργανης ανάλυσης και παρασκευής καλλυντικών για πρακτική εκπαίδευση.",
+    value: "Εργαστηριακή άσκηση",
+    description: "Υψηλού επιπέδου εργαστηριακή και πρακτική άσκηση είναι βασικός στόχος του Τμήματος.",
   },
   {
-    icon: "calendar",
-    title: "Διάρκεια",
-    value: `${program.semesters.value.min} εξάμηνα · ${program.ects.value} ECTS`,
-    description:
-      `Ελάχιστη διάρκεια ${program.semesters.value.min} διδακτικά εξάμηνα· ο μέγιστος χρόνος φοίτησης είναι ${program.semesters.value.max} εξάμηνα.`,
-  },
-  {
-    icon: "euro",
-    title: "Δίδακτρα",
-    value: formatEuro(program.tuition.value),
-    description:
-      "Συνολικά δίδακτρα για ολόκληρο το πρόγραμμα.",
+    icon: "graduation",
+    title: "Μετά το ΠΜΣ",
+    value: "Διδακτορικό",
+    description: "Οι απόφοιτοι μπορούν να συνεχίσουν για διδακτορικό δίπλωμα σε ελληνικά ή ξένα πανεπιστήμια.",
   },
 ];
 
@@ -771,11 +769,10 @@ export interface NavTarget {
    live on dedicated pages are no longer listed here. */
 export const navTargets: NavTarget[] = [
   { id: "top", label: "Αρχή", icon: "sparkles" },
+  { id: "spoudes", label: "Σπουδές", icon: "graduation" },
   { id: "journey", label: "Διαδρομή", icon: "orbit" },
-  { id: "sxoli", label: "Η Σχολή", icon: "building" },
-  { id: "mentors", label: "Διδάσκοντες", icon: "users" },
-  { id: "careers", label: "Καριέρα", icon: "trending" },
-  { id: "news", label: "Νέα", icon: "book" },
+  { id: "didaskontes", label: "Διδάσκοντες", icon: "users" },
+  { id: "aitisi", label: "Αίτηση", icon: "calendar" },
 ];
 
 /* ────────────────────────────────────────────
@@ -1136,29 +1133,30 @@ export interface Milestone {
   icon: IconKey;
 }
 
+/* Πραγματικά ορόσημα από τον Οδηγό Σπουδών (σ.4–6). */
 export const milestones: Milestone[] = [
   {
-    period: "Ίδρυση",
-    title: "Δημιουργία του ΠΜΣ",
-    description: "Το πρόγραμμα ιδρύεται στο Τμήμα Επιστημών Διατροφής & Διαιτολογίας του ΔΙΠΑΕ.",
+    period: "1985",
+    title: "Ίδρυση του Τμήματος",
+    description: "Ως «Τμήμα Διατροφής του Ανθρώπου» δέχεται τους πρώτους φοιτητές τον Σεπτέμβριο του 1985.",
     icon: "sprout",
   },
   {
-    period: "Υποδομές",
-    title: "Σύγχρονα Εργαστήρια",
-    description: "Εξοπλισμός εργαστηρίων παρασκευής, ενόργανης ανάλυσης και αξιολόγησης δέρματος.",
-    icon: "microscope",
+    period: "2004",
+    title: "Πρώτο μεταπτυχιακό",
+    description: "Οι πρώτοι μεταπτυχιακοί φοιτητές του Τμήματος, σε συνεργασία με το Πανεπιστήμιο Ιωαννίνων.",
+    icon: "graduation",
   },
   {
-    period: "Δίκτυο",
-    title: "Διεπιστημονικές Συνεργασίες",
-    description: "Σύμπραξη μελών ΔΕΠ από ΔΙΠΑΕ, ΑΠΘ, ΠΑΔΑ και στελεχών της βιομηχανίας.",
-    icon: "users",
+    period: "2019",
+    title: "Ένταξη της Κοσμητολογίας",
+    description: "Με τον Ν.4610/2019 εντάσσεται στο Τμήμα το Τμήμα Αισθητικής & Κοσμητολογίας του ΑΤΕΙΘ.",
+    icon: "building",
   },
   {
-    period: "Σήμερα",
-    title: "Νέος Κύκλος Σπουδών",
-    description: "Συνεχής ανανέωση του προγράμματος με τις τελευταίες εξελίξεις του κλάδου.",
+    period: "2021–22",
+    title: "ΠΜΣ «Κοσμητολογία»",
+    description: "Το πρόγραμμα ξεκινά με το χειμερινό εξάμηνο 2021–22, με δύο ειδικεύσεις.",
     icon: "rocket",
   },
 ];

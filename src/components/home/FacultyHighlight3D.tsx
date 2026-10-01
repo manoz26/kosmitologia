@@ -194,7 +194,7 @@ export function FacultyHighlight3D() {
         <Reveal delay={0.1}>
           <div className="mt-12 text-center">
             <Link
-              href="/didaskotes"
+              href="/programma#didaskontes"
               className="group inline-flex items-center gap-2 rounded-full border-2 border-ihu-green-dark/30 bg-white/50 px-7 py-3.5 text-sm font-bold text-ihu-green-dark backdrop-blur-md transition-all hover:bg-ihu-green-dark hover:text-white"
             >
               Δείτε όλο το σώμα ΔΕΠ

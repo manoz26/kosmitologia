@@ -105,7 +105,7 @@ export function FacultyShowcase() {
         <Reveal delay={0.08}>
           <div className="mt-8 text-center">
             <Link
-              href="/didaskotes"
+              href="/programma#didaskontes"
               className="group inline-flex items-center gap-2 rounded-full border-2 border-ihu-green-dark/30 bg-white/50 px-7 py-3.5 text-sm font-bold text-ihu-green-dark backdrop-blur-md transition-all hover:bg-ihu-green-dark hover:text-white"
             >
               Όλοι οι διδάσκοντες

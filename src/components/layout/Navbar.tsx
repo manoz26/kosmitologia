@@ -7,19 +7,18 @@ import { useState, useEffect } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
 import Image from "next/image";
 
-const navLinks = [
+type NavLink = {
+  href?: string;
+  label: string;
+  subLinks?: { href: string; label: string }[];
+};
+
+/* The 5-page architecture (docs/protasi-anadiamorfosis.md, Αλλαγή 1). */
+const navLinks: NavLink[] = [
   { href: "/", label: "Αρχική" },
-  {
-    label: "Το Πρόγραμμα",
-    subLinks: [
-      { href: "/sxetika", label: "Σχετικά με το ΠΜΣ" },
-      { href: "/programma", label: "Πρόγραμμα Σπουδών" },
-      { href: "/didaskotes", label: "Διδάσκοντες" },
-      { href: "/ergastiria", label: "Εργαστήρια & Υποδομές" },
-    ]
-  },
-  { href: "/karieres", label: "Απόφοιτοι & Καριέρα" },
-  { href: "/eggrafes", label: "Εγγραφές" },
+  { href: "/programma", label: "Σπουδές" },
+  { href: "/eggrafes", label: "Εισαγωγή" },
+  { href: "/sxetika", label: "Το Τμήμα" },
   { href: "/epikoinonia", label: "Επικοινωνία" },
 ];
 

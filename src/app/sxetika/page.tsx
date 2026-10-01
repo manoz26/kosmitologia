@@ -1,48 +1,57 @@
+/* ══════════════════════════════════════════════════════════════════════════
+   /sxetika — «Το Τμήμα»
+   ──────────────────────────────────────────────────────────────────────────
+   One of the five pages of the redesign (docs/protasi-anadiamorfosis.md,
+   Αλλαγή 1). It absorbs the old /ergastiria page, which now redirects to
+   #ergastiria (see next.config.ts). Each section says something the others
+   don't:
+
+     • IdentitySection ...... the Department & the University
+     • HistoryMilestones3D .. 1985 → 2021–22, from the study guide
+     • BeforeAfterSkin ...... the science — interactive 3D molecule
+     • LabShowcase3D ........ the labs (#ergastiria)
+     • CampusMap3D .......... where — the campus, 1.600 στρέμματα
+     • CommunityGallery ..... photos
+   ══════════════════════════════════════════════════════════════════════════ */
+
 import { Metadata } from "next";
 
-import { PageShell } from "@/components/PageShell";
-import { AboutHeroSection } from "@/components/sections/AboutHeroSection";
-import { ProgramObjectivesSection } from "@/components/sections/ProgramObjectivesSection";
-import { SpecializationsBento } from "@/components/sections/SpecializationsBento";
-
-import { LachaniSurface } from "@/components/home/LachaniSurface";
+import { ScrollBackdrop } from "@/components/home/ScrollBackdrop";
+import { LachaniPageHeader } from "@/components/home/LachaniPageHeader";
 import { IdentitySection } from "@/components/home/IdentitySection";
 import { HistoryMilestones3D } from "@/components/home/HistoryMilestones3D";
-import { SkinScience3D } from "@/components/home/SkinScience3D";
-import { SustainabilitySection } from "@/components/home/SustainabilitySection";
+import { BeforeAfterSkin } from "@/components/home/BeforeAfterSkin";
+import { LabShowcase3D } from "@/components/home/LabShowcase3D";
 import { CampusMap3D } from "@/components/home/CampusMap3D";
 import { CommunityGallery } from "@/components/sections/CommunityGallery";
 
 export const metadata: Metadata = {
-  title: "Η Σχολή & το Τμήμα",
+  title: "Το Τμήμα",
   description:
-    "Το ΠΜΣ Κοσμητολογία στο Διεθνές Πανεπιστήμιο της Ελλάδος — όραμα, στόχοι, ιστορία, ειδικεύσεις και οι εγκαταστάσεις του Τμήματος Επιστημών Διατροφής & Διαιτολογίας στη Σίνδο.",
+    "Το Τμήμα Επιστημών Διατροφής & Διαιτολογίας του Διεθνούς Πανεπιστημίου της Ελλάδος: ιστορία, εργαστήρια και η Αλεξάνδρεια Πανεπιστημιούπολη στη Σίνδο.",
   alternates: { canonical: "/sxetika" },
 };
 
 export default function SxetikaPage() {
   return (
-    <>
-      <PageShell
-        title="Η Σχολή & Το Τμήμα"
-        subtitle="Μάθετε για το όραμα, την ιστορία και τις εγκαταστάσεις της Κοσμητείας."
-      >
-        <div className="flex flex-col gap-12 md:gap-24">
-          <AboutHeroSection />
-          <ProgramObjectivesSection />
-          <SpecializationsBento />
-        </div>
-      </PageShell>
+    <div className="relative">
+      <ScrollBackdrop />
 
-      {/* ── Λαχανί band: identity, history, science, sustainability & campus ── */}
-      <LachaniSurface>
+      <div className="relative z-0">
+        <LachaniPageHeader
+          eyebrow="ΔΙΠΑΕ · Σίνδος"
+          title="Το"
+          highlight="Τμήμα"
+          intro="Το Τμήμα Επιστημών Διατροφής & Διαιτολογίας, η ιστορία του, τα εργαστήρια και η Πανεπιστημιούπολη όπου γίνονται τα μαθήματα."
+        />
+
         <IdentitySection />
         <HistoryMilestones3D />
-        <SkinScience3D />
-        <SustainabilitySection />
+        <BeforeAfterSkin />
+        <LabShowcase3D />
         <CampusMap3D />
         <CommunityGallery />
-      </LachaniSurface>
-    </>
+      </div>
+    </div>
   );
 }

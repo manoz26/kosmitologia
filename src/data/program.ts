@@ -59,6 +59,20 @@ export const program = {
   campusDistance: { value: "17 χλμ. από τη Θεσσαλονίκη", source: `${GUIDE}, σ.3` },
 } satisfies Record<string, Fact<unknown>>;
 
+/* ── Συντονιστική Επιτροπή ───────────────────────────────────────────────────
+   Ονόματα & ρόλοι από τον Οδηγό (σ.1). Οι βαθμίδες ΔΕΝ μπαίνουν εδώ: ο Οδηγός
+   και το faculty.ts διαφέρουν — εκκρεμεί ενημερωμένη λίστα από τον πελάτη. */
+
+export const committeeSource = `${GUIDE}, σ.1`;
+
+export const committee: { name: string; role: "Διευθυντής" | "Αν. Διευθυντής" | "Μέλος"; email: string }[] = [
+  { name: "Αθανάσιος Παπαδόπουλος", role: "Διευθυντής", email: "papadnas@ihu.gr" },
+  { name: "Ιορδάνης Παπαδόπουλος", role: "Αν. Διευθυντής", email: "driordanis@ihu.gr" },
+  { name: "Μαρία Χασαπίδου", role: "Μέλος", email: "mnhas@ihu.gr" },
+  { name: "Ελισάβετ Βαρδάκα", role: "Μέλος", email: "evardaka@ihu.gr" },
+  { name: "Άννα Γιαννακουδάκη", role: "Μέλος", email: "annagianna@live.com" },
+];
+
 /** 1600 → "1.600" */
 export function formatNumber(n: number) {
   return n.toLocaleString("el-GR");

@@ -10,9 +10,7 @@
 
 import { useRef } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
 
 import { labFeatures } from "./lib/data";
 import { Icon, Reveal, SectionHeading, Chip, TiltCard } from "./lib/primitives";
@@ -28,7 +26,7 @@ export function LabShowcase3D() {
   const stackY = useTransform(scrollYProgress, (p) => (reduced ? 0 : 50 - 100 * clamp01(p)));
 
   return (
-    <section ref={ref} id="labs" className="relative w-full overflow-hidden py-24 md:py-32">
+    <section ref={ref} id="ergastiria" className="relative w-full overflow-hidden py-24 md:py-32">
       <div className="section-container relative z-10 grid grid-cols-1 items-center gap-14 px-4 lg:grid-cols-[0.95fr_1.05fr]">
         {/* Left: copy + features */}
         <div>
@@ -37,7 +35,7 @@ export function LabShowcase3D() {
             label="Υποδομές"
             labelIcon="microscope"
             title="Εργαστήρια"
-            highlight="αιχμής"
+            highlight="του Τμήματος"
             description="Η μάθηση γίνεται πράξη. Σύγχρονα εργαστήρια παρασκευής, ενόργανης ανάλυσης και αξιολόγησης δέρματος, για εκπαίδευση με βιομηχανικά πρότυπα."
           />
 
@@ -62,15 +60,6 @@ export function LabShowcase3D() {
             ))}
           </div>
 
-          <Reveal delay={0.1}>
-            <Link
-              href="/ergastiria"
-              className="group mt-8 inline-flex items-center gap-2 font-semibold text-ihu-green-dark transition-all hover:gap-3"
-            >
-              Δείτε τις εγκαταστάσεις
-              <ArrowUpRight size={18} className="transition-transform group-hover:translate-x-0.5" />
-            </Link>
-          </Reveal>
         </div>
 
         {/* Right: 3D photo stack */}

@@ -11,8 +11,8 @@
    The visitor lands on the crisp 2.8K poster (the footage's first frame);
    the film only moves once they scroll. The copy lifts & fades on the way
    in, and the dark footage melts into the λαχανί page below. Reduced-motion
-   visitors get the static poster. The CTAs live on <HeroLachani3D/> right
-   below, so this opener stays purely atmospheric.
+   visitors get the static poster. It is the page's only hero, so it carries
+   the single <h1> and the two CTAs (Αλλαγή 2 of the redesign).
 
    All scroll-linked styles are function-based on purpose: framer-motion
    turns range-based scroll transforms into native scroll-linked WAAPI
@@ -20,14 +20,15 @@
    ══════════════════════════════════════════════════════════════════════════ */
 
 import { useRef } from "react";
+import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ChevronDown, MousePointer2, Sparkles } from "lucide-react";
+import { ArrowRight, ChevronDown, MousePointer2, Sparkles } from "lucide-react";
 
 import { ScrollFilm, HERO_FILM, useHeroFilm, useStaticFilm } from "@/components/ui/scroll-film";
 
 const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
 
-/* Shared overlay copy — atmospheric, no CTAs (the 3D hero below owns those). */
+/* Shared overlay copy: headline + the two ways in. */
 function HeroCopy() {
   return (
     <>
@@ -45,6 +46,21 @@ function HeroCopy() {
       <p className="mx-auto mt-6 max-w-xl text-base text-white/85 drop-shadow-md md:text-lg">
         Από τη φύση, στο εργαστήριο, στο δέρμα.
       </p>
+      <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+        <Link
+          href="/eggrafes"
+          className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#cfe38a] px-7 py-3.5 text-sm font-bold text-ihu-green-dark shadow-lg transition-all hover:gap-3 hover:bg-white sm:w-auto"
+        >
+          Κάνε αίτηση
+          <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
+        </Link>
+        <Link
+          href="/programma"
+          className="inline-flex w-full items-center justify-center rounded-full border border-white/40 bg-white/10 px-7 py-3.5 text-sm font-bold text-white backdrop-blur-md transition-colors hover:bg-white/20 sm:w-auto"
+        >
+          Δες το πρόγραμμα
+        </Link>
+      </div>
     </>
   );
 }
@@ -61,6 +77,8 @@ export function CinematicScrollHero() {
 
   const copyOpacity = useTransform(scrollYProgress, (p) => 1 - clamp01((p - 0.08) / 0.12));
   const copyY = useTransform(scrollYProgress, (p) => -90 * clamp01(p / 0.2));
+  /* Once the copy has faded, its links must not catch clicks. */
+  const copyPointer = useTransform(copyOpacity, (o) => (o < 0.15 ? "none" : "auto"));
   const cueOpacity = useTransform(scrollYProgress, (p) => 1 - clamp01(p / 0.06));
   const blendOpacity = useTransform(scrollYProgress, (p) => clamp01((p - 0.78) / 0.22));
 
@@ -96,7 +114,7 @@ export function CinematicScrollHero() {
 
         {/* Copy */}
         <motion.div
-          style={{ opacity: copyOpacity, y: copyY }}
+          style={{ opacity: copyOpacity, y: copyY, pointerEvents: copyPointer }}
           className="section-container absolute inset-0 flex flex-col items-center justify-center px-4 text-center"
         >
           <HeroCopy />

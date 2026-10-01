@@ -13,11 +13,9 @@ export interface NavGroup {
 
 export const mainNavItems: NavItem[] = [
   { label: "Αρχική", href: "/" },
-  { label: "Πρόγραμμα Σπουδών", href: "/programma" },
+  { label: "Σπουδές", href: "/programma" },
   { label: "Εισαγωγή", href: "/eggrafes" },
-  { label: "Διδάσκοντες", href: "/didaskotes" },
-  { label: "Καριέρα", href: "/karieres" },
-  { label: "Νέα", href: "/nea" },
+  { label: "Το Τμήμα", href: "/sxetika" },
   { label: "Επικοινωνία", href: "/epikoinonia" },
 ];
 
@@ -34,17 +32,16 @@ export const footerGroups: NavGroup[] = [
   {
     label: "Πρόγραμμα",
     items: [
-      { label: "Πρόγραμμα Σπουδών", href: "/programma" },
+      { label: "Σπουδές", href: "/programma" },
+      { label: "Διδάσκοντες", href: "/programma#didaskontes" },
       { label: "Εισαγωγή & Δικαιολογητικά", href: "/eggrafes" },
-      { label: "Διδάσκοντες", href: "/didaskotes" },
-      { label: "Δίδακτρα", href: "/eggrafes" },
     ],
   },
   {
     label: "Χρήσιμα",
     items: [
       { label: "Νέα & Ανακοινώσεις", href: "/nea" },
-      { label: "Καριέρα & Αποκατάσταση", href: "/karieres" },
+      { label: "Καριέρα", href: "/programma#karieres" },
       { label: "ΔιΠΑΕ", href: "https://www.ihu.gr", isExternal: true },
     ],
   },

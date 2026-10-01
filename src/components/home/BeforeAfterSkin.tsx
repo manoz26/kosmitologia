@@ -1,60 +1,58 @@
 /* ══════════════════════════════════════════════════════════════════════════
-   BeforeAfterSkin
+   BeforeAfterSkin — «Η επιστήμη» (on /sxetika)
    ──────────────────────────────────────────────────────────────────────────
-   The "science with results" section. On the left, an interactive 3D model of
-   hyaluronic acid (drawn on canvas — no stock photos, no invented "metrics")
-   that the visitor can rotate. On the right, facts about the School in one ruled
-   panel. On desktop the model is sticky so it stays in view while
-   the story scrolls past. Transparent — floats over <ScrollBackdrop/>.
+   On the left, an interactive 3D model of hyaluronic acid (drawn on canvas —
+   no stock photos, no invented "metrics") that the visitor can rotate. On the
+   right, the science behind it as four ruled rows, each tied to a real course
+   of the programme (src/data/courses.ts, study guide). On desktop the model is
+   sticky so it stays in view. Transparent — floats over <ScrollBackdrop/>.
    ══════════════════════════════════════════════════════════════════════════ */
 
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-
-import {
-  SectionHeading,
-  GlassPanel,
-  Reveal,
-  IconBadge,
-  MiniStat,
-} from "./lib/primitives";
+import { courses } from "@/data/courses";
+import { SectionHeading, GlassPanel, Reveal, IconBadge } from "./lib/primitives";
 import { MoleculeViewer } from "./lib/MoleculeViewer";
 import type { IconKey } from "./lib/data";
 
-/* ── Content: what the visitor learns about the School while scrolling ── */
-const schoolFacts: { icon: IconKey; title: string; text: string }[] = [
+const courseName = (code: string) => courses.find((c) => c.code === code)?.nameGr ?? "";
+
+/* The science, row by row — every row names the course that teaches it. */
+const scienceRows: { icon: IconKey; title: string; text: string; course: string }[] = [
   {
-    icon: "building",
-    title: "Το Τμήμα & το Ίδρυμα",
-    text: "Τμήμα Επιστημών Διατροφής & Διαιτολογίας του Διεθνούς Πανεπιστημίου της Ελλάδος — Αλεξάνδρεια Πανεπιστημιούπολη, Σίνδος Θεσσαλονίκης.",
-  },
-  {
-    icon: "map-pin",
-    title: "1.600 στρέμματα campus",
-    text: "Υπερσύγχρονες ιδιόκτητες εγκαταστάσεις — το ιδανικό περιβάλλον για την ακαδημαϊκή και ερευνητική ανάπτυξη των φοιτητών.",
-  },
-  {
-    icon: "microscope",
-    title: "Σύγχρονα εργαστήρια",
-    text: "Εξοπλισμός ενόργανης ανάλυσης & αξιολόγησης — από τη φασματοσκοπία και τη χρωματογραφία μέχρι τις in vivo μετρήσεις δέρματος.",
+    icon: "atom",
+    title: "Από το μόριο",
+    text: "Η χημεία των δραστικών συστατικών και πώς δρουν στο δέρμα.",
+    course: courseName("COSM1004"),
   },
   {
     icon: "scan-face",
-    title: "Επιστήμη με μετρήσιμο αποτέλεσμα",
-    text: "Δεν μένουμε στους ισχυρισμούς: πιστοποιούμε την αποτελεσματικότητα με κλινική & ενόργανη αξιολόγηση — από τη μοριακή δομή ως το τελικό προϊόν.",
+    title: "Στο δέρμα",
+    text: "Η φυσιολογία του δέρματος, το μικροβίωμα και οι παθήσεις του.",
+    course: courseName("COSM1002"),
+  },
+  {
+    icon: "flask",
+    title: "Στο προϊόν",
+    text: "Σχεδιασμός και παρασκευή καλλυντικών, μέσα στο ευρωπαϊκό νομοθετικό πλαίσιο.",
+    course: courseName("COSM1008"),
+  },
+  {
+    icon: "microscope",
+    title: "Με μετρήσεις",
+    text: "Ποιοτικός έλεγχος με φασματοσκοπία και χρωματογραφία (HPLC, GC).",
+    course: courseName("COSM1009"),
   },
 ];
 
 export function BeforeAfterSkin() {
   return (
-    <section id="sxoli" className="relative w-full overflow-hidden py-24 md:py-32">
+    <section id="epistimi" className="relative w-full overflow-hidden py-24 md:py-32">
       <div className="section-container px-4">
         <SectionHeading
-          label="Η Σχολή & η Επιστήμη"
+          label="Η επιστήμη"
           labelIcon="sparkles"
           title="Η διαφορά που κάνει η"
           highlight="γνώση"
-          description="Στο ΠΜΣ Κοσμητολογία δεν σταματάμε στη θεωρία. Ξεκινάμε από τη μοριακή δομή των δραστικών συστατικών και φτάνουμε ως την κλινική & ενόργανη αξιολόγηση του τελικού προϊόντος."
+          description="Από τη μοριακή δομή ενός συστατικού μέχρι τον ποιοτικό έλεγχο του τελικού προϊόντος, όπως τα διδάσκει το πρόγραμμα."
         />
 
         <div className="mt-14 grid items-start gap-10 lg:grid-cols-2 lg:gap-14">
@@ -68,12 +66,12 @@ export function BeforeAfterSkin() {
             </p>
           </div>
 
-          {/* ── Right: the story about the School, revealed on scroll ── */}
+          {/* ── Right: the science, tied to the courses that teach it ── */}
           <div className="space-y-5">
             {/* One panel with ruled rows instead of four stacked cards */}
             <Reveal direction="up">
               <GlassPanel className="divide-y divide-ihu-green-dark/10 px-5">
-                {schoolFacts.map((f) => (
+                {scienceRows.map((f) => (
                   <div key={f.title} className="flex items-start gap-4 py-5">
                     <IconBadge icon={f.icon} size="sm" />
                     <div>
@@ -83,31 +81,13 @@ export function BeforeAfterSkin() {
                       <p className="mt-1.5 text-sm leading-relaxed text-text-secondary">
                         {f.text}
                       </p>
+                      <p className="mt-1.5 text-xs font-semibold text-ihu-green-dark">Μάθημα: {f.course}</p>
                     </div>
                   </div>
                 ))}
               </GlassPanel>
             </Reveal>
 
-            <Reveal direction="up">
-              <GlassPanel className="p-5">
-                <div className="grid grid-cols-3 gap-2">
-                  <MiniStat value="3" label="Εξάμηνα" />
-                  <MiniStat value="90" label="ECTS" />
-                  <MiniStat value="40" label="Φοιτητές / έτος" />
-                </div>
-              </GlassPanel>
-            </Reveal>
-
-            <Reveal direction="up">
-              <Link
-                href="/sxetika"
-                className="group inline-flex items-center gap-2 rounded-full bg-ihu-green-dark px-6 py-3 text-sm font-bold text-white shadow-lg shadow-ihu-green-dark/30 transition-all hover:-translate-y-0.5 hover:shadow-xl"
-              >
-                Περισσότερα για τη Σχολή
-                <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
-              </Link>
-            </Reveal>
           </div>
         </div>
       </div>

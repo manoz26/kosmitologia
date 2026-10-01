@@ -3,13 +3,16 @@
 /* ══════════════════════════════════════════════════════════════════════════
    HistoryMilestones3D — "Ορόσημα"
    ──────────────────────────────────────────────────────────────────────────
-   The programme's story as a connected four-node horizontal timeline, closing
-   with a compact stat row. Reveal-on-scroll with a gradient connector.
+   The Department's real milestones (study guide σ.4–6) as a connected
+   four-node horizontal timeline, closing with a compact stat row. Reveal-on-scroll with a gradient connector.
    ══════════════════════════════════════════════════════════════════════════ */
 
+import { faculty } from "@/data/faculty";
 import { milestones } from "./lib/data";
 import { Icon, Reveal, SectionHeading, MiniStat, Divider } from "./lib/primitives";
 import { GlowOrb } from "./lib/decorations";
+
+const institutions = new Set(faculty.map((f) => f.institution)).size;
 
 export function HistoryMilestones3D() {
   return (
@@ -22,7 +25,7 @@ export function HistoryMilestones3D() {
           labelIcon="star"
           title="Ορόσημα"
           highlight="διαδρομής"
-          description="Ένα πρόγραμμα που χτίστηκε με όραμα — από την ίδρυση μέχρι τον σημερινό κύκλο σπουδών."
+          description="Από το πρώτο τμήμα Διατροφής του 1985 μέχρι το ΠΜΣ «Κοσμητολογία»."
         />
 
         <div className="relative mt-16">
@@ -50,11 +53,9 @@ export function HistoryMilestones3D() {
         <Divider className="mt-16" />
 
         <Reveal delay={0.05}>
-          <div className="mx-auto mt-10 grid max-w-3xl grid-cols-2 gap-6 md:grid-cols-4">
-            <MiniStat value="1.600" label="Στρέμματα campus" />
-            <MiniStat value="19" label="Μέλη ΔΕΠ" />
-            <MiniStat value="5" label="Ιδρύματα-δίκτυο" />
-            <MiniStat value="90 ECTS" label="Πιστωτικές μονάδες" />
+          <div className="mx-auto mt-10 grid max-w-md grid-cols-2 gap-6">
+            <MiniStat value={String(faculty.length)} label="Διδάσκοντες" />
+            <MiniStat value={String(institutions)} label="Φορείς διδασκόντων" />
           </div>
         </Reveal>
       </div>

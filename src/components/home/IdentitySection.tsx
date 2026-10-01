@@ -9,9 +9,7 @@
    ══════════════════════════════════════════════════════════════════════════ */
 
 import { useRef } from "react";
-import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowRight } from "lucide-react";
 
 import { identityHighlights } from "./lib/data";
 import {
@@ -72,21 +70,11 @@ export function IdentitySection() {
           </Reveal>
           <Reveal delay={0.22}>
             <p className="mt-4 leading-relaxed text-text-secondary">
-              Με υπερσύγχρονες ιδιόκτητες εγκαταστάσεις που απλώνονται σε 1.600
-              στρέμματα, το τμήμα παρέχει το ιδανικό περιβάλλον για την ακαδημαϊκή
-              και ερευνητική ανάπτυξη των φοιτητών. Σκοπός του προγράμματος είναι η
-              άρτια εκπαίδευση επιστημόνων που θα ηγηθούν στον ραγδαία
-              αναπτυσσόμενο κλάδο της Κοσμητολογίας.
+              Είναι ένα από τα τέσσερα τμήματα ανώτατης εκπαίδευσης στη Διατροφή
+              και Διαιτολογία στην Ελλάδα, και από το 2019 φιλοξενεί και το
+              γνωστικό αντικείμενο της Αισθητικής & Κοσμητολογίας. Πάνω σε αυτή τη
+              διπλή βάση, διατροφή και επιστήμη του δέρματος, στηρίζεται το ΠΜΣ.
             </p>
-          </Reveal>
-          <Reveal delay={0.28}>
-            <Link
-              href="/sxetika"
-              className="group mt-8 inline-flex items-center gap-2 font-semibold text-ihu-green-dark transition-all hover:gap-3"
-            >
-              Περισσότερα σχετικά με το ΠΜΣ
-              <ArrowRight size={18} className="transition-transform group-hover:translate-x-0.5" />
-            </Link>
           </Reveal>
         </div>
 

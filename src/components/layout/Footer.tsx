@@ -49,10 +49,11 @@ export function Footer() {
           <h3 className="font-heading font-semibold text-text-primary mb-6 text-lg">Γρήγοροι Σύνδεσμοι</h3>
           <ul className="space-y-3">
             <li><Link href="/" className="text-text-secondary text-sm hover:text-primary transition-colors">Αρχική</Link></li>
-            <li><Link href="/sxetika" className="text-text-secondary text-sm hover:text-primary transition-colors">Σχετικά με το ΠΜΣ</Link></li>
-            <li><Link href="/programma" className="text-text-secondary text-sm hover:text-primary transition-colors">Πρόγραμμα Σπουδών</Link></li>
+            <li><Link href="/programma" className="text-text-secondary text-sm hover:text-primary transition-colors">Σπουδές</Link></li>
             <li><Link href="/eggrafes" className="text-text-secondary text-sm hover:text-primary transition-colors">Εισαγωγή</Link></li>
-            <li><Link href="/karieres" className="text-text-secondary text-sm hover:text-primary transition-colors">Καριέρες & Απόφοιτοι</Link></li>
+            <li><Link href="/sxetika" className="text-text-secondary text-sm hover:text-primary transition-colors">Το Τμήμα</Link></li>
+            <li><Link href="/epikoinonia" className="text-text-secondary text-sm hover:text-primary transition-colors">Επικοινωνία</Link></li>
+            <li><Link href="/nea" className="text-text-secondary text-sm hover:text-primary transition-colors">Νέα & Ανακοινώσεις</Link></li>
           </ul>
         </div>
       </div>
