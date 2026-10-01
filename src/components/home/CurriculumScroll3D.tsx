@@ -108,7 +108,7 @@ function CourseCard({ course }: { course: Course }) {
   const theme = SEMESTER_THEME[course.semester];
   const iconKey = COURSE_ICON[course.icon] ?? "sparkles";
   return (
-    <div className="group relative flex h-full w-[80vw] max-w-[340px] shrink-0 flex-col overflow-hidden rounded-[1.6rem] glass-lachani pr-0 sm:w-[340px]">
+    <div className="group relative flex h-full w-[80vw] max-w-[340px] shrink-0 flex-col overflow-hidden rounded-3xl glass-lachani pr-0 sm:w-[340px]">
       {/* header band */}
       <div className="relative overflow-hidden p-6" style={{ background: `linear-gradient(140deg, ${theme.from}, ${theme.to})` }}>
         <div className="pointer-events-none absolute -inset-y-2 -left-1/3 w-1/2 -skew-x-12 bg-white/20 blur-md opacity-0 transition-opacity duration-700 group-hover:animate-lh-sheen group-hover:opacity-100" />
@@ -141,7 +141,7 @@ function CourseCard({ course }: { course: Course }) {
 function CtaPanel() {
   return (
     <div className="flex h-full w-[78vw] max-w-sm shrink-0 flex-col justify-center pr-6 sm:w-[400px]">
-      <div className="glass-lachani-deep rounded-[2rem] p-8">
+      <div className="glass-lachani-deep rounded-3xl p-8">
         <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-ihu-green to-ihu-green-dark text-white shadow-lg">
           <GraduationCap size={26} />
         </span>

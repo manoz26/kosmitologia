@@ -51,7 +51,7 @@ function FlipCard({ path }: { path: CareerPath }) {
     <div className="group h-[23rem] [perspective:1600px]">
       <div className="relative h-full w-full transition-transform duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)] group-focus-within:[transform:rotateY(180deg)]">
         {/* Front */}
-        <div className="absolute inset-0 flex flex-col overflow-hidden rounded-[1.6rem] glass-lachani p-7 [backface-visibility:hidden]">
+        <div className="absolute inset-0 flex flex-col overflow-hidden rounded-3xl glass-lachani p-7 [backface-visibility:hidden]">
           <div
             className="flex h-16 w-16 items-center justify-center rounded-2xl text-white shadow-lg"
             style={{ background: `linear-gradient(140deg, ${theme.from}, ${theme.to})` }}
@@ -67,7 +67,7 @@ function FlipCard({ path }: { path: CareerPath }) {
 
         {/* Back */}
         <div
-          className="absolute inset-0 flex flex-col overflow-hidden rounded-[1.6rem] p-7 text-white [backface-visibility:hidden] [transform:rotateY(180deg)]"
+          className="absolute inset-0 flex flex-col overflow-hidden rounded-3xl p-7 text-white [backface-visibility:hidden] [transform:rotateY(180deg)]"
           style={{ background: `linear-gradient(150deg, ${theme.from}, ${theme.to})` }}
         >
           <div className="pointer-events-none absolute -inset-y-2 -left-1/3 w-1/2 -skew-x-12 bg-white/15 blur-md animate-lh-sheen" />
@@ -157,7 +157,7 @@ export function CareerPaths3D() {
 
             {/* CTA tile to balance the 5-card grid */}
             <CardRiser progress={smooth} index={careerPaths.length} total={careerPaths.length + 1}>
-              <div className="flex h-[23rem] flex-col justify-center rounded-[1.6rem] glass-lachani-deep p-8 text-center">
+              <div className="flex h-[23rem] flex-col justify-center rounded-3xl glass-lachani-deep p-8 text-center">
                 <h3 className="font-heading text-2xl font-extrabold text-text-primary">
                   Δείτε όλες τις προοπτικές
                 </h3>

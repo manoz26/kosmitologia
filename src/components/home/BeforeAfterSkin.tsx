@@ -3,8 +3,8 @@
    ──────────────────────────────────────────────────────────────────────────
    The "science with results" section. On the left, an interactive 3D model of
    hyaluronic acid (drawn on canvas — no stock photos, no invented "metrics")
-   that the visitor can rotate. On the right, facts about the School reveal one
-   by one on scroll. On desktop the model is sticky so it stays in view while
+   that the visitor can rotate. On the right, facts about the School in one ruled
+   panel. On desktop the model is sticky so it stays in view while
    the story scrolls past. Transparent — floats over <ScrollBackdrop/>.
    ══════════════════════════════════════════════════════════════════════════ */
 
@@ -70,21 +70,24 @@ export function BeforeAfterSkin() {
 
           {/* ── Right: the story about the School, revealed on scroll ── */}
           <div className="space-y-5">
-            {schoolFacts.map((f, i) => (
-              <Reveal key={f.title} direction="up" delay={i * 0.05}>
-                <GlassPanel className="flex items-start gap-4 p-5">
-                  <IconBadge icon={f.icon} />
-                  <div>
-                    <h3 className="font-heading text-lg font-bold text-text-primary">
-                      {f.title}
-                    </h3>
-                    <p className="mt-1.5 text-sm leading-relaxed text-text-secondary">
-                      {f.text}
-                    </p>
+            {/* One panel with ruled rows instead of four stacked cards */}
+            <Reveal direction="up">
+              <GlassPanel className="divide-y divide-ihu-green-dark/10 px-5">
+                {schoolFacts.map((f) => (
+                  <div key={f.title} className="flex items-start gap-4 py-5">
+                    <IconBadge icon={f.icon} size="sm" />
+                    <div>
+                      <h3 className="font-heading text-lg font-bold text-text-primary">
+                        {f.title}
+                      </h3>
+                      <p className="mt-1.5 text-sm leading-relaxed text-text-secondary">
+                        {f.text}
+                      </p>
+                    </div>
                   </div>
-                </GlassPanel>
-              </Reveal>
-            ))}
+                ))}
+              </GlassPanel>
+            </Reveal>
 
             <Reveal direction="up">
               <GlassPanel className="p-5">

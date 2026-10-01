@@ -33,7 +33,7 @@ const clamp = (v: number, min: number, max: number) => Math.min(max, Math.max(mi
 /* ── The inner visual of a single mentor card (shared by both layouts) ── */
 function MentorFace({ prof }: { prof: FeaturedProfessor }) {
   return (
-    <div className="relative flex h-full w-full flex-col overflow-hidden rounded-[1.8rem] glass-lachani-deep p-7 text-center [backface-visibility:hidden]">
+    <div className="relative flex h-full w-full flex-col overflow-hidden rounded-3xl glass-lachani-deep p-7 text-center [backface-visibility:hidden]">
       {/* coloured crown */}
       <div
         aria-hidden
@@ -47,7 +47,7 @@ function MentorFace({ prof }: { prof: FeaturedProfessor }) {
       />
 
       <div
-        className="relative mx-auto flex h-24 w-24 items-center justify-center rounded-[1.6rem] font-heading text-3xl font-black text-white shadow-xl"
+        className="relative mx-auto flex h-24 w-24 items-center justify-center rounded-3xl font-heading text-3xl font-black text-white shadow-xl"
         style={{
           background: `linear-gradient(140deg, ${prof.from}, ${prof.to})`,
           transform: "translateZ(60px)",
@@ -56,7 +56,7 @@ function MentorFace({ prof }: { prof: FeaturedProfessor }) {
         {prof.initials}
         <span
           aria-hidden
-          className="absolute inset-0 rounded-[1.6rem] ring-1 ring-white/40"
+          className="absolute inset-0 rounded-3xl ring-1 ring-white/40"
         />
       </div>
 

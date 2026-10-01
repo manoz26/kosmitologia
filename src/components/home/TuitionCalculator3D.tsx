@@ -3,15 +3,16 @@
 /* ══════════════════════════════════════════════════════════════════════════
    TuitionCalculator3D — "Υπολογίστε τα δίδακτρα"
    ──────────────────────────────────────────────────────────────────────────
-   A small interactive calculator: toggle the exemption eligibility and choose
-   the number of instalments to see the resulting amount. Purely informational
-   (no submission), with an animated euro readout.
+   A small interactive calculator: choose the number of instalments to see
+   the amount per instalment. Purely informational (no submission), with an
+   animated euro readout. (The "up to 30% exemption" toggle was removed on
+   2026-10-01 — the claim is not in the study guide.)
    ══════════════════════════════════════════════════════════════════════════ */
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowRight, BadgePercent, Wallet } from "lucide-react";
+import { ArrowRight, Wallet } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Reveal, SectionHeading } from "./lib/primitives";
@@ -23,10 +24,9 @@ function euro(n: number) {
 }
 
 export function TuitionCalculator3D() {
-  const [exempt, setExempt] = useState(false);
   const [installments, setInstallments] = useState<1 | 2 | 3>(3);
 
-  const total = exempt ? 0 : BASE;
+  const total = BASE;
   const perInstallment = useMemo(() => Math.round(total / installments), [total, installments]);
 
   return (
@@ -37,40 +37,15 @@ export function TuitionCalculator3D() {
           labelIcon="euro"
           title="Υπολογίστε τα"
           highlight="δίδακτρά σας"
-          description="Τα συνολικά δίδακτρα είναι €2.400 για όλο το πρόγραμμα, με δυνατότητα πλήρους απαλλαγής έως 30% των φοιτητών (Ν. 4957/2022)."
+          description="Τα συνολικά δίδακτρα είναι €2.400 για όλο το πρόγραμμα."
         />
 
         <Reveal direction="scale">
           <div className="mx-auto mt-14 grid max-w-4xl grid-cols-1 gap-6 lg:grid-cols-[1fr_1.1fr] [perspective:1500px]">
             {/* controls */}
-            <div className="rounded-[2rem] glass-lachani p-7 md:p-8">
-              {/* exemption toggle */}
-              <div className="flex items-center justify-between gap-4 rounded-2xl bg-white/45 p-4">
-                <div className="flex items-center gap-3">
-                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-ihu-green to-ihu-green-dark text-white shadow">
-                    <BadgePercent size={20} />
-                  </span>
-                  <div>
-                    <p className="font-heading text-sm font-bold text-text-primary">Δικαιούχος απαλλαγής</p>
-                    <p className="text-xs text-text-secondary">Πλήρης απαλλαγή διδάκτρων</p>
-                  </div>
-                </div>
-                <button
-                  role="switch"
-                  aria-checked={exempt}
-                  onClick={() => setExempt((v) => !v)}
-                  className={cn("relative h-7 w-12 shrink-0 rounded-full transition-colors duration-300", exempt ? "bg-ihu-green-dark" : "bg-ihu-green-dark/20")}
-                >
-                  <motion.span
-                    layout
-                    transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                    className={cn("absolute top-0.5 h-6 w-6 rounded-full bg-white shadow", exempt ? "right-0.5" : "left-0.5")}
-                  />
-                </button>
-              </div>
-
+            <div className="rounded-3xl glass-lachani p-7 md:p-8">
               {/* installments */}
-              <div className="mt-5">
+              <div>
                 <p className="mb-2 text-sm font-semibold text-text-primary">Δόσεις</p>
                 <div className="grid grid-cols-3 gap-2">
                   {[1, 2, 3].map((n) => {
@@ -79,11 +54,9 @@ export function TuitionCalculator3D() {
                       <button
                         key={n}
                         onClick={() => setInstallments(n as 1 | 2 | 3)}
-                        disabled={exempt}
                         className={cn(
                           "rounded-xl py-3 text-sm font-bold transition-all duration-300",
-                          exempt && "cursor-not-allowed opacity-40",
-                          active && !exempt ? "bg-ihu-green-dark text-white shadow-lg" : "bg-white/55 text-ihu-green-dark hover:bg-white/80",
+                          active ? "bg-ihu-green-dark text-white shadow-lg" : "bg-white/55 text-ihu-green-dark hover:bg-white/80",
                         )}
                       >
                         {n} {n === 1 ? "δόση" : "δόσεις"}
@@ -94,12 +67,12 @@ export function TuitionCalculator3D() {
               </div>
 
               <p className="mt-5 text-xs leading-relaxed text-text-secondary">
-                * Ενδεικτικός υπολογισμός. Η απαλλαγή αφορά έως το 30% των εγγεγραμμένων φοιτητών βάσει εισοδηματικών κριτηρίων.
+                * Ενδεικτικός υπολογισμός.
               </p>
             </div>
 
             {/* result */}
-            <div className="relative flex flex-col justify-center overflow-hidden rounded-[2rem] glass-lachani-deep p-8 text-center md:p-10">
+            <div className="relative flex flex-col justify-center overflow-hidden rounded-3xl glass-lachani-deep p-8 text-center md:p-10">
               <div
                 aria-hidden
                 className="pointer-events-none absolute left-1/2 top-0 h-48 w-48 -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl animate-halo-pulse"
@@ -119,22 +92,14 @@ export function TuitionCalculator3D() {
                     transition={{ duration: 0.4 }}
                     className="font-heading text-5xl font-black text-ihu-green-dark md:text-6xl"
                   >
-                    {total === 0 ? "€0" : euro(total)}
+                    {euro(total)}
                   </motion.p>
                 </AnimatePresence>
               </div>
 
-              <AnimatePresence mode="wait">
-                {exempt ? (
-                  <motion.p key="ex" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="mt-3 text-sm font-semibold text-ihu-green">
-                    Πλήρης απαλλαγή διδάκτρων 🎉
-                  </motion.p>
-                ) : (
-                  <motion.p key="inst" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="mt-3 text-sm text-text-secondary">
-                    {installments} × <span className="font-bold text-ihu-green-dark">{euro(perInstallment)}</span> ανά δόση
-                  </motion.p>
-                )}
-              </AnimatePresence>
+              <p className="mt-3 text-sm text-text-secondary">
+                {installments} × <span className="font-bold text-ihu-green-dark">{euro(perInstallment)}</span> ανά δόση
+              </p>
 
               <Link
                 href="/eggrafes"

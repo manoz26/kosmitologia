@@ -6,12 +6,12 @@ import { SectionWrapper } from "@/components/ui/SectionWrapper";
 import { faculty } from "@/data/faculty";
 
 const gradients = [
-  "from-lavender to-lavender-light",
-  "from-mint to-mint-light",
-  "from-peach to-peach-light",
-  "from-lavender-dark to-lavender",
-  "from-mint-dark to-mint",
-  "from-peach-warm to-peach",
+  "from-ihu-green to-ihu-green-light",
+  "from-lachani to-lachani-bright",
+  "from-ihu-blue to-ihu-blue-light",
+  "from-ihu-green-dark to-ihu-green",
+  "from-ihu-green-dark to-lachani",
+  "from-ihu-blue to-ihu-blue",
 ];
 
 export function FacultySection() {
@@ -54,7 +54,7 @@ export function FacultySection() {
             </p>
             <a
               href={`mailto:${member.email}`}
-              className="inline-flex items-center gap-1.5 text-[11px] font-medium text-lavender hover:text-lavender-dark transition-colors group/link"
+              className="inline-flex items-center gap-1.5 text-[11px] font-medium text-ihu-green hover:text-ihu-green-dark transition-colors group/link"
             >
               <Mail className="h-3 w-3" />
               <span className="truncate max-w-[180px]">{member.email}</span>

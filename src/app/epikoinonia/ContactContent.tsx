@@ -118,9 +118,9 @@ function InfoCard({ card }: { card: typeof INFO_CARDS[0] }) {
   const Icon = card.icon;
   
   const colorStyles = {
-    lavender: "text-lavender bg-lavender-50 border-lavender/40",
-    mint: "text-mint-dark bg-mint-50 border-mint/40",
-    peach: "text-peach-foreground bg-peach-50 border-peach/40",
+    lavender: "text-ihu-green bg-ihu-green-50 border-ihu-green/40",
+    mint: "text-ihu-green-dark bg-lachani-mist border-lachani/40",
+    peach: "text-ihu-blue bg-ihu-blue-50 border-ihu-blue/40",
   };
 
   return (
@@ -169,7 +169,7 @@ function ContactForm() {
 
   return (
     <motion.div variants={itemVariants} className="bg-white/80 backdrop-blur-md border border-border-soft p-8 lg:p-12 relative">
-      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-lavender via-mint to-peach" />
+      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-ihu-green via-lachani to-ihu-blue" />
       
       <div className="mb-10">
         <h2 className="font-heading text-3xl font-bold text-text-primary mb-2 uppercase tracking-tight">
@@ -189,7 +189,7 @@ function ContactForm() {
             exit={{ opacity: 0, y: -10 }}
             className="flex flex-col items-start justify-center py-16"
           >
-            <div className="w-16 h-16 bg-mint-50 border border-mint flex items-center justify-center mb-6 text-mint-dark">
+            <div className="w-16 h-16 bg-lachani-mist border border-lachani flex items-center justify-center mb-6 text-ihu-green-dark">
               <CheckCircle2 className="w-8 h-8" />
             </div>
             <h3 className="text-2xl font-heading font-bold text-text-primary mb-2 uppercase tracking-tight">
@@ -200,7 +200,7 @@ function ContactForm() {
             </p>
             <button 
               onClick={() => setIsSuccess(false)}
-              className="mt-8 px-8 py-3 bg-text-primary text-white font-medium hover:bg-lavender transition-colors flex items-center gap-2 uppercase tracking-wider text-sm"
+              className="mt-8 px-8 py-3 bg-text-primary text-white font-medium hover:bg-ihu-green transition-colors flex items-center gap-2 uppercase tracking-wider text-sm"
             >
               Νεο Μηνυμα <ArrowRight className="w-4 h-4" />
             </button>
@@ -271,7 +271,7 @@ function ContactForm() {
             <button 
               type="submit" 
               disabled={isSubmitting}
-              className="group bg-text-primary text-white py-4 px-8 font-medium transition-all hover:bg-lavender disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-3 w-full md:w-auto uppercase tracking-wider text-sm"
+              className="group bg-text-primary text-white py-4 px-8 font-medium transition-all hover:bg-ihu-green disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-3 w-full md:w-auto uppercase tracking-wider text-sm"
             >
               {isSubmitting ? (
                 <>
@@ -373,13 +373,13 @@ function AbstractMapVisual() {
       <motion.div 
         variants={abstractShapeVariants}
         animate="animate"
-        className="absolute top-20 -right-10 w-48 h-64 bg-lavender/20 border border-lavender/30 mix-blend-screen transform rotate-12"
+        className="absolute top-20 -right-10 w-48 h-64 bg-ihu-green/20 border border-ihu-green/30 mix-blend-screen transform rotate-12"
       />
       <motion.div 
         variants={abstractShapeVariants}
         animate="animate"
         style={{ animationDelay: '-5s' }}
-        className="absolute bottom-10 -left-10 w-64 h-32 bg-mint/20 border border-mint/30 mix-blend-screen transform -rotate-6"
+        className="absolute bottom-10 -left-10 w-64 h-32 bg-lachani/20 border border-lachani/30 mix-blend-screen transform -rotate-6"
       />
 
       <div className="relative z-10 flex items-start gap-4">
@@ -395,7 +395,7 @@ function AbstractMapVisual() {
       <div className="relative z-10 mt-auto">
         <div className="bg-white/5 border border-white/10 p-6 backdrop-blur-md">
           <div className="flex items-start gap-4">
-            <MapPin className="w-5 h-5 text-mint flex-shrink-0 mt-0.5" />
+            <MapPin className="w-5 h-5 text-lachani flex-shrink-0 mt-0.5" />
             <div>
               <h4 className="font-bold text-white mb-2 uppercase text-xs tracking-widest">Πλοηγηση</h4>
               <p className="text-sm text-white/70 leading-relaxed">

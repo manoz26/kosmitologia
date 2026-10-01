@@ -86,7 +86,9 @@
   --border: #CBD5E1; /* slate-300 for clearer borders */
   --input: #CBD5E1;
   --ring: #2A427F;
-  --radius: 0.75rem; /* A good middle ground, 12px */
+  /* 10px base → rounded-2xl 15px, rounded-3xl 20px. Softer than square,
+     calmer than the old 24–40px "bubble" cards. */
+  --radius: 0.625rem;
   /* --font-heading is provided by next/font (Commissioner, full Greek glyphs)
      via the @theme inline block above — do not re-declare it here or the Greek
      face is lost (this is what broke ω/ώ in headings). */
@@ -403,33 +405,31 @@
   .will-change-transform { will-change: transform; }
 
   /* Λαχανί gradient text */
+  /* Accent words in headings: one solid brand green instead of a shimmering
+     gradient (kept as classes so every heading picks it up). */
   .text-gradient-lachani {
-    background: linear-gradient(120deg, var(--color-lachani-deep) 0%, var(--color-lachani) 45%, var(--color-lachani-bright) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: #6B8A22;
   }
   .text-gradient-fresh {
-    background: linear-gradient(120deg, #5F712A 0%, #879D42 40%, #B9D84A 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: #5F712A;
   }
 
-  /* Frosted glass tuned for the λαχανί canvas */
+  /* Panels on the λαχανί canvas: mostly-solid white with a light frost, a
+     hairline green border and a short soft shadow — calmer (and much cheaper
+     to composite) than the old heavy frosted glass. */
   .glass-lachani {
-    background: rgba(255, 255, 255, 0.62);
-    backdrop-filter: blur(16px) saturate(120%);
-    -webkit-backdrop-filter: blur(16px) saturate(120%);
-    border: 1px solid rgba(255, 255, 255, 0.75);
-    box-shadow: 0 18px 50px -24px rgba(95, 113, 42, 0.28), inset 0 1px 0 rgba(255,255,255,0.7);
+    background: rgba(255, 255, 255, 0.86);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid rgba(95, 113, 42, 0.12);
+    box-shadow: 0 10px 30px -18px rgba(63, 79, 24, 0.28);
   }
   .glass-lachani-deep {
-    background: rgba(255, 255, 255, 0.45);
-    backdrop-filter: blur(22px) saturate(130%);
-    -webkit-backdrop-filter: blur(22px) saturate(130%);
-    border: 1px solid rgba(255, 255, 255, 0.6);
-    box-shadow: 0 30px 70px -30px rgba(95, 113, 42, 0.35), inset 0 1px 0 rgba(255,255,255,0.65);
+    background: rgba(255, 255, 255, 0.74);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(95, 113, 42, 0.12);
+    box-shadow: 0 14px 36px -20px rgba(63, 79, 24, 0.3);
   }
 
   /* Soft inner ring used on glass chips */
@@ -617,4 +617,28 @@ html.perf-lite .glass-lachani-deep {
   .animate-lh-blob-morph {
     animation: none !important;
   }
+}
+/* ══════════════════════════════════════════════════════════════════════════
+   STILL BACKGROUNDS (2026-10)
+   ──────────────────────────────────────────────────────────────────────────
+   The client found drifting "bubbles", auroras and morphing blobs behind the
+   content distracting. Background-only ambient loops are frozen everywhere
+   in their resting pose. The 3D props and scroll-driven scenes in the
+   foreground keep their motion.
+   ══════════════════════════════════════════════════════════════════════════ */
+.animate-drift-a,
+.animate-drift-b,
+.animate-drift-c,
+.animate-lh-aurora,
+.animate-lh-blob-morph,
+.animate-lh-bubble,
+.animate-lh-sparkle,
+.animate-grid-pan,
+/* decorative light sweeps across cards and shimmering heading words */
+.animate-lh-sheen,
+.animate-lh-shimmer-text {
+  animation: none !important;
+}
+.animate-lh-sheen {
+  opacity: 0 !important;
 }

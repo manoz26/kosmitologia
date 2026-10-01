@@ -79,7 +79,7 @@ export function LabShowcase3D() {
             <TiltCard max={9} glare={false} className="h-full w-full" innerClassName="h-full w-full overflow-visible">
               {/* main photo */}
               <div
-                className="absolute left-1/2 top-1/2 h-[78%] w-[78%] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-[1.8rem] border-4 border-white shadow-2xl"
+                className="absolute left-1/2 top-1/2 h-[78%] w-[78%] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-3xl border-4 border-white shadow-2xl"
                 style={{ transform: "translate(-50%,-50%) translateZ(20px)" }}
               >
                 <Image src="/images/lab.png" alt="Εργαστήριο Κοσμητολογίας" fill className="object-cover" sizes="(max-width:768px) 80vw, 36vw" />

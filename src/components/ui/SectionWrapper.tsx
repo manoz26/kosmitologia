@@ -18,7 +18,7 @@ interface SectionWrapperProps {
 
 const bgVariants = {
   plain: "",
-  gradient: "bg-gradient-to-b from-surface via-lavender-50/30 to-surface",
+  gradient: "bg-gradient-to-b from-surface via-ihu-green-50/30 to-surface",
   mesh: "mesh-gradient",
   white: "bg-white",
   slate: "bg-slate-50",
@@ -66,7 +66,7 @@ export function SectionWrapper({
             className={cn("mb-16", centered && "text-center")}
           >
             {subtitle && (
-              <span className="inline-block text-sm font-semibold uppercase tracking-[0.2em] text-lavender mb-4">
+              <span className="inline-block text-sm font-semibold uppercase tracking-[0.2em] text-ihu-green mb-4">
                 {subtitle}
               </span>
             )}
@@ -76,9 +76,9 @@ export function SectionWrapper({
               </h2>
             )}
             <div className="mt-6 mx-auto flex items-center gap-2 justify-center">
-              <span className="h-[3px] w-8 rounded-full bg-lavender" />
-              <span className="h-[3px] w-16 rounded-md bg-gradient-to-r from-lavender via-mint to-peach" />
-              <span className="h-[3px] w-8 rounded-full bg-mint" />
+              <span className="h-[3px] w-8 rounded-full bg-ihu-green" />
+              <span className="h-[3px] w-16 rounded-md bg-gradient-to-r from-ihu-green via-lachani to-ihu-blue" />
+              <span className="h-[3px] w-8 rounded-full bg-lachani" />
             </div>
           </motion.div>
         )}

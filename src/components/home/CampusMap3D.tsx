@@ -20,7 +20,7 @@ const MAPS_URL =
 
 function StylisedMap() {
   return (
-    <div className="relative h-full w-full overflow-hidden rounded-[1.8rem] border-4 border-white bg-gradient-to-br from-[#E4EEC8] to-[#C6D98C] shadow-2xl">
+    <div className="relative h-full w-full overflow-hidden rounded-3xl border-4 border-white bg-gradient-to-br from-[#E4EEC8] to-[#C6D98C] shadow-2xl">
       {/* parks / blocks */}
       <div className="home-grid-soft absolute inset-0 opacity-40" />
       <div className="absolute left-[12%] top-[16%] h-20 w-28 rounded-lg bg-ihu-green/25" />

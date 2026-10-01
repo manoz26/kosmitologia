@@ -10,9 +10,9 @@ const objectives = [
     desc: "Παροχή προηγμένων γνώσεων σε επιστημονικά πεδία που καλύπτουν τις σύγχρονες ανάγκες στην επιστήμη της Κοσμητολογίας.",
     colSpan: "md:col-span-2",
     rowSpan: "md:row-span-2",
-    bg: "bg-gradient-to-br from-lavender-50 to-white",
-    iconBg: "bg-lavender-100",
-    iconColor: "text-lavender",
+    bg: "bg-gradient-to-br from-ihu-green-50 to-white",
+    iconBg: "bg-lachani-soft",
+    iconColor: "text-ihu-green",
     delay: 0.1,
   },
   {
@@ -21,9 +21,9 @@ const objectives = [
     desc: "Εφαρμογή της κοσμητολογικής επιστήμης στην ιδιωτική και δημόσια υγεία, με γνώμονα την ασφάλεια.",
     colSpan: "md:col-span-1",
     rowSpan: "md:row-span-1",
-    bg: "bg-gradient-to-br from-mint-50 to-white",
-    iconBg: "bg-mint-100",
-    iconColor: "text-mint-dark",
+    bg: "bg-gradient-to-br from-lachani-mist to-white",
+    iconBg: "bg-lachani-soft",
+    iconColor: "text-ihu-green-dark",
     delay: 0.2,
   },
   {
@@ -32,9 +32,9 @@ const objectives = [
     desc: "Ανάπτυξη και προώθηση της έρευνας σε όλα τα πεδία της Κοσμητολογίας.",
     colSpan: "md:col-span-1",
     rowSpan: "md:row-span-2",
-    bg: "bg-gradient-to-br from-peach-50 to-white",
-    iconBg: "bg-peach-100",
-    iconColor: "text-peach-dark",
+    bg: "bg-gradient-to-br from-ihu-blue-50 to-white",
+    iconBg: "bg-ihu-blue-50",
+    iconColor: "text-ihu-blue-dark",
     delay: 0.3,
   },
   {
@@ -85,7 +85,7 @@ export function ProgramObjectivesSection() {
           </motion.h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[220px]">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:auto-rows-[minmax(220px,auto)]">
           {objectives.map((obj, i) => {
             const Icon = obj.icon;
             return (
@@ -95,7 +95,7 @@ export function ProgramObjectivesSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: obj.delay }}
-                className={`group relative overflow-hidden rounded-[2rem] border border-border-soft ${obj.bg} p-8 flex flex-col justify-between ${obj.colSpan} ${obj.rowSpan} hover:shadow-xl hover:-translate-y-1 transition-all duration-300`}
+                className={`group relative overflow-hidden rounded-3xl border border-border-soft ${obj.bg} p-8 flex flex-col justify-between ${obj.colSpan} ${obj.rowSpan} hover:shadow-xl hover:-translate-y-1 transition-all duration-300`}
               >
                 {/* Large Background Icon */}
                 <div className="absolute -right-8 -bottom-8 opacity-5 group-hover:opacity-10 group-hover:scale-110 transition-all duration-500 pointer-events-none">

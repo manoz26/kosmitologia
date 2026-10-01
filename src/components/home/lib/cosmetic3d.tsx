@@ -559,7 +559,7 @@ export function SkinCrossSection({
     { h: 0.36, from: "#7FC79A", to: "#3E7A4E", label: "Υποδόριος" },
   ];
   return (
-    <div className={cn("relative overflow-hidden rounded-[1.6rem]", className)} style={{ width: size, height: size * 1.1, ...style }} aria-hidden>
+    <div className={cn("relative overflow-hidden rounded-3xl", className)} style={{ width: size, height: size * 1.1, ...style }} aria-hidden>
       <div className="flex h-full w-full flex-col">
         {layers.map((l, i) => {
           const active = activeLayer === i;

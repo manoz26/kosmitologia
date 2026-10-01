@@ -62,7 +62,7 @@ function Timeline() {
 
 function CriteriaPanel() {
   return (
-    <div className="rounded-[2rem] glass-lachani-deep p-7 md:p-8">
+    <div className="rounded-3xl glass-lachani-deep p-7 md:p-8">
       <h3 className="font-heading text-xl font-bold text-text-primary">Κριτήρια Αξιολόγησης</h3>
       <p className="mt-1.5 text-sm text-text-secondary">
         Χωρίς γραπτές εξετάσεις — αξιολόγηση φακέλου υποψηφιότητας με μόρια.

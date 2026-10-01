@@ -8,7 +8,6 @@ import { CareerAscent3D } from "@/components/karieres/CareerAscent3D";
 import { SkillsConstellation } from "@/components/home/SkillsConstellation";
 import { CareerSupport } from "@/components/karieres/CareerSupport";
 import { PartnersMarquee } from "@/components/home/PartnersMarquee";
-import { TestimonialsDeck } from "@/components/home/TestimonialsDeck";
 import { CtaFinale3D } from "@/components/home/CtaFinale3D";
 
 export const metadata: Metadata = {
@@ -46,9 +45,8 @@ export default function KarieresPage() {
         {/* Support & networking services */}
         <CareerSupport />
 
-        {/* Where graduates find work + alumni voices */}
+        {/* Where graduates find work */}
         <PartnersMarquee />
-        <TestimonialsDeck />
 
         {/* Closing call to action */}
         <CtaFinale3D />

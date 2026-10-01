@@ -6,9 +6,9 @@ import Image from "next/image";
 
 export function AboutHeroSection() {
   return (
-    <section className="relative w-full max-w-6xl mx-auto rounded-[2.5rem] overflow-hidden bg-white border border-border-soft shadow-xl shadow-black/5">
+    <section className="relative w-full max-w-6xl mx-auto rounded-3xl overflow-hidden bg-white border border-border-soft shadow-xl shadow-black/5">
       {/* Decorative Top Gradient */}
-      <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-lavender via-mint to-peach" />
+      <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-ihu-green via-lachani to-ihu-blue" />
 
       <div className="grid lg:grid-cols-2 gap-0">
         {/* Left Content */}
@@ -22,14 +22,14 @@ export function AboutHeroSection() {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="relative z-10"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-lavender-50 text-lavender-dark text-xs font-bold uppercase tracking-widest mb-8 border border-lavender/20">
-              <span className="w-2 h-2 rounded-full bg-lavender animate-pulse" />
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-ihu-green-50 text-ihu-green-dark text-xs font-bold uppercase tracking-widest mb-8 border border-ihu-green/20">
+              <span className="w-2 h-2 rounded-full bg-ihu-green animate-pulse" />
               Γνωστικο Αντικειμενο
             </div>
 
             <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-extrabold text-text-primary leading-[1.1] mb-6">
               Η Επιστήμη της <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-lavender-dark to-primary">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-ihu-green-dark to-primary">
                 Κοσμητολογίας
               </span>
             </h2>
@@ -41,7 +41,7 @@ export function AboutHeroSection() {
             <div className="flex flex-col sm:flex-row gap-6">
               {/* Stat 1 */}
               <div className="flex items-center gap-4 group">
-                <div className="w-12 h-12 rounded-2xl bg-mint-50 flex items-center justify-center text-mint-dark group-hover:bg-mint group-hover:text-white transition-colors duration-300">
+                <div className="w-12 h-12 rounded-2xl bg-lachani-mist flex items-center justify-center text-ihu-green-dark group-hover:bg-lachani group-hover:text-white transition-colors duration-300">
                   <Clock className="w-6 h-6" />
                 </div>
                 <div>
@@ -52,7 +52,7 @@ export function AboutHeroSection() {
 
               {/* Stat 2 */}
               <div className="flex items-center gap-4 group">
-                <div className="w-12 h-12 rounded-2xl bg-peach-50 flex items-center justify-center text-peach-dark group-hover:bg-peach group-hover:text-white transition-colors duration-300">
+                <div className="w-12 h-12 rounded-2xl bg-ihu-blue-50 flex items-center justify-center text-ihu-blue-dark group-hover:bg-ihu-blue group-hover:text-white transition-colors duration-300">
                   <BookOpen className="w-6 h-6" />
                 </div>
                 <div>
@@ -90,7 +90,7 @@ export function AboutHeroSection() {
               className="absolute bottom-8 right-8 left-8 md:left-auto md:w-80 bg-white/90 backdrop-blur-md p-6 rounded-2xl border border-white/40 shadow-xl"
             >
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-lavender-light to-lavender flex items-center justify-center text-white shadow-inner shrink-0">
+                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-ihu-green-light to-ihu-green flex items-center justify-center text-white shadow-inner shrink-0">
                   <Beaker className="w-6 h-6" />
                 </div>
                 <div>

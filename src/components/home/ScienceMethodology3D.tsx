@@ -33,7 +33,7 @@ export function ScienceMethodology3D() {
         <div className="mt-16 grid grid-cols-1 gap-6 [perspective:1500px] sm:grid-cols-2 lg:grid-cols-3">
           {methodSteps.map((step, i) => (
             <Reveal key={step.index} delay={(i % 3) * 0.08} direction="up">
-              <div className="group relative h-full overflow-hidden rounded-[1.6rem] glass-lachani p-7 transition-transform duration-300 hover:-translate-y-1.5">
+              <div className="group relative h-full overflow-hidden rounded-3xl glass-lachani p-7 transition-transform duration-300 hover:-translate-y-1.5">
                 {/* big index watermark */}
                 <span className="pointer-events-none absolute -right-2 -top-4 select-none font-heading text-[5.5rem] font-black leading-none text-ihu-green-dark/10">
                   {step.index}

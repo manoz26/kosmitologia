@@ -21,7 +21,9 @@
    Geometry is computed once at module load (deterministic — no hydration
    risk; the scene is drawn on <canvas>, nothing SSR-sensitive). Drag to
    rotate; it idles with a slow auto-spin (calm = slower, reduced-motion =
-   still). Coordinates are in ångström-scale units.
+   still). The render loop only runs while the viewer is on screen, so the
+   page isn't repainting an off-screen canvas every frame (that competed with
+   the hero film for the main thread). Coordinates are in ångström-scale units.
    ══════════════════════════════════════════════════════════════════════════ */
 
 import { useEffect, useRef } from "react";
@@ -249,6 +251,7 @@ export function MoleculeViewer({ calm = false, className }: { calm?: boolean; cl
     const tgt = { rx: -0.42, ry: 0.7 };
     let dragging = false;
     let raf = 0;
+    let onScreen = true;
     const spin = reduced ? 0 : calm ? 0.0022 : 0.0042;
 
     const draw = () => {
@@ -381,7 +384,7 @@ export function MoleculeViewer({ calm = false, className }: { calm?: boolean; cl
       cur.rx += (tgt.rx - cur.rx) * 0.12;
       cur.ry += (tgt.ry - cur.ry) * 0.12;
       draw();
-      raf = requestAnimationFrame(step);
+      raf = onScreen ? requestAnimationFrame(step) : 0;
     };
 
     const measure = () => {
@@ -422,8 +425,14 @@ export function MoleculeViewer({ calm = false, className }: { calm?: boolean; cl
     wrap.addEventListener("pointercancel", up);
 
     raf = requestAnimationFrame(step);
+    const io = new IntersectionObserver(([entry]) => {
+      onScreen = entry.isIntersecting;
+      if (onScreen && !raf) raf = requestAnimationFrame(step);
+    });
+    io.observe(wrap);
     return () => {
       cancelAnimationFrame(raf);
+      io.disconnect();
       ro.disconnect();
       wrap.removeEventListener("pointerdown", down);
       wrap.removeEventListener("pointermove", move);

@@ -10,6 +10,7 @@ import {
 import { LachaniSurface } from "@/components/home/LachaniSurface";
 import { AdmissionTimeline3D } from "@/components/home/AdmissionTimeline3D";
 import { TuitionCalculator3D } from "@/components/home/TuitionCalculator3D";
+import { ScrollBackdrop } from "@/components/home/ScrollBackdrop";
 import { DownloadsSection } from "@/components/home/DownloadsSection";
 
 const DOCUMENTS = [
@@ -73,7 +74,9 @@ export function EggrafesContent() {
   const nextYear = currentYear + 1;
 
   return (
-    <main className="min-h-screen flex flex-col pt-24">
+    <main className="relative min-h-screen flex flex-col pt-24">
+      {/* Same still λαχανί canvas as the home page */}
+      <ScrollBackdrop />
       
       {/* HEADER SECTION */}
       <section className="py-16 lg:py-24">

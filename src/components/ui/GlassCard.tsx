@@ -16,7 +16,7 @@ const variantStyles = {
   default: "border border-border-soft shadow-sm bg-white",
   elevated: "border border-border-soft shadow-md bg-white",
   colored:
-    "border border-border-soft shadow-md bg-white bg-gradient-to-br from-white/70 via-white/60 to-lavender-50/50",
+    "border border-border-soft shadow-md bg-white bg-gradient-to-br from-white/70 via-white/60 to-ihu-green-50/50",
 };
 
 export function GlassCard({

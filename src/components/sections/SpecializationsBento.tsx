@@ -12,9 +12,9 @@ const specializations = [
     description: "Εστίαση στον σχεδιασμό, ανάπτυξη, παρασκευή και ποιοτικό έλεγχο καινοτόμων καλλυντικών με σύγχρονες μεθόδους ανάλυσης. Προετοιμασία στελεχών για την παραγωγή προϊόντων υψηλής προστιθέμενης αξίας.",
     icon: FlaskConical,
     theme: "mint",
-    bg: "bg-mint-50",
-    text: "text-mint-dark",
-    gradient: "from-mint-100 to-transparent",
+    bg: "bg-lachani-mist",
+    text: "text-ihu-green-dark",
+    gradient: "from-lachani-soft to-transparent",
     features: ["Σχεδιασμός Προϊόντων", "Ποιοτικός Έλεγχος", "Σύγχρονη Ανάλυση", "Καινοτόμα Καλλυντικά"],
   },
   {
@@ -24,9 +24,9 @@ const specializations = [
     description: "Εξειδίκευση στην εφαρμογή κοσμητολογικών τεχνικών για την αντιμετώπιση δερματολογικών παθήσεων. Σύζευξη επιστήμης και κλινικής αισθητικής για την προαγωγή της υγείας του δέρματος.",
     icon: Stethoscope,
     theme: "lavender",
-    bg: "bg-lavender-50",
-    text: "text-lavender",
-    gradient: "from-lavender-100 to-transparent",
+    bg: "bg-ihu-green-50",
+    text: "text-ihu-green",
+    gradient: "from-lachani-soft to-transparent",
     features: ["Δερματολογικές Παθήσεις", "Κλινική Αισθητική", "Εξατομικευμένα Πρωτόκολλα", "Παθοφυσιολογία"],
   }
 ];
@@ -67,7 +67,7 @@ export function SpecializationsBento() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: idx * 0.2 }}
                 className={cn(
-                  "group relative bg-white rounded-[2.5rem] p-10 md:p-12 overflow-hidden border border-border-soft hover:shadow-2xl transition-all duration-500",
+                  "group relative bg-white rounded-3xl p-10 md:p-12 overflow-hidden border border-border-soft hover:shadow-2xl transition-all duration-500",
                   idx === 1 ? "lg:mt-12" : "" // Subtle staggered layout
                 )}
               >

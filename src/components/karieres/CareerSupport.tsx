@@ -26,7 +26,7 @@ export function CareerSupport() {
         <div className="mt-14 grid grid-cols-1 gap-6 [perspective:1400px] md:grid-cols-3">
           {careerSupport.map((service, i) => (
             <Reveal key={service.title} delay={i * 0.1} direction="up">
-              <TiltCard max={8} glare={false} className="h-full" innerClassName="glass-lachani rounded-[1.8rem] p-8 h-full">
+              <TiltCard max={8} glare={false} className="h-full" innerClassName="glass-lachani rounded-3xl p-8 h-full">
                 <div style={{ transform: "translateZ(30px)" }}>
                   <IconBadge icon={service.icon} size="lg" />
                   <h3 className="mt-6 font-heading text-xl font-bold text-text-primary">{service.title}</h3>

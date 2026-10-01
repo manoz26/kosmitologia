@@ -12,21 +12,21 @@ const contactCards = [
     title: "Τηλέφωνο",
     lines: [contactInfo.phone1, contactInfo.phone2],
     href: `tel:+30${contactInfo.phone1.replace(/\s/g, "")}`,
-    color: "from-lavender to-lavender-dark",
+    color: "from-ihu-green to-ihu-green-dark",
   },
   {
     icon: Mail,
     title: "Email",
     lines: [contactInfo.email],
     href: `mailto:${contactInfo.email}`,
-    color: "from-mint to-mint-dark",
+    color: "from-lachani to-ihu-green-dark",
   },
   {
     icon: MapPin,
     title: "Διεύθυνση",
     lines: [contactInfo.building, contactInfo.campus, contactInfo.postalCode],
     href: "#map",
-    color: "from-peach to-peach-warm",
+    color: "from-ihu-blue to-ihu-blue",
   },
 ];
 
@@ -66,7 +66,7 @@ export function ContactSection() {
 
           {/* Hours */}
           <div className="flex items-center gap-3 border border-border-soft shadow-sm bg-white rounded-md px-4 py-3">
-            <Clock className="h-4 w-4 text-lavender flex-shrink-0" />
+            <Clock className="h-4 w-4 text-ihu-green flex-shrink-0" />
             <p className="text-xs text-text-muted">
               Ωράριο Γραμματείας: <span className="font-medium text-text-secondary">Δευτ-Παρ 09:00-15:00</span>
             </p>
@@ -95,7 +95,7 @@ export function ContactSection() {
                   <input
                     type="text"
                     placeholder="π.χ. Μαρία Παπαδοπούλου"
-                    className="w-full px-4 py-3 rounded-md bg-white/60 border border-border-soft text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-lavender/30 focus:border-lavender transition-all"
+                    className="w-full px-4 py-3 rounded-md bg-white/60 border border-border-soft text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-ihu-green/30 focus:border-ihu-green transition-all"
                   />
                 </div>
                 <div>
@@ -105,7 +105,7 @@ export function ContactSection() {
                   <input
                     type="email"
                     placeholder="you@example.com"
-                    className="w-full px-4 py-3 rounded-md bg-white/60 border border-border-soft text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-lavender/30 focus:border-lavender transition-all"
+                    className="w-full px-4 py-3 rounded-md bg-white/60 border border-border-soft text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-ihu-green/30 focus:border-ihu-green transition-all"
                   />
                 </div>
               </div>
@@ -114,7 +114,7 @@ export function ContactSection() {
                 <label className="block text-xs font-medium text-text-secondary mb-1.5 uppercase tracking-wider">
                   Θέμα
                 </label>
-                <select className="w-full px-4 py-3 rounded-md bg-white/60 border border-border-soft text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-lavender/30 focus:border-lavender transition-all appearance-none cursor-pointer">
+                <select className="w-full px-4 py-3 rounded-md bg-white/60 border border-border-soft text-sm text-text-primary focus:outline-none focus:ring-2 focus:ring-ihu-green/30 focus:border-ihu-green transition-all appearance-none cursor-pointer">
                   <option>Γενική Ερώτηση</option>
                   <option>Αίτηση Εγγραφής</option>
                   <option>Πρόγραμμα Σπουδών</option>
@@ -130,13 +130,13 @@ export function ContactSection() {
                 <textarea
                   rows={4}
                   placeholder="Γράψτε το μήνυμά σας εδώ..."
-                  className="w-full px-4 py-3 rounded-md bg-white/60 border border-border-soft text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-lavender/30 focus:border-lavender transition-all resize-none"
+                  className="w-full px-4 py-3 rounded-md bg-white/60 border border-border-soft text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-ihu-green/30 focus:border-ihu-green transition-all resize-none"
                 />
               </div>
 
               <button
                 type="button"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-md bg-gradient-to-r from-lavender to-lavender-dark px-8 py-3.5 text-sm font-bold text-white shadow-lg shadow-lavender/20 hover:shadow-lavender/40 hover:scale-[1.02] active:scale-100 transition-all duration-200"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-md bg-gradient-to-r from-ihu-green to-ihu-green-dark px-8 py-3.5 text-sm font-bold text-white shadow-lg shadow-ihu-green/20 hover:shadow-ihu-green/40 hover:scale-[1.02] active:scale-100 transition-all duration-200"
               >
                 <Send className="h-4 w-4" />
                 Αποστολή Μηνύματος
@@ -174,13 +174,13 @@ export function ContactSection() {
             className="mt-8"
           >
             <h3 className="font-heading text-lg font-bold text-text-primary mb-4 flex items-center gap-2">
-              <MapPin className="h-5 w-5 text-peach-warm" />
+              <MapPin className="h-5 w-5 text-ihu-blue" />
               Πρόσβαση στο Campus
             </h3>
             
             <div className="grid sm:grid-cols-3 gap-4">
-              <div className="border border-border-soft shadow-sm bg-white rounded-md p-5 border border-border-soft hover:border-lavender/30 transition-colors group shadow-sm hover:shadow-md">
-                <div className="h-10 w-10 rounded-md bg-lavender-50 text-lavender-dark flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+              <div className="border border-border-soft shadow-sm bg-white rounded-md p-5 border border-border-soft hover:border-ihu-green/30 transition-colors group shadow-sm hover:shadow-md">
+                <div className="h-10 w-10 rounded-md bg-ihu-green-50 text-ihu-green-dark flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
                   <Bus className="h-5 w-5" />
                 </div>
                 <h4 className="font-heading font-semibold text-sm text-text-primary mb-2">
@@ -191,8 +191,8 @@ export function ContactSection() {
                 </p>
               </div>
 
-              <div className="border border-border-soft shadow-sm bg-white rounded-md p-5 border border-border-soft hover:border-mint/30 transition-colors group shadow-sm hover:shadow-md">
-                <div className="h-10 w-10 rounded-md bg-mint-50 text-mint-dark flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+              <div className="border border-border-soft shadow-sm bg-white rounded-md p-5 border border-border-soft hover:border-lachani/30 transition-colors group shadow-sm hover:shadow-md">
+                <div className="h-10 w-10 rounded-md bg-lachani-mist text-ihu-green-dark flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
                   <TrainFront className="h-5 w-5" />
                 </div>
                 <h4 className="font-heading font-semibold text-sm text-text-primary mb-2">
@@ -203,8 +203,8 @@ export function ContactSection() {
                 </p>
               </div>
 
-              <div className="border border-border-soft shadow-sm bg-white rounded-md p-5 border border-border-soft hover:border-peach/30 transition-colors group shadow-sm hover:shadow-md">
-                <div className="h-10 w-10 rounded-md bg-peach-50 text-peach-warm flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+              <div className="border border-border-soft shadow-sm bg-white rounded-md p-5 border border-border-soft hover:border-ihu-blue/30 transition-colors group shadow-sm hover:shadow-md">
+                <div className="h-10 w-10 rounded-md bg-ihu-blue-50 text-ihu-blue flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
                   <Car className="h-5 w-5" />
                 </div>
                 <h4 className="font-heading font-semibold text-sm text-text-primary mb-2">

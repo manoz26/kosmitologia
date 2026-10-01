@@ -120,7 +120,7 @@ export function CareerPathsExplorer() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -12 }}
                 transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                className="relative h-full overflow-hidden rounded-[2rem] glass-lachani-deep p-7 md:p-10"
+                className="relative h-full overflow-hidden rounded-3xl glass-lachani-deep p-7 md:p-10"
               >
                 {/* decorative themed glow */}
                 <div

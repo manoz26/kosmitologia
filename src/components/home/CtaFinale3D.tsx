@@ -45,7 +45,7 @@ export function CtaFinale3D() {
       <OrbitRing size={560} className="left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-25" duration={70} dash="2 16" />
 
       <div className="section-container relative z-10 px-4 [perspective:1500px]">
-        <TiltCard max={6} glare={false} className="mx-auto max-w-4xl" innerClassName="glass-lachani-deep rounded-[2.5rem] px-6 py-14 text-center md:px-16 md:py-20">
+        <TiltCard max={6} glare={false} className="mx-auto max-w-4xl" innerClassName="glass-lachani-deep rounded-3xl px-6 py-14 text-center md:px-16 md:py-20">
           {/* halo */}
           <div
             aria-hidden

@@ -3,9 +3,10 @@
 /* ══════════════════════════════════════════════════════════════════════════
    SkillsConstellation
    ──────────────────────────────────────────────────────────────────────────
-   The competencies a graduate masters, each as an animated circular progress
-   ring that fills when scrolled into view, on a tilting glass card. A compact,
-   data-dense "skills radar" without a charting dependency.
+   The competencies a graduate masters, each on a tilting glass card whose
+   ring draws itself closed when scrolled into view. The ring is purely
+   decorative: there are no percentages — the programme publishes no such
+   figures, so the site does not invent them.
    ══════════════════════════════════════════════════════════════════════════ */
 
 import { motion } from "framer-motion";
@@ -19,7 +20,6 @@ const R = (SIZE - STROKE) / 2;
 const CIRC = 2 * Math.PI * R;
 
 function SkillRing({ skill, delay }: { skill: Skill; delay: number }) {
-  const offset = CIRC * (1 - skill.level / 100);
   return (
     <TiltCard max={10} glare={false} innerClassName="glass-lachani rounded-3xl p-6 h-full" className="h-full">
       <div className="flex flex-col items-center text-center">
@@ -36,7 +36,7 @@ function SkillRing({ skill, delay }: { skill: Skill; delay: number }) {
               strokeLinecap="round"
               strokeDasharray={CIRC}
               initial={{ strokeDashoffset: CIRC }}
-              whileInView={{ strokeDashoffset: offset }}
+              whileInView={{ strokeDashoffset: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 1.1, delay, ease: [0.22, 1, 0.36, 1] }}
             />
@@ -46,16 +46,6 @@ function SkillRing({ skill, delay }: { skill: Skill; delay: number }) {
               <Icon name={skill.icon} size={15} />
             </span>
           </div>
-          {/* floating percentage */}
-          <motion.span
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: delay + 0.5 }}
-            className="absolute -bottom-1 left-1/2 -translate-x-1/2 rounded-full bg-ihu-green-dark px-2 py-0.5 font-heading text-[11px] font-bold text-white shadow"
-          >
-            {skill.level}%
-          </motion.span>
         </div>
 
         <h3 className="mt-5 font-heading text-sm font-bold leading-snug text-text-primary" style={{ transform: "translateZ(20px)" }}>

@@ -108,7 +108,7 @@ export function FormulationLab3D() {
 
           {/* result */}
           <Reveal direction="right">
-            <div className="relative overflow-hidden rounded-[2rem] glass-lachani-deep p-8 text-center md:p-10">
+            <div className="relative overflow-hidden rounded-3xl glass-lachani-deep p-8 text-center md:p-10">
               <OrbitRing size={300} className="left-1/2 top-[42%] -translate-x-1/2 -translate-y-1/2 opacity-40" duration={40} />
               <div className="relative mx-auto flex h-44 items-center justify-center">
                 <motion.div

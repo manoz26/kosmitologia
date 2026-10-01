@@ -246,7 +246,7 @@ export function SectionLabel({
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-2 rounded-full border border-ihu-green-dark/15 bg-white/55 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-ihu-green-dark shadow-sm backdrop-blur-md ring-glass",
+        "inline-flex items-center gap-2 rounded-full border border-ihu-green-dark/15 bg-white/70 px-4 py-1.5 text-sm font-semibold text-ihu-green-dark",
         className,
       )}
     >

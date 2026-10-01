@@ -152,7 +152,7 @@ export const identityHighlights: IdentityHighlight[] = [
     title: "Δίδακτρα",
     value: "€2.400",
     description:
-      "Συνολικά δίδακτρα για ολόκληρο το πρόγραμμα, με δυνατότητα απαλλαγής έως 30% των φοιτητών (Ν. 4957/2022).",
+      "Συνολικά δίδακτρα για ολόκληρο το πρόγραμμα.",
   },
 ];
 
@@ -355,7 +355,7 @@ export const programStats: ProgramStat[] = [
   { icon: "layers", value: 2, label: "Κατευθύνσεις", sub: "Εξειδικευμένη γνώση" },
   { icon: "users", value: 40, label: "Φοιτητές / έτος", sub: "Μικρά, εστιασμένα τμήματα" },
   { icon: "book", value: 11, label: "Μαθήματα", sub: "9 ανά ειδίκευση (7 κοινά)" },
-  { icon: "euro", value: 2400, prefix: "€", label: "Δίδακτρα", sub: "Με δυνατότητα απαλλαγής 30%" },
+  { icon: "euro", value: 2400, prefix: "€", label: "Δίδακτρα", sub: "Για ολόκληρο το πρόγραμμα" },
 ];
 
 /* ────────────────────────────────────────────
@@ -397,7 +397,7 @@ export const reasons: Reason[] = [
     icon: "clock",
     title: "Ευέλικτο Πρόγραμμα",
     description:
-      "Μαθήματα Παρασκευή–Κυριακή και δυνατότητα μερικής φοίτησης για εργαζόμενους φοιτητές.",
+      "Δυνατότητα μερικής φοίτησης για εργαζόμενους φοιτητές.",
   },
   {
     icon: "globe",
@@ -506,52 +506,6 @@ export const evaluationCriteria: { label: string; weight: number }[] = [
   { label: "Συστατικές επιστολές & συνέντευξη", weight: 25 },
 ];
 
-/* ────────────────────────────────────────────
-   Testimonials
-   ──────────────────────────────────────────── */
-
-export interface Testimonial {
-  quote: string;
-  name: string;
-  role: string;
-  initials: string;
-  accent: string;
-}
-
-export const testimonials: Testimonial[] = [
-  {
-    quote:
-      "Πέρασα από τη θεωρία στο πραγματικό εργαστήριο. Σήμερα σχεδιάζω φόρμουλες σε τμήμα R&D — το ΠΜΣ μου έδωσε ακριβώς αυτή τη γέφυρα.",
-    name: "Δήμητρα Κ.",
-    role: "R&D Formulator, Βιομηχανία Καλλυντικών",
-    initials: "ΔΚ",
-    accent: "#879D42",
-  },
-  {
-    quote:
-      "Η συνέργεια δερματολογίας και κοσμητολογίας άλλαξε τον τρόπο που προσεγγίζω τους ασθενείς μου στην κλινική αισθητική.",
-    name: "Νίκος Π.",
-    role: "Clinical Skincare Specialist",
-    initials: "ΝΠ",
-    accent: "#5F712A",
-  },
-  {
-    quote:
-      "Από την ενόργανη ανάλυση μέχρι τη νομοθεσία, απέκτησα όλα τα εργαλεία για να λανσάρω το δικό μου brand φυσικών καλλυντικών.",
-    name: "Ελένη Μ.",
-    role: "Founder, Natural Cosmetics Startup",
-    initials: "ΕΜ",
-    accent: "#9DAE2E",
-  },
-  {
-    quote:
-      "Το μικρό μέγεθος των τμημάτων σημαίνει πραγματική επαφή με τους καθηγητές. Ένιωσα μέλος μιας ερευνητικής ομάδας.",
-    name: "Γιώργος Α.",
-    role: "Quality Control Manager",
-    initials: "ΓΑ",
-    accent: "#3E9466",
-  },
-];
 
 /* ────────────────────────────────────────────
    Latest news (placeholder cards)
@@ -756,22 +710,21 @@ export const ingredients: Ingredient[] = [
 
 export interface Skill {
   label: string;
-  level: number; // 0..100
   icon: IconKey;
   category: string;
 }
 
 export const skills: Skill[] = [
-  { label: "Σχεδιασμός Φορμουλών", level: 92, icon: "flask", category: "R&D" },
-  { label: "Ενόργανη Ανάλυση", level: 88, icon: "microscope", category: "Ανάλυση" },
-  { label: "Δερματολογική Αξιολόγηση", level: 85, icon: "scan-face", category: "Κλινική" },
-  { label: "Ποιοτικός Έλεγχος", level: 90, icon: "gauge", category: "QC" },
-  { label: "Κανονιστική Συμμόρφωση", level: 80, icon: "scale", category: "Regulatory" },
-  { label: "Μικροβιολογική Ασφάλεια", level: 78, icon: "dna", category: "Ασφάλεια" },
-  { label: "Έρευνα & Μεθοδολογία", level: 86, icon: "search", category: "Έρευνα" },
-  { label: "Βιωσιμότητα & Πράσινη Χημεία", level: 82, icon: "leaf", category: "Sustainability" },
-  { label: "Επιχειρηματικότητα", level: 75, icon: "rocket", category: "Business" },
-  { label: "Branding & Marketing", level: 72, icon: "palette", category: "Business" },
+  { label: "Σχεδιασμός Φορμουλών", icon: "flask", category: "R&D" },
+  { label: "Ενόργανη Ανάλυση", icon: "microscope", category: "Ανάλυση" },
+  { label: "Δερματολογική Αξιολόγηση", icon: "scan-face", category: "Κλινική" },
+  { label: "Ποιοτικός Έλεγχος", icon: "gauge", category: "QC" },
+  { label: "Κανονιστική Συμμόρφωση", icon: "scale", category: "Regulatory" },
+  { label: "Μικροβιολογική Ασφάλεια", icon: "dna", category: "Ασφάλεια" },
+  { label: "Έρευνα & Μεθοδολογία", icon: "search", category: "Έρευνα" },
+  { label: "Βιωσιμότητα & Πράσινη Χημεία", icon: "leaf", category: "Sustainability" },
+  { label: "Επιχειρηματικότητα", icon: "rocket", category: "Business" },
+  { label: "Branding & Marketing", icon: "palette", category: "Business" },
 ];
 
 /* ────────────────────────────────────────────
@@ -918,28 +871,10 @@ export const programFacts: ProgramFact[] = [
   { icon: "graduation", label: "Τίτλος", value: "MSc Κοσμητολογία", note: "Μεταπτυχιακό Δίπλωμα Ειδίκευσης" },
   { icon: "calendar", label: "Διάρκεια", value: "3 εξάμηνα", note: "Πλήρης φοίτηση (έως 5 μερική)" },
   { icon: "award", label: "Πιστωτικές", value: "90 ECTS", note: "30 + 30 + 30 ανά εξάμηνο" },
-  { icon: "euro", label: "Δίδακτρα", value: "€2.400", note: "Απαλλαγή έως 30% (Ν.4957/2022)" },
+  { icon: "euro", label: "Δίδακτρα", value: "€2.400", note: "Για ολόκληρο το πρόγραμμα" },
   { icon: "layers", label: "Κατευθύνσεις", value: "2", note: "Παρασκευή & Δερματολογία" },
   { icon: "users", label: "Εισακτέοι", value: "40 / έτος", note: "Μικρά, εστιασμένα τμήματα" },
   { icon: "globe", label: "Γλώσσα", value: "Ελληνικά", note: "Αγγλική βιβλιογραφία" },
-  { icon: "clock", label: "Μορφή", value: "Υβριδική", note: "Παρασκευή – Κυριακή" },
-];
-
-/* ────────────────────────────────────────────
-   Weekly rhythm — "πώς λειτουργεί"
-   ──────────────────────────────────────────── */
-
-export interface RhythmDay {
-  day: string;
-  time: string;
-  focus: string;
-  icon: IconKey;
-}
-
-export const weeklyRhythm: RhythmDay[] = [
-  { day: "Παρασκευή", time: "Απόγευμα", focus: "Διαλέξεις & θεωρία", icon: "book" },
-  { day: "Σάββατο", time: "Πρωί – Απόγευμα", focus: "Εργαστήρια & σεμινάρια", icon: "flask-round" },
-  { day: "Κυριακή", time: "Πρωί", focus: "Μελέτες περίπτωσης & παρουσιάσεις", icon: "users" },
 ];
 
 export interface LearningFormat {
@@ -958,11 +893,6 @@ export const learningFormats: LearningFormat[] = [
     icon: "flask-round",
     title: "Εργαστηριακή πρακτική",
     description: "Πραγματική παρασκευή και ενόργανη ανάλυση καλλυντικών σε πλήρως εξοπλισμένα εργαστήρια.",
-  },
-  {
-    icon: "globe",
-    title: "Εξ αποστάσεως συνιστώσα",
-    description: "Επιλεγμένα μαθήματα και υλικό διαθέσιμα εξ αποστάσεως, για ευελιξία στους εργαζόμενους φοιτητές.",
   },
 ];
 

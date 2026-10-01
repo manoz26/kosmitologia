@@ -26,7 +26,6 @@ export default function SxetikaPage() {
       <PageShell
         title="Η Σχολή & Το Τμήμα"
         subtitle="Μάθετε για το όραμα, την ιστορία και τις εγκαταστάσεις της Κοσμητείας."
-        className="bg-surface"
       >
         <div className="flex flex-col gap-12 md:gap-24">
           <AboutHeroSection />

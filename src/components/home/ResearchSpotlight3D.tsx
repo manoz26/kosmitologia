@@ -39,7 +39,7 @@ export function ResearchSpotlight3D() {
         <div className="mt-16 grid grid-cols-1 gap-6 [perspective:1500px] sm:grid-cols-2 lg:grid-cols-3">
           {researchAreas.map((area, i) => (
             <Reveal key={area.title} delay={(i % 3) * 0.08} direction="up">
-              <TiltCard max={9} innerClassName="glass-lachani rounded-[1.6rem] h-full" className="h-full">
+              <TiltCard max={9} innerClassName="glass-lachani rounded-3xl h-full" className="h-full">
                 <div
                   className="relative overflow-hidden p-6"
                   style={{ background: `linear-gradient(140deg, ${area.from}, ${area.to})`, transform: "translateZ(24px)" }}
@@ -60,7 +60,7 @@ export function ResearchSpotlight3D() {
 
         {/* thesis pipeline */}
         <Reveal direction="up" delay={0.1}>
-          <div className="mt-12 overflow-hidden rounded-[2rem] glass-lachani-deep p-7 md:p-9">
+          <div className="mt-12 overflow-hidden rounded-3xl glass-lachani-deep p-7 md:p-9">
             <div className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
               <h3 className="font-heading text-xl font-bold text-text-primary">Η πορεία μιας διπλωματικής</h3>
               <span className="rounded-full bg-ihu-green/12 px-3 py-1 text-xs font-bold text-ihu-green-dark">Γ’ Εξάμηνο · 30 ECTS</span>

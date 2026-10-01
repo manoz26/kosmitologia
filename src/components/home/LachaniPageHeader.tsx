@@ -34,7 +34,7 @@ export function LachaniPageHeader({
       </Link>
 
       {eyebrow && (
-        <span className="mb-3 block text-sm font-bold uppercase tracking-[0.2em] text-ihu-green-dark">
+        <span className="mb-3 block text-sm font-semibold text-ihu-green-dark">
           {eyebrow}
         </span>
       )}

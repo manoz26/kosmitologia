@@ -85,7 +85,7 @@ export function HomeChrome() {
       {/* scroll-spy dock */}
       <nav
         aria-label="Πλοήγηση ενοτήτων"
-        className="fixed right-4 top-1/2 z-40 hidden -translate-y-1/2 xl:block"
+        className="fixed right-4 top-1/2 z-40 hidden -translate-y-1/2 min-[1440px]:block"
       >
         <ul className="flex flex-col items-center gap-2 rounded-full border border-white/50 bg-white/40 p-2 shadow-lg backdrop-blur-md">
           {navTargets.map((target) => {

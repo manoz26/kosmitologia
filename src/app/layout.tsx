@@ -91,7 +91,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="el" className={`${commissioner.variable} ${inter.variable}`}>
-      <body className="min-h-dvh flex flex-col antialiased bg-gradient-to-b from-[#E0F2FE] via-[#E8F5E9] to-[#F4F7ED]">
+      <body className="min-h-dvh flex flex-col antialiased bg-gradient-to-b from-[#EEF4DC] via-[#F1F6E4] to-[#F4F7ED]">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }}

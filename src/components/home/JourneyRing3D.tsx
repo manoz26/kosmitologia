@@ -6,9 +6,17 @@
    The flagship scroll-driven 3D section. A pinned stage rotates a ring of five
    cards — the five stages a cosmetic product travels through inside the
    programme — synchronised with a glass detail panel, progress rail, molecular
-   orbits, depth particles and a soft floor. Native CSS 3D + framer-motion only,
-   re-themed to the λαχανί palette and rendered transparently over the page
-   backdrop.
+   orbits and a soft floor. Native CSS 3D + framer-motion only, re-themed to
+   the λαχανί palette and rendered transparently over the page backdrop.
+
+   Motion contract (2026-10 refinement):
+     • The ring turns WITH the scroll, continuously, and dwells on each stage
+       (eased plateaus) — instead of snapping to the next stage with a spring.
+     • Every card's prominence (opacity / scale) is derived from the same
+       scroll position, so the whole scene moves as one piece. No blur filters
+       on the side cards (expensive, and they made the scene look smeared).
+     • Nothing moves on its own: no drifting particles, no perpetual spins or
+       pulses. The orbit rings turn only as the visitor scrolls.
 
    Sizing contract — the section must survive ANY viewport:
      • The ring measures the box the layout actually gives it (ResizeObserver)
@@ -43,7 +51,6 @@ import { Icon, GradientText } from "./lib/primitives";
 import {
   useViewport,
   useReduced,
-  useScatter,
   useBoxSize,
   type BoxSize,
   type Viewport,
@@ -103,57 +110,37 @@ function circularDelta(index: number, active: number, count: number): number {
   return delta;
 }
 
-/* ────────────────────────────────────────────
-   Local depth particles
-   ──────────────────────────────────────────── */
+const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
 
-function JourneyParticles({
-  progress,
-  glow,
-  reduced,
-}: {
-  progress: MotionValue<number>;
-  glow: string;
-  reduced: boolean;
-}) {
-  const particles = useScatter(reduced ? 10 : 24, 99);
-  const nearY = useTransform(progress, [0, 1], [70, -110]);
-  const farY = useTransform(progress, [0, 1], [25, -40]);
-
-  return (
-    <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-      {particles.map((p) => {
-        const isNear = p.depth > 0.5;
-        return (
-          <motion.span
-            key={p.id}
-            className={cn(!reduced && "animate-drift-a")}
-            style={{
-              position: "absolute",
-              left: `${p.left}%`,
-              top: `${p.top}%`,
-              width: p.size,
-              height: p.size,
-              borderRadius: "50%",
-              y: isNear ? nearY : farY,
-              opacity: 0.12 + p.depth * 0.4,
-              filter: `blur(${(1 - p.depth) * 3}px)`,
-              animationDelay: `${p.delay}s`,
-              animationDuration: `${p.duration}s`,
-              background: `radial-gradient(circle at 30% 30%, rgba(255,255,255,0.9), ${glow} 70%, transparent 75%)`,
-            }}
-          />
-        );
-      })}
-    </div>
-  );
+/* Continuous stage position with a plateau around every whole stage: the
+   first and last 22% of each step hold still, the middle eases across. The
+   ring therefore rests facing a card while the visitor reads it, then turns
+   smoothly to the next one as they keep scrolling. */
+function dwell(x: number): number {
+  const i = Math.floor(x);
+  const f = x - i;
+  const t = clamp01((f - 0.22) / 0.56);
+  return i + t * t * (3 - 2 * t);
 }
 
 /* ────────────────────────────────────────────
    Molecule orbits
    ──────────────────────────────────────────── */
 
-function MoleculeOrbits({ accent, size }: { accent: string; size: number }) {
+function MoleculeOrbits({
+  accent,
+  size,
+  turn,
+}: {
+  accent: string;
+  size: number;
+  /** Ring rotation in degrees, driven by the scroll position. */
+  turn: MotionValue<number>;
+}) {
+  const turnA = useTransform(turn, (v) => v * 0.35);
+  const turnB = useTransform(turn, (v) => -v * 0.25);
+  const turnC = useTransform(turn, (v) => v * 0.15);
+  const turns = [turnA, turnB, turnC];
   const dots = (n: number, r: number) =>
     Array.from({ length: n }, (_, i) => {
       const a = (i / n) * Math.PI * 2;
@@ -164,9 +151,9 @@ function MoleculeOrbits({ accent, size }: { accent: string; size: number }) {
     });
 
   const rings = [
-    { r: 46, dash: "5 10", op: 0.3, n: 3, spin: "animate-orbit-spin" },
-    { r: 38, dash: "2 12", op: 0.22, n: 5, spin: "animate-orbit-spin-rev" },
-    { r: 30, dash: "9 6", op: 0.16, n: 2, spin: "animate-orbit-spin" },
+    { r: 46, dash: "5 10", op: 0.3, n: 3 },
+    { r: 38, dash: "2 12", op: 0.22, n: 5 },
+    { r: 30, dash: "9 6", op: 0.16, n: 2 },
   ];
 
   return (
@@ -176,16 +163,14 @@ function MoleculeOrbits({ accent, size }: { accent: string; size: number }) {
       style={{ width: size, height: size }}
     >
       {rings.map((ring, idx) => (
-        <div key={idx} className={cn("absolute inset-0", ring.spin)} style={idx === 2 ? { animationDuration: "70s" } : undefined}>
+        <motion.div key={idx} className="absolute inset-0" style={{ rotate: turns[idx] }}>
           <svg viewBox="0 0 100 100" className="absolute inset-0 h-full w-full" style={{ opacity: ring.op }}>
             <circle cx="50" cy="50" r={ring.r} fill="none" stroke={accent} strokeWidth="0.4" strokeDasharray={ring.dash} />
             {dots(ring.n, ring.r).map((d, i) => (
-              <circle key={i} cx={d.x} cy={d.y} r="1.1" fill={accent}>
-                <animate attributeName="r" values="0.8;1.6;0.8" dur="3s" begin={`${i * 0.4}s`} repeatCount="indefinite" />
-              </circle>
+              <circle key={i} cx={d.x} cy={d.y} r="1.2" fill={accent} />
             ))}
           </svg>
-        </div>
+        </motion.div>
       ))}
     </div>
   );
@@ -199,19 +184,20 @@ function StageCard({
   stage,
   index,
   activeIndex,
+  stagePos,
   geometry,
 }: {
   stage: JourneyStage;
   index: number;
   activeIndex: number;
+  stagePos: MotionValue<number>;
   geometry: RingGeometry;
 }) {
-  const delta = circularDelta(index, activeIndex, STAGE_COUNT);
-  const absDelta = Math.abs(delta);
-  const isActive = absDelta === 0;
-  const targetOpacity = absDelta === 0 ? 1 : absDelta === 1 ? 0.55 : 0.2;
-  const targetScale = absDelta === 0 ? 1 : absDelta === 1 ? 0.92 : 0.8;
-  const targetBlur = absDelta === 0 ? 0 : absDelta === 1 ? 1.2 : 3;
+  const isActive = index === activeIndex;
+  /* Distance (in stages, around the ring) from the card facing the viewer. */
+  const distance = useTransform(stagePos, (v) => Math.abs(circularDelta(index, v, STAGE_COUNT)));
+  const opacity = useTransform(distance, (d) => (d <= 1 ? 1 - 0.45 * d : Math.max(0.2, 0.55 - 0.35 * (d - 1))));
+  const scale = useTransform(distance, (d) => (d <= 1 ? 1 - 0.08 * d : Math.max(0.8, 0.92 - 0.12 * (d - 1))));
 
   return (
     <div
@@ -224,15 +210,11 @@ function StageCard({
         transform: `rotateY(${index * ANGLE_STEP}deg) translateZ(${geometry.radius}px)`,
       }}
     >
-      <motion.div
-        className="relative h-full w-full"
-        animate={{ opacity: targetOpacity, scale: targetScale, filter: `blur(${targetBlur}px)` }}
-        transition={{ type: "spring", stiffness: 120, damping: 24 }}
-      >
+      <motion.div className="relative h-full w-full" style={{ opacity, scale }}>
         {/* The face is designed once at 250×340 and shrunk as a whole, so its
             type scales with the card instead of overflowing small cards. */}
         <div
-          className="relative overflow-hidden rounded-[1.6rem] border border-white/30"
+          className="relative overflow-hidden rounded-3xl border border-white/30"
           style={{
             width: CARD_W,
             height: CARD_H,
@@ -245,18 +227,12 @@ function StageCard({
           }}
         >
           <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-black/15" />
-          <div className="absolute -left-1/3 top-0 h-full w-1/2 -skew-x-12 bg-white/15 blur-md" style={{ opacity: isActive ? 0.7 : 0.3 }} />
           <span className="absolute -right-2 -top-6 select-none font-heading text-[7rem] font-black leading-none text-white/10">
             {stage.index}
           </span>
           <div className="relative z-10 flex h-full flex-col justify-between p-6">
-            <div className="flex items-center justify-between">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/20 text-white ring-1 ring-white/30 backdrop-blur-md">
-                <Icon name={stage.icon} size={24} />
-              </div>
-              <span className="rounded-full bg-black/20 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-white/90 backdrop-blur-md">
-                {stage.index} / 0{STAGE_COUNT}
-              </span>
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/20 text-white ring-1 ring-white/30">
+              <Icon name={stage.icon} size={24} />
             </div>
             <div>
               <h3 className="font-heading text-xl font-bold leading-tight text-white drop-shadow">
@@ -272,13 +248,13 @@ function StageCard({
               </div>
             </div>
           </div>
-          {isActive && (
-            <motion.div
-              layoutId="journey-active-ring"
-              className="pointer-events-none absolute inset-0 rounded-[1.6rem] ring-2 ring-white/60"
-              transition={{ type: "spring", stiffness: 200, damping: 26 }}
-            />
-          )}
+          <div
+            aria-hidden
+            className={cn(
+              "pointer-events-none absolute inset-0 rounded-3xl ring-2 ring-white/60 transition-opacity duration-500",
+              isActive ? "opacity-100" : "opacity-0",
+            )}
+          />
         </div>
       </motion.div>
     </div>
@@ -291,34 +267,40 @@ function StageCard({
 
 function StageRing3D({
   activeIndex,
+  stagePos,
   glow,
   accent,
   geometry,
-  reduced,
 }: {
   activeIndex: number;
+  stagePos: MotionValue<number>;
   glow: string;
   accent: string;
   geometry: RingGeometry;
-  reduced: boolean;
 }) {
+  const ringRotate = useTransform(stagePos, (v) => -v * ANGLE_STEP);
   return (
     <div className="relative flex h-full w-full items-center justify-center">
-      <MoleculeOrbits accent={accent} size={620 * geometry.k} />
+      <MoleculeOrbits accent={accent} size={620 * geometry.k} turn={ringRotate} />
       <div
         aria-hidden
-        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl animate-halo-pulse transition-[background] duration-700"
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full opacity-50 blur-3xl transition-[background] duration-700"
         style={{ background: glow, width: 256 * geometry.k, height: 256 * geometry.k }}
       />
       <div className="relative" style={{ width: geometry.cardWidth, height: geometry.cardHeight, perspective: geometry.perspective }}>
         <motion.div
           className="preserve-3d relative h-full w-full"
-          style={{ transformStyle: "preserve-3d" }}
-          animate={{ rotateY: -activeIndex * ANGLE_STEP }}
-          transition={reduced ? { duration: 0 } : { type: "spring", stiffness: 80, damping: 18 }}
+          style={{ transformStyle: "preserve-3d", rotateY: ringRotate }}
         >
           {journeyStages.map((stage, i) => (
-            <StageCard key={stage.id} stage={stage} index={i} activeIndex={activeIndex} geometry={geometry} />
+            <StageCard
+              key={stage.id}
+              stage={stage}
+              index={i}
+              activeIndex={activeIndex}
+              stagePos={stagePos}
+              geometry={geometry}
+            />
           ))}
         </motion.div>
       </div>
@@ -469,10 +451,10 @@ function ProgressRail({
             <button
               key={stage.id}
               onClick={() => onSelect(i)}
-              className={cn("text-left text-xs font-medium transition-all duration-300", isActive ? "text-text-primary" : "text-text-secondary/50 hover:text-text-secondary")}
+              className={cn("text-left text-xs font-medium transition-colors duration-300", isActive ? "text-text-primary" : "text-text-secondary/60 hover:text-text-secondary")}
             >
-              <span className="block font-heading tabular-nums">{stage.index}</span>
-              <span className="block max-w-[9rem] truncate text-[10px] uppercase tracking-wider">{stage.subtitle}</span>
+              <span className="font-heading tabular-nums">{stage.index}</span>
+              <span className="ml-2 whitespace-nowrap text-[11px] font-semibold">{stage.kicker.split("·").pop()?.trim()}</span>
             </button>
           );
         })}
@@ -595,9 +577,15 @@ export function JourneyRing3D() {
   });
   const smoothProgress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, restDelta: 0.001 });
 
-  useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    const clamped = Math.min(0.9999, Math.max(0, latest));
-    const next = Math.round(clamped * (STAGE_COUNT - 1));
+  /* 0 … STAGE_COUNT-1, continuous, with a dwell on every stage. Reduced
+     motion jumps straight between stages. */
+  const stagePos = useTransform(smoothProgress, (p) => {
+    const x = clamp01(p) * (STAGE_COUNT - 1);
+    return reduced ? Math.round(x) : dwell(x);
+  });
+
+  useMotionValueEvent(stagePos, "change", (v) => {
+    const next = Math.min(STAGE_COUNT - 1, Math.max(0, Math.round(v)));
     setActiveIndex((prev) => (prev === next ? prev : next));
   });
 
@@ -622,8 +610,6 @@ export function JourneyRing3D() {
       style={{ height: `${STAGE_COUNT * VH_PER_STAGE}vh` }}
     >
       <div className="sticky top-0 h-screen w-full overflow-hidden supports-[height:100dvh]:h-dvh">
-        <JourneyParticles progress={smoothProgress} glow={activeStage.glow} reduced={reduced} />
-
         {/* light floor grid */}
         <div
           aria-hidden
@@ -672,7 +658,13 @@ export function JourneyRing3D() {
                 ref={ringBoxRef}
                 className="order-1 flex h-[clamp(9rem,26vh,16rem)] w-full items-center justify-center lg:order-2 lg:h-[clamp(20rem,56vh,34rem)]"
               >
-                <StageRing3D activeIndex={activeIndex} glow={activeStage.glow} accent={activeStage.accent} geometry={geometry} reduced={reduced} />
+                <StageRing3D
+                  activeIndex={activeIndex}
+                  stagePos={stagePos}
+                  glow={activeStage.glow}
+                  accent={activeStage.accent}
+                  geometry={geometry}
+                />
               </div>
             </div>
           </div>

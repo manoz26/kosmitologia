@@ -117,7 +117,7 @@ function ForkCard({
     <Reveal direction={side === "preparation" ? "left" : "right"} className="h-full">
       <button
         onClick={() => onOpen(course)}
-        className="group relative flex h-full w-full flex-col overflow-hidden rounded-[1.6rem] glass-lachani text-left transition-all duration-300 hover:-translate-y-1"
+        className="group relative flex h-full w-full flex-col overflow-hidden rounded-3xl glass-lachani text-left transition-all duration-300 hover:-translate-y-1"
         style={{ boxShadow: `0 22px 55px -30px ${meta.glow}` }}
       >
         {/* accent header band */}
@@ -257,7 +257,7 @@ function SplitBanner() {
           return (
             <Reveal key={s.id} direction={i === 0 ? "left" : "right"} className="h-full">
               <div
-                className="relative flex h-full flex-col overflow-hidden rounded-[1.8rem] glass-lachani"
+                className="relative flex h-full flex-col overflow-hidden rounded-3xl glass-lachani"
                 style={{ boxShadow: `0 26px 60px -34px ${s.glow}` }}
               >
                 <div className="relative overflow-hidden p-6" style={{ background: `linear-gradient(140deg, ${s.from}, ${s.to})` }}>
@@ -342,7 +342,7 @@ function CourseModal({ course, onClose }: { course: Course; onClose: () => void 
         animate={{ y: 0, opacity: 1, scale: 1 }}
         exit={{ y: 30, opacity: 0, scale: 0.98 }}
         transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-        className="relative z-10 max-h-[92vh] w-full max-w-2xl overflow-hidden rounded-t-[2rem] glass-lachani-deep shadow-2xl sm:rounded-[2rem]"
+        className="relative z-10 max-h-[92vh] w-full max-w-2xl overflow-hidden rounded-t-3xl glass-lachani-deep shadow-2xl sm:rounded-3xl"
       >
         {/* header band */}
         <div className="relative overflow-hidden p-6 md:p-7" style={{ background: `linear-gradient(140deg, ${from}, ${to})` }}>
