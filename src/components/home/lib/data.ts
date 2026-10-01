@@ -433,9 +433,16 @@ export const evaluationCriteria: { label: string; weight: number }[] = [
   { label: "Συνάφεια πτυχίου", weight: program.selectionWeights.value.relevance },
   { label: "Βαθμός πτυχίου", weight: program.selectionWeights.value.degreeGrade },
   { label: "Βαθμοί σε σχετικά μαθήματα", weight: program.selectionWeights.value.relevantCourses },
-  /* ΑΝΕΠΙΒΕΒΑΙΩΤΑ ποσοστά — εκκρεμεί απόφαση (βλ. program.ts). */
-  { label: "Επαγγελματική / ερευνητική εμπειρία", weight: 35 },
-  { label: "Συστατικές επιστολές & συνέντευξη", weight: 25 },
+];
+
+/* Τα υπόλοιπα κριτήρια του Οδηγού (σ.8), χωρίς ποσοστά μέχρι να τα δώσει ο
+   πελάτης. Τα 35%/25% που υπήρχαν εδώ αφαιρέθηκαν 01/10/2026 (ανεπιβεβαίωτα). */
+export const otherCriteria: string[] = [
+  "Διπλωματική εργασία",
+  "Ερευνητική δραστηριότητα",
+  "Επαγγελματική εμπειρία",
+  "Δεύτερη ξένη γλώσσα",
+  "Προσωπική συνέντευξη",
 ];
 
 

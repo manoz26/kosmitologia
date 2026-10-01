@@ -14,7 +14,7 @@ import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { ArrowRight, FileText } from "lucide-react";
 
 import { formatEuro, program } from "@/data/program";
-import { admissionSteps, evaluationCriteria } from "./lib/data";
+import { admissionSteps, evaluationCriteria, otherCriteria } from "./lib/data";
 import { Icon, Reveal, SectionHeading } from "./lib/primitives";
 
 function Timeline() {
@@ -88,6 +88,15 @@ function CriteriaPanel() {
           </div>
         ))}
       </div>
+
+      <p className="mt-6 text-xs font-bold uppercase tracking-[0.14em] text-ihu-green-dark">Συνεκτιμώνται επίσης</p>
+      <ul className="mt-2.5 flex flex-wrap gap-2">
+        {otherCriteria.map((label) => (
+          <li key={label} className="rounded-full bg-white/60 px-3 py-1 text-xs font-medium text-text-primary">
+            {label}
+          </li>
+        ))}
+      </ul>
 
       <div className="mt-7 grid grid-cols-3 gap-3 border-t border-ihu-green-dark/10 pt-6 text-center">
         {[
