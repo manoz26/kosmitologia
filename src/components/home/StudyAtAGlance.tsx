@@ -3,17 +3,16 @@
 /* ══════════════════════════════════════════════════════════════════════════
    StudyAtAGlance — «Τι θα σπουδάσεις»
    ──────────────────────────────────────────────────────────────────────────
-   The whole programme on one screen: the two specialisations, then the three
-   semesters with their shared courses and the one course per semester where
-   the specialisations fork. Calm by design (one-shot reveals, no pinning) —
-   the deep, interactive view lives on /programma (SpecializationTracks3D).
-   Data: src/data/courses.ts (study guide) and src/data/program.ts.
+   The programme in one glance: the two specialisations and the key numbers.
+   The semester-by-semester course lists are deliberately not repeated here —
+   they live on /programma (SpecializationTracks3D). Calm by design (one-shot
+   reveals, no pinning). Data: src/data/courses.ts and src/data/program.ts.
    ══════════════════════════════════════════════════════════════════════════ */
 
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
-import { curriculum, semesters, specializations } from "@/data/courses";
+import { specializations } from "@/data/courses";
 import { program } from "@/data/program";
 import { Icon, Reveal, SectionHeading } from "./lib/primitives";
 import type { IconKey } from "./lib/data";
@@ -58,44 +57,6 @@ export function StudyAtAGlance() {
               </div>
             </Reveal>
           ))}
-        </div>
-
-        {/* The three semesters */}
-        <div className="mx-auto mt-5 grid max-w-5xl gap-5 lg:grid-cols-3">
-          {curriculum.map((row, i) => {
-            const sem = semesters.find((s) => s.id === row.semester)!;
-            const ects = row.shared.reduce((n, c) => n + c.ects, 0) + (row.fork?.preparation.ects ?? 0);
-            return (
-              <Reveal key={row.semester} delay={0.1 + i * 0.08} direction="up">
-                <div className="h-full rounded-3xl bg-white/60 p-6 ring-1 ring-ihu-green-dark/10">
-                  <div className="flex items-baseline justify-between gap-3">
-                    <h3 className="font-heading text-base font-bold text-text-primary">{sem.label}</h3>
-                    <span className="text-xs font-bold tabular-nums text-ihu-green-dark">{ects} ECTS</span>
-                  </div>
-                  <ul className="mt-4 space-y-2">
-                    {row.shared.map((c) => (
-                      <li key={c.code} className="text-sm leading-snug text-text-secondary">
-                        {c.nameGr}
-                      </li>
-                    ))}
-                  </ul>
-                  {row.fork && (
-                    <div className="mt-4 rounded-2xl bg-lachani-mist/70 p-3.5">
-                      <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-ihu-green-dark">
-                        Ανάλογα με την ειδίκευση
-                      </p>
-                      <p className="mt-1.5 text-sm leading-snug text-text-primary">
-                        <span className="font-bold text-ihu-green-dark">Ι</span> {row.fork.preparation.nameGr}
-                      </p>
-                      <p className="mt-1 text-sm leading-snug text-text-primary">
-                        <span className="font-bold text-ihu-green-dark">ΙΙ</span> {row.fork.dermatology.nameGr}
-                      </p>
-                    </div>
-                  )}
-                </div>
-              </Reveal>
-            );
-          })}
         </div>
 
         {/* Key numbers, once */}

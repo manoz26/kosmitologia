@@ -13,7 +13,7 @@
 
 import { useRef } from "react";
 import Link from "next/link";
-import { ArrowRight, Building2, GraduationCap, Rotate3d } from "lucide-react";
+import { ArrowRight, Rotate3d } from "lucide-react";
 import {
   motion,
   useScroll,
@@ -23,16 +23,9 @@ import {
 } from "framer-motion";
 
 import { careerPaths, careerStats, type CareerPath } from "@/data/careers";
-import { Icon, Reveal, SectionHeading } from "./lib/primitives";
+import { Icon, SectionHeading } from "./lib/primitives";
 import { useReduced } from "./lib/hooks";
-import { partners, type IconKey } from "./lib/data";
-
-/* «Εκεί που βρίσκουν δουλειά» — the list the department kept (01/10/2026),
-   split into sectors and education. Named employers are pending from the
-   client (docs/email-pros-pelati.md) — never invent company names here. */
-const EDUCATION = new Set(["ΑΠΘ", "ΠΑΔΑ", "UNIC", "ΙΕΚ & ΚΔΒΜ"]);
-const workSectors = partners.filter((p) => !EDUCATION.has(p));
-const workEducation = partners.filter((p) => EDUCATION.has(p));
+import type { IconKey } from "./lib/data";
 
 const CAREER_ICON: Record<string, IconKey> = {
   "flask-conical": "flask",
@@ -116,33 +109,6 @@ function FlipCard({ path, index }: { path: CareerPath; index: number }) {
           </div>
         </div>
       </div>
-    </div>
-  );
-}
-
-function WorkGroup({
-  title,
-  items,
-  icon: IconCmp,
-}: {
-  title: string;
-  items: string[];
-  icon: typeof Building2;
-}) {
-  return (
-    <div>
-      <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-ihu-green-dark">{title}</p>
-      <ul className="mt-2.5 flex flex-wrap gap-2">
-        {items.map((p) => (
-          <li
-            key={p}
-            className="inline-flex items-center gap-2 rounded-2xl bg-white/70 px-3.5 py-2 text-sm font-semibold text-text-primary ring-1 ring-ihu-green-dark/10"
-          >
-            <IconCmp size={15} className="text-ihu-green-dark" />
-            {p}
-          </li>
-        ))}
-      </ul>
     </div>
   );
 }
@@ -238,19 +204,6 @@ export function CareerPaths3D() {
             </CardRiser>
           </motion.div>
         </div>
-
-        {/* Where graduates work */}
-        <Reveal direction="up">
-          <div className="mx-auto mt-14 max-w-5xl rounded-3xl glass-lachani-deep p-6 md:p-8">
-            <h3 className="font-heading text-xl font-extrabold text-text-primary md:text-2xl">
-              Πού εργάζονται οι απόφοιτοι
-            </h3>
-            <div className="mt-5 grid gap-6 md:grid-cols-[1.6fr_1fr]">
-              <WorkGroup title="Κλάδοι" items={workSectors} icon={Building2} />
-              <WorkGroup title="Εκπαίδευση & έρευνα" items={workEducation} icon={GraduationCap} />
-            </div>
-          </div>
-        </Reveal>
       </div>
     </section>
   );

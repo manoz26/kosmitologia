@@ -770,6 +770,7 @@ export interface NavTarget {
 export const navTargets: NavTarget[] = [
   { id: "top", label: "Αρχή", icon: "sparkles" },
   { id: "spoudes", label: "Σπουδές", icon: "graduation" },
+  { id: "apofoitoi", label: "Απόφοιτοι", icon: "briefcase" },
   { id: "journey", label: "Διαδρομή", icon: "orbit" },
   { id: "didaskontes", label: "Διδάσκοντες", icon: "users" },
   { id: "aitisi", label: "Αίτηση", icon: "calendar" },
