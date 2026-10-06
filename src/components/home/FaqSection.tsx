@@ -13,22 +13,25 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Plus, HelpCircle, Mail } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import { useHashTarget } from "@/lib/use-hash-target";
 import { faqItems } from "@/data/faq";
 import { Reveal, SectionHeading } from "./lib/primitives";
 
 function FaqRow({
+  id,
   question,
   answer,
   open,
   onToggle,
 }: {
+  id: string;
   question: string;
   answer: string;
   open: boolean;
   onToggle: () => void;
 }) {
   return (
-    <div className={cn("overflow-hidden rounded-2xl glass-lachani transition-colors", open && "ring-1 ring-ihu-green/30")}>
+    <div id={id} className={cn("overflow-hidden rounded-2xl glass-lachani transition-colors", open && "ring-1 ring-ihu-green/30")}>
       <button
         onClick={onToggle}
         className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left"
@@ -62,57 +65,62 @@ function FaqRow({
 
 export function FaqSection() {
   const [open, setOpen] = useState<number | null>(0);
-  const mid = Math.ceil(faqItems.length / 2);
-  const columns = [faqItems.slice(0, mid), faqItems.slice(mid)];
+
+  /* A link to #faq-<n> opens that answer (the site search links here). */
+  useHashTarget("faq-", (n) => {
+    const i = Number(n);
+    if (Number.isInteger(i) && i >= 0 && i < faqItems.length) setOpen(i);
+  });
 
   return (
     <section id="faq" className="relative w-full overflow-hidden py-24 md:py-32">
-      <div className="section-container relative z-10 px-4">
-        <SectionHeading
-          label="Συχνές ερωτήσεις"
-          labelIcon="lightbulb"
-          title="Ό,τι χρειάζεται"
-          highlight="να ξέρετε"
-          description="Από τη διάρκεια και τα δίδακτρα μέχρι τα δικαιολογητικά και τη διαδικασία επιλογής."
-        />
+      {/* The heading and the way to the Secretariat hold the left four
+          columns (sticky on desktop); the questions run down the right eight. */}
+      <div className="section-container relative z-10 grid gap-10 px-4 lg:grid-cols-12 lg:gap-10">
+        <div className="lg:col-span-4">
+          <div className="lg:sticky lg:top-28">
+            <SectionHeading
+              align="left"
+              label="Συχνές ερωτήσεις"
+              labelIcon="lightbulb"
+              title="Ό,τι χρειάζεται"
+              highlight="να ξέρετε"
+              description="Από τη διάρκεια και τα δίδακτρα μέχρι τα δικαιολογητικά και τη διαδικασία επιλογής."
+            />
 
-        <div className="mx-auto mt-14 grid max-w-5xl grid-cols-1 gap-4 md:grid-cols-2 md:gap-5">
-          {columns.map((col, colIdx) => (
-            <div key={colIdx} className="flex flex-col gap-4">
-              {col.map((item, i) => {
-                const globalIndex = colIdx * mid + i;
-                return (
-                  <Reveal key={item.question} delay={i * 0.05} direction={colIdx === 0 ? "left" : "right"}>
-                    <FaqRow
-                      question={item.question}
-                      answer={item.answer}
-                      open={open === globalIndex}
-                      onToggle={() => setOpen((cur) => (cur === globalIndex ? null : globalIndex))}
-                    />
-                  </Reveal>
-                );
-              })}
-            </div>
-          ))}
+            <Reveal delay={0.1}>
+              <div className="mt-8 edge-top glass-lachani-deep p-6">
+                <div className="flex items-center gap-3">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-ihu-green to-ihu-green-dark text-white shadow-lg">
+                    <HelpCircle size={20} />
+                  </span>
+                  <p className="font-heading font-bold text-text-primary">Έχετε άλλη ερώτηση;</p>
+                </div>
+                <p className="mt-3 text-sm text-text-secondary">Η Γραμματεία του ΠΜΣ είναι στη διάθεσή σας.</p>
+                <Link
+                  href="/epikoinonia"
+                  className="mt-5 inline-flex items-center gap-2 rounded-full bg-ihu-green-dark px-5 py-2.5 text-sm font-bold text-white shadow-lg transition-all hover:gap-3"
+                >
+                  <Mail size={16} /> Επικοινωνία
+                </Link>
+              </div>
+            </Reveal>
+          </div>
         </div>
 
-        <Reveal delay={0.1}>
-          <div className="mx-auto mt-12 flex max-w-xl flex-col items-center gap-4 rounded-3xl glass-lachani-deep p-7 text-center sm:flex-row sm:text-left">
-            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-ihu-green to-ihu-green-dark text-white shadow-lg">
-              <HelpCircle size={24} />
-            </span>
-            <div className="flex-1">
-              <p className="font-heading font-bold text-text-primary">Έχετε άλλη ερώτηση;</p>
-              <p className="text-sm text-text-secondary">Η Γραμματεία του ΠΜΣ είναι στη διάθεσή σας.</p>
-            </div>
-            <Link
-              href="/epikoinonia"
-              className="inline-flex items-center gap-2 rounded-full bg-ihu-green-dark px-5 py-2.5 text-sm font-bold text-white shadow-lg transition-all hover:gap-3"
-            >
-              <Mail size={16} /> Επικοινωνία
-            </Link>
-          </div>
-        </Reveal>
+        <div className="flex flex-col gap-3 lg:col-span-8">
+          {faqItems.map((item, i) => (
+            <Reveal key={item.question} delay={Math.min(i, 6) * 0.04} direction="up">
+              <FaqRow
+                id={`faq-${i}`}
+                question={item.question}
+                answer={item.answer}
+                open={open === i}
+                onToggle={() => setOpen((cur) => (cur === i ? null : i))}
+              />
+            </Reveal>
+          ))}
+        </div>
       </div>
     </section>
   );

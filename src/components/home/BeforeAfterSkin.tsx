@@ -55,22 +55,22 @@ export function BeforeAfterSkin() {
           description="Από τη μοριακή δομή ενός συστατικού μέχρι τον ποιοτικό έλεγχο του τελικού προϊόντος, όπως τα διδάσκει το πρόγραμμα."
         />
 
-        <div className="mt-14 grid items-start gap-10 lg:grid-cols-2 lg:gap-14">
+        <div className="mt-10 grid items-start gap-10 md:mt-12 lg:grid-cols-12 lg:gap-10">
           {/* ── Left: interactive 3D molecule (sticky on desktop) ── */}
-          <div className="lg:sticky lg:top-24">
+          <div className="lg:sticky lg:top-24 lg:col-span-6">
             <GlassPanel className="p-2.5">
               <MoleculeViewer />
             </GlassPanel>
-            <p className="mt-3 text-center text-xs font-medium text-text-secondary">
-              Υαλουρονικό οξύ — το μόριο-κλειδί της ενυδάτωσης. Σύρετε για να το περιστρέψετε σε 3D.
+            <p className="mt-3 text-xs font-medium text-text-secondary">
+              Υαλουρονικό οξύ — το μόριο-κλειδί της ενυδάτωσης. Τρισδιάστατο μοντέλο, περιστρέφεται με σύρσιμο.
             </p>
           </div>
 
           {/* ── Right: the science, tied to the courses that teach it ── */}
-          <div className="space-y-5">
-            {/* One panel with ruled rows instead of four stacked cards */}
+          <div className="space-y-5 lg:col-span-6">
+            {/* One square-cut panel with ruled rows instead of four stacked cards */}
             <Reveal direction="up">
-              <GlassPanel className="divide-y divide-ihu-green-dark/10 px-5">
+              <GlassPanel className="divide-y divide-ihu-green-dark/10 edge-top px-5 md:px-6">
                 {scienceRows.map((f) => (
                   <div key={f.title} className="flex items-start gap-4 py-5">
                     <IconBadge icon={f.icon} size="sm" />

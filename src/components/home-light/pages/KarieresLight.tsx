@@ -133,7 +133,7 @@ function CareerExplorer() {
 const ascentSteps: { title: string; text: string }[] = [
   { title: "Δίπλωμα ΜΣ", text: "«Κοσμητολογία» — 90 ECTS, μία από τις δύο ειδικεύσεις" },
   { title: "Είσοδος στον κλάδο", text: "Έρευνα & ανάπτυξη, ποιοτικός έλεγχος, κλινική κοσμητολογία" },
-  { title: "Εξέλιξη", text: "Εξειδικευμένα στελέχη, σύμβουλοι, δικά σας σκευάσματα" },
+  { title: "Εξέλιξη", text: "Εξειδικευμένα στελέχη, σύμβουλοι, ίδια σκευάσματα" },
   { title: "Διδακτορικό", text: "Συνέχιση σπουδών σε ελληνικά ή ξένα πανεπιστήμια" },
 ];
 
@@ -243,7 +243,7 @@ export function KarieresLight() {
           <SectionHead
             kicker="Πέντε μονοπάτια"
             title="Πού οδηγεί το δίπλωμα"
-            description="Από την έρευνα και τη βιομηχανία μέχρι την κλινική αισθητική, την επιχειρηματικότητα και την εκπαίδευση. Επιλέξτε ένα πεδίο."
+            description="Από την έρευνα και τη βιομηχανία μέχρι την κλινική αισθητική, την επιχειρηματικότητα και την εκπαίδευση, με επιλογή πεδίου."
           />
           <CareerExplorer />
         </div>
@@ -265,7 +265,7 @@ export function KarieresLight() {
       {/* CTA */}
       <section className="py-16">
         <div className={cn(CONTAINER, "flex flex-wrap items-center gap-x-6 gap-y-3")}>
-          <PrimaryLink href="/light/eggrafes">Κάντε αίτηση</PrimaryLink>
+          <PrimaryLink href="/light/eggrafes">Υποβολή αίτησης</PrimaryLink>
         </div>
       </section>
     </>

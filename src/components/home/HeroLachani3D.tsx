@@ -319,7 +319,7 @@ export function HeroLachani3D() {
         className="pointer-events-none absolute bottom-6 left-1/2 z-20 -translate-x-1/2 text-center"
       >
         <span className="mb-1.5 flex items-center justify-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.3em] text-ihu-green-dark/70">
-          <MousePointer2 size={12} /> Κυλήστε
+          <MousePointer2 size={12} /> Κύλιση
         </span>
         <ChevronDown size={20} className="mx-auto animate-scroll-hint text-ihu-green-dark/70" />
       </motion.div>

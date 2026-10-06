@@ -7,6 +7,8 @@ import { useState, useEffect } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
 import Image from "next/image";
 
+import { SiteSearch } from "./SiteSearch";
+
 type NavLink = {
   href?: string;
   label: string;
@@ -57,76 +59,81 @@ export function Navbar() {
           </div>
         </Link>
 
-        {/* Desktop Nav */}
-        <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
-          {navLinks.map((item, idx) => (
-            item.subLinks ? (
-              <div 
-                key={idx} 
-                className="relative"
-                onMouseEnter={() => setDropdownOpen(true)}
-                onMouseLeave={() => setDropdownOpen(false)}
-              >
-                <button className={`flex items-center gap-1 text-sm font-medium transition-colors hover:text-primary ${
-                  item.subLinks.some(sub => pathname === sub.href) ? "text-primary" : "text-text-secondary"
-                }`}>
+        <div className="flex items-center gap-2 sm:gap-3 lg:gap-6 xl:gap-8">
+          {/* Desktop Nav */}
+          <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
+            {navLinks.map((item, idx) => (
+              item.subLinks ? (
+                <div 
+                  key={idx} 
+                  className="relative"
+                  onMouseEnter={() => setDropdownOpen(true)}
+                  onMouseLeave={() => setDropdownOpen(false)}
+                >
+                  <button className={`flex items-center gap-1 text-sm font-medium transition-colors hover:text-primary ${
+                    item.subLinks.some(sub => pathname === sub.href) ? "text-primary" : "text-text-secondary"
+                  }`}>
+                    {item.label}
+                    <ChevronDown size={14} className={`transition-transform duration-200 ${dropdownOpen ? 'rotate-180' : ''}`} />
+                  </button>
+                  <AnimatePresence>
+                    {dropdownOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 10 }}
+                        transition={{ duration: 0.2 }}
+                        className="absolute top-full left-0 mt-2 w-56 bg-white border border-border-soft shadow-sm rounded-md overflow-hidden py-2"
+                      >
+                        {item.subLinks.map((subLink) => (
+                          <Link
+                            key={subLink.href}
+                            href={subLink.href}
+                            className={`block px-4 py-2 text-sm transition-colors hover:bg-muted ${
+                              pathname === subLink.href ? "text-primary font-semibold bg-primary/5" : "text-text-secondary"
+                            }`}
+                          >
+                            {subLink.label}
+                          </Link>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              ) : (
+                <Link
+                  key={item.href}
+                  href={item.href!}
+                  className={`relative text-sm font-medium transition-colors hover:text-primary ${
+                    pathname === item.href ? "text-primary" : "text-text-secondary"
+                  }`}
+                >
                   {item.label}
-                  <ChevronDown size={14} className={`transition-transform duration-200 ${dropdownOpen ? 'rotate-180' : ''}`} />
-                </button>
-                <AnimatePresence>
-                  {dropdownOpen && (
+                  {pathname === item.href && (
                     <motion.div
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 10 }}
-                      transition={{ duration: 0.2 }}
-                      className="absolute top-full left-0 mt-2 w-56 bg-white border border-border-soft shadow-sm rounded-md overflow-hidden py-2"
-                    >
-                      {item.subLinks.map((subLink) => (
-                        <Link
-                          key={subLink.href}
-                          href={subLink.href}
-                          className={`block px-4 py-2 text-sm transition-colors hover:bg-muted ${
-                            pathname === subLink.href ? "text-primary font-semibold bg-primary/5" : "text-text-secondary"
-                          }`}
-                        >
-                          {subLink.label}
-                        </Link>
-                      ))}
-                    </motion.div>
+                      layoutId="navbar-indicator"
+                      className="absolute -bottom-1 left-0 right-0 h-[2px] bg-secondary rounded-md"
+                      initial={false}
+                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    />
                   )}
-                </AnimatePresence>
-              </div>
-            ) : (
-              <Link
-                key={item.href}
-                href={item.href!}
-                className={`relative text-sm font-medium transition-colors hover:text-primary ${
-                  pathname === item.href ? "text-primary" : "text-text-secondary"
-                }`}
-              >
-                {item.label}
-                {pathname === item.href && (
-                  <motion.div
-                    layoutId="navbar-indicator"
-                    className="absolute -bottom-1 left-0 right-0 h-[2px] bg-secondary rounded-md"
-                    initial={false}
-                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                  />
-                )}
-              </Link>
-            )
-          ))}
-        </nav>
+                </Link>
+              )
+            ))}
+          </nav>
 
-        {/* Mobile Menu Toggle */}
-        <button
-          className="lg:hidden relative z-10 p-2 text-text-primary"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label="Toggle menu"
-        >
-          {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+          {/* Site search — a field on desktop, an icon on smaller screens */}
+          <SiteSearch />
+
+          {/* Mobile Menu Toggle */}
+          <button
+            className="lg:hidden relative z-10 p-2 text-text-primary"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Nav */}

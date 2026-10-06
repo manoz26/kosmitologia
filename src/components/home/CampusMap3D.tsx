@@ -3,7 +3,7 @@
 /* ══════════════════════════════════════════════════════════════════════════
    CampusMap3D
    ──────────────────────────────────────────────────────────────────────────
-   "Πού θα σπουδάσεις". A tilting 3D map card (stylised, dependency-free, with a
+   "Πού διεξάγονται τα μαθήματα". A tilting 3D map card (stylised, dependency-free, with a
    pulsing location pin and animated roads) beside the campus facts and a link
    that opens the real location in Google Maps.
    ══════════════════════════════════════════════════════════════════════════ */
@@ -64,33 +64,39 @@ export function CampusMap3D() {
     <section id="campus" className="relative w-full overflow-hidden py-24 md:py-32">
       <GlowOrb className="right-[-6%] top-10" size={380} color="rgba(216,236,128,0.4)" />
 
-      <div className="section-container relative z-10 grid grid-cols-1 items-center gap-14 px-4 lg:grid-cols-2">
+      {/* Map on the left, facts on the right — the mirror of the labs section
+          above it, so the page zig-zags instead of stacking the same way. */}
+      <div className="section-container relative z-10 grid grid-cols-1 items-center gap-14 px-4 lg:grid-cols-12 lg:gap-10">
         {/* facts */}
-        <div>
+        <div className="lg:order-2 lg:col-span-6 lg:col-start-7">
           <SectionHeading
             align="left"
             label="Τοποθεσία"
             labelIcon="map-pin"
-            title="Πού θα"
-            highlight="σπουδάσετε"
+            title="Πού διεξάγονται"
+            highlight="τα μαθήματα"
             description="Στην καρδιά της Σίνδου Θεσσαλονίκης, στις σύγχρονες εγκαταστάσεις της Αλεξάνδρειας Πανεπιστημιούπολης του ΔΙΠΑΕ."
           />
 
-          <div className="mt-9 grid grid-cols-1 gap-3 sm:grid-cols-2">
-            {campusFacts.map((fact, i) => (
-              <Reveal key={fact.label} delay={i * 0.08} direction="up">
-                <div className="flex h-full items-start gap-3 rounded-2xl glass-lachani p-5">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-ihu-green to-ihu-green-dark text-white shadow">
-                    <Icon name={fact.icon} size={18} />
+          {/* The facts as one square-cut ledger */}
+          <Reveal direction="up">
+            <dl className="mt-9 grid grid-cols-1 edge-top glass-lachani sm:grid-cols-2">
+              {campusFacts.map((fact) => (
+                <div
+                  key={fact.label}
+                  className="flex items-start gap-3 border-b border-ihu-green-dark/10 p-5 sm:odd:border-r"
+                >
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-ihu-green to-ihu-green-dark text-white shadow">
+                    <Icon name={fact.icon} size={17} />
                   </span>
                   <div>
-                    <p className="text-[11px] font-bold uppercase tracking-wide text-ihu-green-dark">{fact.label}</p>
-                    <p className="mt-0.5 text-sm font-medium text-text-primary">{fact.value}</p>
+                    <dt className="text-xs font-semibold text-ihu-green-dark">{fact.label}</dt>
+                    <dd className="mt-0.5 text-sm font-medium text-text-primary">{fact.value}</dd>
                   </div>
                 </div>
-              </Reveal>
-            ))}
-          </div>
+              ))}
+            </dl>
+          </Reveal>
 
           <Reveal delay={0.12}>
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
@@ -114,8 +120,8 @@ export function CampusMap3D() {
         </div>
 
         {/* map */}
-        <Reveal direction="right">
-          <div className="relative mx-auto h-[24rem] w-full max-w-xl [perspective:1500px] md:h-[28rem]">
+        <Reveal direction="left" className="lg:order-1 lg:col-span-6">
+          <div className="relative h-[24rem] w-full [perspective:1500px] md:h-[28rem]">
             <TiltCard max={8} glare={false} className="h-full w-full" innerClassName="h-full w-full">
               <StylisedMap />
             </TiltCard>

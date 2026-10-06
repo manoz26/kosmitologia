@@ -6,7 +6,7 @@
    through `getIcon` in primitives.tsx.
    ══════════════════════════════════════════════════════════════════════════ */
 
-import { admissions, formatNumber, program } from "@/data/program";
+import { formatNumber, program } from "@/data/program";
 
 export type IconKey =
   | "sprout"
@@ -58,7 +58,8 @@ export type IconKey =
   | "sun"
   | "waves"
   | "hexagon"
-  | "orbit";
+  | "orbit"
+  | "megaphone";
 
 /* ────────────────────────────────────────────
    Hero — headline rotation + quick facts
@@ -395,21 +396,21 @@ export const admissionSteps: AdmissionStep[] = [
     icon: "calendar",
     title: "Πρόσκληση Εκδήλωσης Ενδιαφέροντος",
     description:
-      `Η Συντονιστική Επιτροπή ανακοινώνει κάθε άνοιξη τον νέο κύκλο. Για τον κύκλο ${admissions.cycle} οι αιτήσεις αναμένονται από 10 Ιουνίου έως 10 Ιουλίου.`,
+      "Η Γραμματεία ανακοινώνει για κάθε κύκλο την πρόσκληση και τις ημερομηνίες υποβολής αιτήσεων.",
   },
   {
     index: "02",
     icon: "book",
     title: "Προετοιμασία Φακέλου",
     description:
-      "Συγκεντρώστε πτυχίο, αναλυτική βαθμολογία, βιογραφικό, πιστοποιητικά γλωσσομάθειας και 2 συστατικές επιστολές.",
+      "Συγκέντρωση πτυχίου, αναλυτικής βαθμολογίας, βιογραφικού, πιστοποιητικών γλωσσομάθειας και 2 συστατικών επιστολών.",
   },
   {
     index: "03",
     icon: "search",
     title: "Υποβολή Αίτησης",
     description:
-      "Καταθέστε ηλεκτρονικά την αίτηση και τα δικαιολογητικά εντός της προθεσμίας της προκήρυξης.",
+      "Ηλεκτρονική κατάθεση της αίτησης και των δικαιολογητικών εντός της προθεσμίας της προκήρυξης.",
   },
   {
     index: "04",
@@ -423,7 +424,7 @@ export const admissionSteps: AdmissionStep[] = [
     icon: "graduation",
     title: "Εγγραφή & Έναρξη",
     description:
-      "Οι επιτυχόντες εγγράφονται και ξεκινούν το ταξίδι τους στην επιστήμη της κοσμητολογίας.",
+      "Εγγραφή των επιτυχόντων και έναρξη των μαθημάτων του προγράμματος.",
   },
 ];
 
@@ -443,41 +444,6 @@ export const otherCriteria: string[] = [
   "Προσωπική συνέντευξη",
 ];
 
-
-/* ────────────────────────────────────────────
-   Latest news (placeholder cards)
-   ──────────────────────────────────────────── */
-
-export interface NewsItem {
-  tag: string;
-  date: string;
-  title: string;
-  excerpt: string;
-}
-
-export const newsItems: NewsItem[] = [
-  {
-    tag: "Ανακοίνωση",
-    date: "Σεπτέμβριος 2025",
-    title: "Πρόσκληση Εκδήλωσης Ενδιαφέροντος Ακαδ. Έτους 2025-2026",
-    excerpt:
-      "Το Τμήμα Επιστημών Διατροφής και Διαιτολογίας ανακοινώνει την έναρξη του νέου κύκλου σπουδών του ΠΜΣ «Κοσμητολογία».",
-  },
-  {
-    tag: "Εκδήλωση",
-    date: "Οκτώβριος 2025",
-    title: "Ημερίδα: Καινοτομία στα Φυσικά Καλλυντικά",
-    excerpt:
-      "Ανοιχτή ημερίδα με ομιλητές από τον ακαδημαϊκό χώρο και τη βιομηχανία για τις νέες τάσεις στα προϊόντα φυσικής προέλευσης.",
-  },
-  {
-    tag: "Έρευνα",
-    date: "Νοέμβριος 2025",
-    title: "Νέα συνεργασία για διπλωματικές εργασίες",
-    excerpt:
-      "Διεύρυνση του δικτύου συνεργαζόμενων εταιρειών για εκπόνηση διπλωματικών και πρακτική άσκηση φοιτητών.",
-  },
-];
 
 /* ────────────────────────────────────────────
    Career snapshot (used on the home overview)
@@ -769,9 +735,10 @@ export interface NavTarget {
    live on dedicated pages are no longer listed here. */
 export const navTargets: NavTarget[] = [
   { id: "top", label: "Αρχή", icon: "sparkles" },
+  { id: "anakoinoseis", label: "Ανακοινώσεις", icon: "megaphone" },
   { id: "spoudes", label: "Σπουδές", icon: "graduation" },
-  { id: "apofoitoi", label: "Απόφοιτοι", icon: "briefcase" },
-  { id: "journey", label: "Διαδρομή", icon: "orbit" },
+  { id: "apofoitoi", label: "Καριέρα", icon: "briefcase" },
+  { id: "minima", label: "Μήνυμα", icon: "quote" },
   { id: "didaskontes", label: "Διδάσκοντες", icon: "users" },
   { id: "aitisi", label: "Αίτηση", icon: "calendar" },
 ];
@@ -978,7 +945,7 @@ export const lifecycle: LifecyclePhase[] = [
     semester: "Α' Εξάμηνο",
     title: "Θεμέλια & Κορμός",
     summary:
-      "Χτίζετε τις βάσεις: μεθοδολογία έρευνας, δερματολογία & μικροβιολογία, επιχειρηματικότητα και το πρώτο μάθημα της ειδίκευσής σας.",
+      "Θεμελίωση γνώσεων: μεθοδολογία έρευνας, δερματολογία & μικροβιολογία, επιχειρηματικότητα και το πρώτο μάθημα της ειδίκευσης.",
     ects: "30 ECTS",
     icon: "book",
     milestones: ["3 κοινά μαθήματα κορμού", "Μεθοδολογία & στατιστική (SPSS)", "Πρώτη επαφή με την ειδίκευση"],
@@ -990,7 +957,7 @@ export const lifecycle: LifecyclePhase[] = [
     semester: "Β' Εξάμηνο",
     title: "Εξειδίκευση",
     summary:
-      "Εμβαθύνετε στην ειδίκευσή σας — Παρασκευή & Αξιολόγηση ή Εφαρμογές στη Δερματολογία — με κοινά και εξειδικευμένα μαθήματα.",
+      "Εμβάθυνση στην ειδίκευση — Παρασκευή & Αξιολόγηση ή Εφαρμογές στη Δερματολογία — με κοινά και εξειδικευμένα μαθήματα.",
     ects: "30 ECTS",
     icon: "layers",
     milestones: ["3 κοινά + 1 μάθημα ειδίκευσης", "Εξειδικευμένα εργαστήρια", "Μελέτες περίπτωσης"],
@@ -1002,7 +969,7 @@ export const lifecycle: LifecyclePhase[] = [
     semester: "Γ' Εξάμηνο",
     title: "Διπλωματική & Πρακτική",
     summary:
-      "Εκπονείτε πρωτότυπη ερευνητική εργασία ή πρακτική άσκηση σε φορέα του κλάδου και αποφοιτάτε.",
+      "Εκπόνηση πρωτότυπης ερευνητικής εργασίας ή πρακτική άσκηση σε φορέα του κλάδου και ολοκλήρωση των σπουδών.",
     ects: "30 ECTS",
     icon: "graduation",
     milestones: ["Διπλωματική ή πρακτική άσκηση", "Υπό επίβλεψη μέλους ΔΕΠ", "Δημόσια υποστήριξη"],
@@ -1025,7 +992,7 @@ export interface TouchLink {
 }
 
 export const touchLinks: TouchLink[] = [
-  { icon: "book", label: "Νέα & Ανακοινώσεις", value: "Δείτε τα τελευταία νέα", href: "/nea" },
+  { icon: "book", label: "Νέα & Ανακοινώσεις", value: "Τα τελευταία νέα", href: "/nea" },
   { icon: "map-pin", label: "Επικοινωνία", value: "Γραμματεία ΠΜΣ", href: "/epikoinonia" },
   { icon: "globe", label: "ΔΙΠΑΕ", value: "www.ihu.gr", href: "https://www.ihu.gr", external: true },
 ];

@@ -186,7 +186,7 @@ export function EpikoinoniaLight() {
         <div className={CONTAINER}>
           <SectionHead
             kicker="Γραμματεία ΠΜΣ"
-            title="Πού θα μας βρείτε"
+            title="Πού βρισκόμαστε"
             description="Για αιτήσεις, δικαιολογητικά και πληροφορίες, επικοινωνήστε με τη Γραμματεία του Προγράμματος."
           />
           <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -268,7 +268,7 @@ export function EpikoinoniaLight() {
             ))}
           </div>
           <FadeIn className="mt-10 text-center">
-            <PrimaryLink href="/light/eggrafes">Ξεκινήστε την αίτησή σας</PrimaryLink>
+            <PrimaryLink href="/light/eggrafes">Υποβολή αίτησης</PrimaryLink>
           </FadeIn>
         </div>
       </section>

@@ -127,7 +127,7 @@ function RosterProgress({ listRef }: { listRef: React.RefObject<HTMLDivElement |
       <div className="h-1.5 w-full max-w-[220px] overflow-hidden rounded-full bg-slate-200">
         <motion.div className="h-full rounded-full bg-ihu-green-dark" style={{ width: fill }} />
       </div>
-      <p className="mt-2.5 text-xs text-text-muted">Κυλήστε για όλο το διδακτικό σώμα</p>
+      <p className="mt-2.5 text-xs text-text-muted">Κύλιση για όλο το διδακτικό σώμα</p>
     </div>
   );
 }
@@ -174,7 +174,7 @@ export function DidaskotesLight() {
             <SectionHead
               kicker="Διδακτικό σώμα"
               title="Οι διδάσκοντες των μαθημάτων"
-              description="Το σώμα διδασκόντων όπως προκύπτει από τα επίσημα περιγράμματα. Πατήστε ένα όνομα για να δείτε τα μαθήματα που διδάσκει."
+              description="Το σώμα διδασκόντων όπως προκύπτει από τα επίσημα περιγράμματα. Η επιλογή ονόματος εμφανίζει τα μαθήματα που διδάσκει."
             />
             <FadeIn className="mt-6">
               <span className="rounded-full bg-white px-3.5 py-1.5 text-xs font-bold text-ihu-green-dark ring-1 ring-slate-200">
@@ -197,7 +197,7 @@ export function DidaskotesLight() {
       {/* CTA */}
       <section className="py-16">
         <div className={cn(CONTAINER, "flex flex-wrap items-center gap-x-6 gap-y-3")}>
-          <PrimaryLink href="/light/programma">Δείτε τα μαθήματα</PrimaryLink>
+          <PrimaryLink href="/light/programma">Μαθήματα του προγράμματος</PrimaryLink>
           <MoreLink href="/light/ergastiria">Εργαστήρια & υποδομές</MoreLink>
         </div>
       </section>

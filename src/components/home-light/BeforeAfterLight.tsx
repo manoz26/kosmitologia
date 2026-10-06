@@ -18,7 +18,7 @@ export function BeforeAfterLight() {
         <MoleculeViewer calm />
       </div>
       <p className="mt-3 text-center text-xs font-medium text-text-secondary">
-        Υαλουρονικό οξύ — το μόριο-κλειδί της ενυδάτωσης. Σύρετε για να το περιστρέψετε.
+        Υαλουρονικό οξύ — το μόριο-κλειδί της ενυδάτωσης. Περιστρέφεται με σύρσιμο.
       </p>
     </div>
   );

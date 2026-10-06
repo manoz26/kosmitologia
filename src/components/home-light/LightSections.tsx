@@ -51,9 +51,9 @@ import {
   pillars,
   featuredProfessors,
   careerSnapshots,
-  newsItems,
   type IconKey,
 } from "@/components/home/lib/data";
+import { announcements, formatPublished } from "@/data/announcements";
 import { courses, semesters } from "@/data/courses";
 import { BeforeAfterLight } from "./BeforeAfterLight";
 
@@ -299,8 +299,8 @@ export function CurriculumSection() {
         <FadeIn className="mt-5">
           <p className="text-xs leading-relaxed text-text-muted">
             Ι = μάθημα της ειδίκευσης «Παρασκευή & Αξιολόγηση Καλλυντικών Προϊόντων» · ΙΙ = μάθημα
-            της ειδίκευσης «Εφαρμογές της Κοσμητολογίας στη Δερματολογία». Επιλέγετε ένα από τα δύο
-            σε κάθε εξάμηνο.
+            της ειδίκευσης «Εφαρμογές της Κοσμητολογίας στη Δερματολογία». Σε κάθε εξάμηνο
+            παρακολουθείται ένα από τα δύο.
           </p>
         </FadeIn>
 
@@ -503,19 +503,19 @@ export function NewsLight() {
         </div>
 
         <div className="mt-10 grid gap-5 md:grid-cols-3">
-          {newsItems.map((n, i) => (
-            <FadeIn key={n.title} delay={i * 0.07}>
+          {announcements.slice(0, 3).map((n, i) => (
+            <FadeIn key={n.id} delay={i * 0.07}>
               <article className="flex h-full flex-col rounded-2xl bg-white p-6 ring-1 ring-slate-200">
                 <div className="flex items-center gap-2.5">
                   <span className="rounded-full bg-lachani-mist px-2.5 py-1 text-[11px] font-bold text-ihu-green-dark">
                     {n.tag}
                   </span>
-                  <span className="text-xs text-text-muted">{n.date}</span>
+                  <span className="text-xs text-text-muted">{formatPublished(n.published)}</span>
                 </div>
                 <h3 className="mt-3.5 font-heading text-base font-bold leading-snug text-text-primary">
                   {n.title}
                 </h3>
-                <p className="mt-2 text-sm leading-relaxed text-text-secondary">{n.excerpt}</p>
+                <p className="mt-2 text-sm leading-relaxed text-text-secondary">{n.text}</p>
               </article>
             </FadeIn>
           ))}
@@ -564,7 +564,7 @@ export function AdmissionsSection() {
       <div className={CONTAINER}>
         <SectionHead
           kicker="Εισαγωγή"
-          title="Πώς θα ενταχθείτε στο ΠΜΣ"
+          title="Διαδικασία εισαγωγής στο ΠΜΣ"
           description="Δεκτοί γίνονται πτυχιούχοι ΑΕΙ όλων των επιστημονικών κλάδων, από την Ελλάδα ή αναγνωρισμένα ιδρύματα του εξωτερικού. Η επιλογή γίνεται με μοριοδότηση του φακέλου και συνέντευξη — χωρίς γραπτές εξετάσεις."
         />
 

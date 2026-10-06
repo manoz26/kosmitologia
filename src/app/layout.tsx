@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Commissioner, Inter } from "next/font/google";
+import { Open_Sans } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Navbar } from "@/components/layout/Navbar";
@@ -9,17 +9,10 @@ import { SITE_URL } from "@/lib/site";
 import { contact, telHref } from "@/data/program";
 import "./globals.css";
 
-// Heading face — Commissioner ships full Greek glyphs (proper ω/ώ), unlike
-// Montserrat which lacked them and broke on Greek titles.
-const commissioner = Commissioner({
-  subsets: ["latin", "latin-ext", "greek"],
-  variable: "--font-heading",
-  display: "swap",
-  weight: ["400", "500", "600", "700", "800"],
-});
-
-const inter = Inter({
-  subsets: ["latin", "latin-ext", "greek"],
+// One face for the whole site — Open Sans (variable, 300–800) ships full Greek
+// glyphs (proper ω/ώ). `--font-heading` is aliased to it in globals.css.
+const openSans = Open_Sans({
+  subsets: ["latin", "latin-ext", "greek", "greek-ext"],
   variable: "--font-sans",
   display: "swap",
 });
@@ -91,7 +84,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="el" className={`${commissioner.variable} ${inter.variable}`}>
+    <html lang="el" className={openSans.variable}>
       <body className="min-h-dvh flex flex-col antialiased bg-gradient-to-b from-[#EEF4DC] via-[#F1F6E4] to-[#F4F7ED]">
         <script
           type="application/ld+json"

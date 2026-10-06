@@ -1,7 +1,7 @@
 "use client";
 
 /* ══════════════════════════════════════════════════════════════════════════
-   FacultyStrip — «Ποιοι διδάσκουν»
+   FacultyStrip — «Διδάσκοντες»
    ──────────────────────────────────────────────────────────────────────────
    A quiet strip of eight teachers: the Συντονιστική Επιτροπή (study guide
    σ.1) plus one teacher from each partner institution, so the breadth of the
@@ -9,9 +9,6 @@
    sends photos (docs/protasi-anadiamorfosis.md, Αλλαγή 5). No ranks are shown —
    the study guide and faculty.ts disagree on them (see program.ts).
    ══════════════════════════════════════════════════════════════════════════ */
-
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 
 import { faculty, facultyInstitutionsText, initialsOf } from "@/data/faculty";
 import { committee } from "@/data/program";
@@ -49,14 +46,15 @@ export function FacultyStrip() {
     <section id="didaskontes" className="relative w-full overflow-hidden py-24 md:py-28">
       <div className="section-container relative z-10 px-4">
         <SectionHeading
-          label="Διδάσκοντες"
+          label="Ακαδημαϊκό προσωπικό"
           labelIcon="users"
-          title="Ποιοι"
-          highlight="διδάσκουν"
+          title={null}
+          highlight="Διδάσκοντες"
           description={`${faculty.length} διδάσκοντες από ${facultyInstitutionsText()}.`}
+          action={{ href: "/programma#didaskontes", label: `Όλοι οι διδάσκοντες (+${othersCount})` }}
         />
 
-        <ul className="mx-auto mt-12 grid max-w-5xl grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <ul className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 md:mt-12 lg:grid-cols-4 lg:gap-5">
           {people.map((p, i) => (
             <Reveal key={p.name} as="li" delay={(i % 4) * 0.06} direction="up">
               <div className="flex h-full items-center gap-4 rounded-2xl glass-lachani p-4">
@@ -78,15 +76,6 @@ export function FacultyStrip() {
           ))}
         </ul>
 
-        <Reveal delay={0.2} direction="up" className="mt-10 text-center">
-          <Link
-            href="/programma#didaskontes"
-            className="group inline-flex items-center gap-2 rounded-full border border-ihu-green-dark/25 bg-white/60 px-6 py-3 text-sm font-bold text-ihu-green-dark backdrop-blur-md transition-all hover:gap-3 hover:bg-white/80"
-          >
-            Όλοι οι διδάσκοντες (+{othersCount})
-            <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
-          </Link>
-        </Reveal>
       </div>
     </section>
   );

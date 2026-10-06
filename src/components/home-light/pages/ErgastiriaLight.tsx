@@ -144,7 +144,7 @@ export function ErgastiriaLight() {
               description="Το πρόγραμμα στηρίζεται σε πραγματική εργαστηριακή εργασία: παρασκευή σκευασμάτων, ενόργανη ανάλυση και αξιολόγηση του δέρματος. Η μεγαλύτερη εργαστηριακή φόρτιση βρίσκεται στη διπλωματική/πρακτική του Γ' εξαμήνου."
             />
             <FadeIn className="mt-8">
-              <PrimaryLink href="/light/programma">Δείτε τα εργαστηριακά μαθήματα</PrimaryLink>
+              <PrimaryLink href="/light/programma">Εργαστηριακά μαθήματα</PrimaryLink>
             </FadeIn>
           </div>
           <FadeIn delay={0.1}>
@@ -203,7 +203,7 @@ export function ErgastiriaLight() {
       {/* CTA */}
       <section className="py-16">
         <div className={cn(CONTAINER, "flex flex-wrap items-center gap-x-6 gap-y-3")}>
-          <PrimaryLink href="/light/eggrafes">Κάντε αίτηση</PrimaryLink>
+          <PrimaryLink href="/light/eggrafes">Υποβολή αίτησης</PrimaryLink>
           <MoreLink href="/light/karieres">Επαγγελματικές προοπτικές</MoreLink>
         </div>
       </section>

@@ -37,6 +37,12 @@ export function facultyInstitutionsText(): string {
   return hasIndustry ? `${academic.join(", ")} και τη βιομηχανία` : academic.join(", ");
 }
 
+/** Anchor of a teacher's card on /programma — the landing spot of the site
+    search. Built from the email's local part: Latin, unique, stable. */
+export function facultyAnchor(f: Pick<FacultyMember, "email">): string {
+  return `didaskon-${f.email.split("@")[0].replace(/[^a-z0-9]+/gi, "-").toLowerCase()}`;
+}
+
 /** Initials without Greek accents: "Άννα Γιαννακουδάκη" → "ΑΓ". */
 export function initialsOf(name: string): string {
   return name

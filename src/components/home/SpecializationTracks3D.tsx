@@ -20,16 +20,21 @@ import { AnimatePresence, motion, useScroll, useSpring, useTransform } from "fra
 import { X } from "lucide-react";
 
 import {
+  courses,
   curriculum,
   specializations,
   getSpecializationCourses,
   getSpecializationEcts,
   type Course,
 } from "@/data/courses";
+import { useHashTarget } from "@/lib/use-hash-target";
 import { Icon, Reveal, SectionHeading } from "./lib/primitives";
 import { Aurora, GlowOrb } from "./lib/decorations";
 import type { IconKey } from "./lib/data";
 import { useReduced } from "./lib/hooks";
+
+/* #mathima-<code> opens that course (the site search links here). */
+const COURSE_HASH = "mathima-";
 
 /* Map the course icon strings onto the shared IconKey set. */
 const COURSE_ICON: Record<string, IconKey> = {
@@ -69,6 +74,7 @@ function SharedCard({ course, onOpen }: { course: Course; onOpen: (c: Course) =>
   return (
     <Reveal direction="up" className="relative mx-auto w-full max-w-xl">
       <button
+        id={`${COURSE_HASH}${course.code}`}
         onClick={() => onOpen(course)}
         className="group relative flex w-full items-center gap-4 overflow-hidden rounded-3xl glass-lachani px-5 py-4 text-left transition-all duration-300 hover:-translate-y-0.5 hover:ring-1 hover:ring-ihu-green/30 md:px-6"
       >
@@ -117,6 +123,7 @@ function ForkCard({
   return (
     <Reveal direction={side === "preparation" ? "left" : "right"} className="h-full">
       <button
+        id={`${COURSE_HASH}${course.code}`}
         onClick={() => onOpen(course)}
         className="group relative flex h-full w-full flex-col overflow-hidden rounded-3xl glass-lachani text-left transition-all duration-300 hover:-translate-y-1"
         style={{ boxShadow: `0 22px 55px -30px ${meta.glow}` }}
@@ -149,7 +156,7 @@ function ForkCard({
           <h4 className="mt-2 font-heading text-[15px] font-bold leading-snug text-text-primary">{course.nameGr}</h4>
           <p className="mt-2 line-clamp-3 text-[13px] leading-relaxed text-text-secondary">{course.description}</p>
           <span className="mt-auto inline-flex items-center gap-1.5 pt-4 text-xs font-bold" style={{ color: meta.accent }}>
-            Δείτε το μάθημα
+            Στοιχεία μαθήματος
             <span className="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
           </span>
         </div>
@@ -250,7 +257,7 @@ function SemesterMarker({ semester, ects }: { semester: number; ects: number }) 
 
 function SplitBanner() {
   return (
-    <div className="relative mx-auto mt-14 max-w-5xl">
+    <div className="relative mt-10 md:mt-12">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
         {specializations.map((s, i) => {
           const count = getSpecializationCourses(s.id).length;
@@ -494,6 +501,12 @@ export function SpecializationTracks3D() {
   const railRef = useRef<HTMLDivElement>(null);
   const reduced = useReduced();
 
+  /* A link to #mathima-<code> opens that course's details. */
+  useHashTarget(COURSE_HASH, (code) => {
+    const course = courses.find((c) => c.code === code);
+    if (course) setSelected(course);
+  });
+
   const { scrollYProgress } = useScroll({ target: railRef, offset: ["start 70%", "end 65%"] });
   const fill = useSpring(useTransform(scrollYProgress, [0, 1], [0, 1]), {
     stiffness: 110,
@@ -513,7 +526,7 @@ export function SpecializationTracks3D() {
           labelIcon="layers"
           title="Ένα πρόγραμμα,"
           highlight="δύο ειδικεύσεις"
-          description="Ξεκινάτε μαζί από έναν κοινό κορμό και, σε κάθε εξάμηνο, ο δρόμος χωρίζει σε δύο ειδικεύσεις. Κυλήστε για να δείτε τη διαδρομή — και πατήστε σε κάθε μάθημα για αναλυτικά στοιχεία."
+          description="Το πρόγραμμα ξεκινά με κοινό κορμό και, σε κάθε εξάμηνο, διακλαδώνεται σε δύο ειδικεύσεις. Η διαδρομή αποτυπώνεται με την κύλιση και κάθε μάθημα ανοίγει για αναλυτικά στοιχεία."
         />
 
         {/* two specialisations, side by side */}

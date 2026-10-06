@@ -96,7 +96,7 @@ export function NeaLight() {
         <div className={CONTAINER}>
           <SectionHead
             kicker="Ο ετήσιος κύκλος"
-            title="Τι να περιμένετε, και πότε"
+            title="Τι προβλέπεται, και πότε"
             description="Το πρόγραμμα ακολουθεί έναν σταθερό ετήσιο ρυθμό. Οι ζωντανές ανακοινώσεις δημοσιεύονται στον επίσημο ιστότοπο."
           />
 
@@ -155,7 +155,7 @@ export function NeaLight() {
       <section className="border-t border-slate-200/70 bg-[#F4F7ED] py-20 md:py-24">
         <div className={cn(CONTAINER, "grid items-center gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-16")}>
           <SectionHead
-            kicker="Μείνετε ενημερωμένοι"
+            kicker="Ενημέρωση"
             title="Οι επίσημες ανακοινώσεις"
             description="Προκηρύξεις, εκδηλώσεις και τα τελευταία νέα του προγράμματος δημοσιεύονται στον ιστότοπο του ΠΜΣ και ανακοινώνονται από τη Γραμματεία."
           />

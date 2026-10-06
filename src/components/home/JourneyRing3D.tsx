@@ -47,7 +47,7 @@ import { ArrowRight, ArrowUpRight, ChevronDown, Atom } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { journeyStages, type JourneyStage } from "./lib/data";
-import { Icon, GradientText } from "./lib/primitives";
+import { Icon, GradientText, HeadingRule } from "./lib/primitives";
 import {
   useViewport,
   useReduced,
@@ -500,18 +500,23 @@ function Heading() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.6 }}
-      className="mx-auto max-w-3xl text-center"
+      className="text-left"
     >
-      <span className="inline-flex items-center gap-2 rounded-full border border-ihu-green-dark/15 bg-white/55 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-ihu-green-dark backdrop-blur-md">
-        <Atom size={14} /> Το ταξίδι ενός καλλυντικού
+      {/* Same split heading as the other sections, sized in vh so the
+          pinned stage still fits (the fit engine measures it). */}
+      <HeadingRule />
+      <span className="mt-[clamp(0.5rem,1.4vh,1rem)] inline-flex items-center gap-2 text-sm font-semibold text-ihu-green-dark">
+        <Atom size={15} /> Το ταξίδι ενός καλλυντικού
       </span>
-      <h2 className="mt-[clamp(0.75rem,1.8vh,1.5rem)] font-heading text-[clamp(1.6rem,4.2vh,3rem)] font-extrabold leading-tight text-text-primary">
-        Από το <GradientText>συστατικό</GradientText> στο <GradientText variant="fresh">προϊόν</GradientText>
-      </h2>
-      <p className="mt-[clamp(0.5rem,1.2vh,1rem)] hidden text-[clamp(0.875rem,1.8vh,1.125rem)] text-text-secondary sm:block">
-        Κάθε στάδιο του προγράμματος αντιστοιχεί σε ένα βήμα της πραγματικής
-        διαδρομής ενός καλλυντικού. Κυλήστε για να το ζήσετε σε τρεις διαστάσεις.
-      </p>
+      <div className="mt-[clamp(0.5rem,1.6vh,1.25rem)] grid gap-[clamp(0.5rem,1.2vh,1rem)] lg:grid-cols-12 lg:items-end lg:gap-x-10">
+        <h2 className="font-heading text-[clamp(1.6rem,4.4vh,3.25rem)] font-extrabold leading-[1.05] tracking-[-0.02em] text-text-primary lg:col-span-7">
+          Από το <GradientText>συστατικό</GradientText> στο <GradientText variant="fresh">προϊόν</GradientText>
+        </h2>
+        <p className="hidden text-[clamp(0.875rem,1.8vh,1.0625rem)] leading-relaxed text-text-secondary sm:block lg:col-span-5 xl:col-span-4 xl:col-start-9">
+          Κάθε στάδιο του προγράμματος αντιστοιχεί σε ένα βήμα της πραγματικής
+          διαδρομής ενός καλλυντικού, σε τρισδιάστατη παρουσίαση που προχωρά με την κύλιση.
+        </p>
+      </div>
     </motion.div>
   );
 }
@@ -520,7 +525,7 @@ function ScrollHint({ progress }: { progress: MotionValue<number> }) {
   const opacity = useTransform(progress, [0, 0.06], [1, 0]);
   return (
     <motion.div style={{ opacity }} className="pointer-events-none absolute bottom-3 left-1/2 z-30 -translate-x-1/2 text-center">
-      <span className="mb-1 block text-[10px] font-bold uppercase tracking-[0.3em] text-ihu-green-dark/60">Κυλήστε</span>
+      <span className="mb-1 block text-[10px] font-bold uppercase tracking-[0.3em] text-ihu-green-dark/60">Κύλιση</span>
       <ChevronDown size={18} className="mx-auto animate-scroll-hint text-ihu-green-dark/70" />
     </motion.div>
   );
@@ -532,7 +537,7 @@ function JourneyCta({ progress }: { progress: MotionValue<number> }) {
   return (
     <motion.div style={{ opacity, y }} className="flex flex-col items-stretch gap-3">
       <Link href="/programma" className="group inline-flex items-center justify-center gap-2 rounded-full bg-ihu-green-dark px-6 py-3 text-sm font-bold text-white shadow-lg transition-all hover:gap-3">
-        Δείτε όλο το Πρόγραμμα Σπουδών
+        Πρόγραμμα Σπουδών
         <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
       </Link>
       {/* On phones one conversion path is enough — the second button costs

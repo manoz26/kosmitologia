@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { Mail, Phone, MapPin, Send, Clock, Bus, TrainFront, Car } from "lucide-react";
-import { SectionWrapper } from "@/components/ui/SectionWrapper";
 import { contactInfo } from "@/data/navigation";
 import { contact } from "@/data/program";
 import { GlassCard } from "@/components/ui/GlassCard";
@@ -33,15 +32,10 @@ const contactCards = [
 
 export function ContactSection() {
   return (
-    <SectionWrapper variant="muted"
-      id="contact"
-      
-      title="Επικοινωνία"
-      subtitle="Γραμματεία ΠΜΣ"
-    >
-      <div className="grid lg:grid-cols-5 gap-8">
+    <section id="contact" className="relative scroll-mt-24 pb-24 pt-12 md:pt-16">
+      <div className="section-container grid gap-8 px-4 lg:grid-cols-12 lg:gap-10">
         {/* Contact Cards */}
-        <div className="lg:col-span-2 space-y-4">
+        <div className="space-y-4 lg:col-span-5">
           {contactCards.map((card, i) => (
             <GlassCard key={card.title} variant="elevated" delay={i * 0.1}>
               <a
@@ -72,10 +66,31 @@ export function ContactSection() {
               Ωράριο Γραμματείας: <span className="font-medium text-text-secondary">{contact.hours.value}</span>
             </p>
           </div>
+
+          {/* Electronic submission of the application */}
+          <GlassCard variant="elevated" delay={0.3}>
+            <h3 className="font-heading font-semibold text-sm text-text-primary mb-2">
+              Αποστολή αίτησης με email
+            </h3>
+            <p className="text-xs text-text-secondary leading-relaxed">
+              Δίνεται η δυνατότητα στους ενδιαφερόμενους να στείλουν σε ηλεκτρονική μορφή μέσω email την αίτηση και τα απαραίτητα δικαιολογητικά, με την απαίτηση να τα προσκομίσουν σε έντυπη μορφή μετά την αποδοχή τους και σε κάθε περίπτωση πριν την ολοκλήρωση της εγγραφής τους στο ΠΜΣ.
+            </p>
+            <div className="mt-3 flex flex-col gap-1">
+              {[contact.email.value, contact.emailAlt.value].map((email) => (
+                <a
+                  key={email}
+                  href={`mailto:${email}`}
+                  className="text-sm font-semibold text-ihu-green-dark hover:underline break-all"
+                >
+                  {email}
+                </a>
+              ))}
+            </div>
+          </GlassCard>
         </div>
 
         {/* Contact Form (Visual Placeholder) */}
-        <div className="lg:col-span-3">
+        <div className="lg:col-span-7">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -219,6 +234,6 @@ export function ContactSection() {
           </motion.div>
         </div>
       </div>
-    </SectionWrapper>
+    </section>
   );
 }

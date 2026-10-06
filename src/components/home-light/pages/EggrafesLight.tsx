@@ -178,8 +178,7 @@ export function EggrafesLight() {
                 Έντυπο Αίτησης
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-text-secondary">
-                Κατεβάστε το αρχείο της αίτησης, συμπληρώστε το και επισυνάψτε το στα δικαιολογητικά
-                σας.
+                Το αρχείο της αίτησης συμπληρώνεται και επισυνάπτεται στα δικαιολογητικά.
               </p>
               <a
                 href="/aitisi.docx"

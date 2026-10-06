@@ -4,11 +4,13 @@
    ProgramRhythm3D — "Πώς λειτουργεί"
    ──────────────────────────────────────────────────────────────────────────
    How the programme is taught: the learning formats (in-person teaching and
-   lab practice). The Fri–Sun "weekly rhythm" cards and the distance-learning
-   format were removed on 2026-10-01 — that schedule is not in the study
-   guide.
+   lab practice) in the left five columns, a photo of lab practice in the
+   right seven (src/data/photos.ts → labPractice; a placeholder until it is
+   set). The Fri–Sun "weekly rhythm" cards and the distance-learning format
+   were removed on 2026-10-01 — that schedule is not in the study guide.
    ══════════════════════════════════════════════════════════════════════════ */
 
+import { PhotoSlot } from "@/components/ui/PhotoSlot";
 import { learningFormats } from "./lib/data";
 import { Icon, Reveal, SectionHeading } from "./lib/primitives";
 import { GlowOrb } from "./lib/decorations";
@@ -27,21 +29,32 @@ export function ProgramRhythm3D() {
           description="Διά ζώσης μαθήματα και πρακτική άσκηση στα εργαστήρια του Τμήματος."
         />
 
-        {/* learning formats */}
-        <div className="mx-auto mt-14 grid max-w-4xl grid-cols-1 gap-5 md:grid-cols-2">
-          {learningFormats.map((format, i) => (
-            <Reveal key={format.title} delay={i * 0.08} direction="up">
-              <div className="flex h-full items-start gap-4 rounded-3xl glass-lachani-deep p-6">
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/55 text-ihu-green-dark ring-1 ring-ihu-green-dark/10">
-                  <Icon name={format.icon} size={22} />
-                </span>
-                <div>
-                  <h4 className="font-heading text-base font-bold text-text-primary">{format.title}</h4>
-                  <p className="mt-2 text-sm leading-relaxed text-text-secondary">{format.description}</p>
+        <div className="mt-10 grid gap-6 md:mt-12 lg:grid-cols-12 lg:items-stretch">
+          {/* learning formats */}
+          <div className="flex flex-col gap-5 lg:col-span-5">
+            {learningFormats.map((format, i) => (
+              <Reveal key={format.title} delay={i * 0.08} direction="up" className="flex-1">
+                <div className="flex h-full items-start gap-4 rounded-3xl glass-lachani-deep p-6 md:p-7">
+                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/55 text-ihu-green-dark ring-1 ring-ihu-green-dark/10">
+                    <Icon name={format.icon} size={22} />
+                  </span>
+                  <div>
+                    <h3 className="font-heading text-lg font-bold text-text-primary">{format.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-text-secondary">{format.description}</p>
+                  </div>
                 </div>
-              </div>
-            </Reveal>
-          ))}
+              </Reveal>
+            ))}
+          </div>
+
+          {/* the lab, in a square-cut frame */}
+          <Reveal direction="up" delay={0.1} className="lg:col-span-7">
+            <PhotoSlot
+              photo="labPractice"
+              sizes="(min-width: 1024px) 58vw, 100vw"
+              className="aspect-[16/10] w-full lg:aspect-auto lg:h-full lg:min-h-[22rem]"
+            />
+          </Reveal>
         </div>
       </div>
     </section>

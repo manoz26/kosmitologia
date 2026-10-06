@@ -22,7 +22,7 @@
 import { useRef } from "react";
 import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowRight, ChevronDown, MousePointer2, Sparkles } from "lucide-react";
+import { ArrowRight, ChevronDown, GraduationCap, MousePointer2 } from "lucide-react";
 
 import { ScrollFilm, HERO_FILM, useHeroFilm, useStaticFilm } from "@/components/ui/scroll-film";
 
@@ -32,13 +32,18 @@ const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
 function HeroCopy() {
   return (
     <>
-      <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-white backdrop-blur-md">
-        <Sparkles size={15} className="text-[#cfe38a]" />
-        <span className="text-xs font-semibold uppercase tracking-[0.22em]">
-          ΠΜΣ Κοσμητολογία · ΔΙΠΑΕ
+      {/* The programme named in full — «ΠΜΣ» alone didn't say it to every
+          visitor (client feedback 06/10/2026). */}
+      <div className="mb-7 inline-flex items-center gap-2.5 rounded-full border border-white/30 bg-white/12 px-5 py-2.5 text-white shadow-[0_8px_30px_-12px_rgba(0,0,0,0.5)] backdrop-blur-md">
+        <GraduationCap size={18} className="shrink-0 text-[#cfe38a]" />
+        <span className="text-sm font-semibold tracking-[0.03em] md:text-base">
+          Μεταπτυχιακό Πρόγραμμα Σπουδών
+          <span className="hidden text-white/70 sm:inline"> · ΔΙΠΑΕ</span>
         </span>
       </div>
-      <h1 className="mx-auto max-w-4xl font-heading text-5xl font-extrabold leading-[1.05] tracking-tight text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.5)] md:text-7xl">
+      {/* 2.35rem on phones: «κοσμητολογίας.» is one long word and 3rem ran
+          off a 375px screen. */}
+      <h1 className="mx-auto max-w-4xl font-heading text-[2.35rem] font-extrabold leading-[1.05] tracking-tight text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.5)] sm:text-5xl md:text-7xl">
         Η επιστήμη
         <br />
         της <span className="text-[#cfe38a]">κοσμητολογίας</span>.
@@ -51,14 +56,14 @@ function HeroCopy() {
           href="/eggrafes"
           className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#cfe38a] px-7 py-3.5 text-sm font-bold text-ihu-green-dark shadow-lg transition-all hover:gap-3 hover:bg-white sm:w-auto"
         >
-          Κάνε αίτηση
+          Υποβολή αίτησης
           <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
         </Link>
         <Link
           href="/programma"
           className="inline-flex w-full items-center justify-center rounded-full border border-white/40 bg-white/10 px-7 py-3.5 text-sm font-bold text-white backdrop-blur-md transition-colors hover:bg-white/20 sm:w-auto"
         >
-          Δες το πρόγραμμα
+          Πρόγραμμα σπουδών
         </Link>
       </div>
     </>
@@ -66,7 +71,9 @@ function HeroCopy() {
 }
 
 export function CinematicScrollHero() {
-  const containerRef = useRef<HTMLDivElement>(null);
+  /* Both branches attach it: useScroll throws (in dev) on a target ref that
+     never gets an element, which the static branch used to leave empty. */
+  const containerRef = useRef<HTMLElement>(null);
   const staticFilm = useStaticFilm();
   const film = useHeroFilm();
 
@@ -87,7 +94,7 @@ export function CinematicScrollHero() {
      the ~210MB of decoded footage that made WebKit reload the tab is gone. ── */
   if (staticFilm) {
     return (
-      <section className="relative h-[100svh] w-full overflow-hidden bg-[#0a0a0a]">
+      <section ref={containerRef} className="relative h-[100svh] w-full overflow-hidden bg-[#0a0a0a]">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={HERO_FILM.poster}
@@ -104,7 +111,7 @@ export function CinematicScrollHero() {
   }
 
   return (
-    <div ref={containerRef} className="relative h-[250vh] w-full bg-[#0a0a0a]">
+    <section ref={containerRef} className="relative h-[250vh] w-full bg-[#0a0a0a]">
       <div className="sticky top-0 h-[100svh] w-full overflow-hidden">
         {/* Poster-first scroll-scrubbed footage */}
         <ScrollFilm progress={scrollYProgress} {...film} />
@@ -126,7 +133,7 @@ export function CinematicScrollHero() {
           className="pointer-events-none absolute bottom-7 left-1/2 z-10 -translate-x-1/2 text-center"
         >
           <span className="mb-1.5 flex items-center justify-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.3em] text-white/80">
-            <MousePointer2 size={12} /> Κυλήστε
+            <MousePointer2 size={12} /> Κύλιση
           </span>
           <ChevronDown size={20} className="mx-auto animate-bounce text-white/80" />
         </motion.div>
@@ -138,7 +145,7 @@ export function CinematicScrollHero() {
           aria-hidden
         />
       </div>
-    </div>
+    </section>
   );
 }
 

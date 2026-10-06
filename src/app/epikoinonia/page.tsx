@@ -1,5 +1,7 @@
 import { Metadata } from "next";
-import { PageShell } from "@/components/PageShell";
+
+import { ScrollBackdrop } from "@/components/home/ScrollBackdrop";
+import { LachaniPageHeader } from "@/components/home/LachaniPageHeader";
 import { ContactSection } from "@/components/sections/ContactSection";
 
 export const metadata: Metadata = {
@@ -11,12 +13,20 @@ export const metadata: Metadata = {
 
 export default function EpikoinoniaPage() {
   return (
-    <>
-      <PageShell title="Επικοινωνία" subtitle="Επικοινωνήστε μαζί μας">
-        <div className="py-12 section-container">
-          <ContactSection />
-        </div>
-      </PageShell>
-    </>
+    <div className="relative">
+      <ScrollBackdrop />
+
+      <div className="relative z-0">
+        <LachaniPageHeader
+          eyebrow="Γραμματεία ΠΜΣ"
+          title="Επικοινωνία"
+          intro="Τηλέφωνο, email, διεύθυνση και ωράριο της Γραμματείας, με οδηγίες πρόσβασης στην Πανεπιστημιούπολη."
+          photo="secretariat"
+          photoCaption="Η Γραμματεία του ΠΜΣ στην Αλεξάνδρεια Πανεπιστημιούπολη, Σίνδος."
+        />
+
+        <ContactSection />
+      </div>
+    </div>
   );
 }

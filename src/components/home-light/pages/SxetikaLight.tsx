@@ -240,7 +240,7 @@ export function SxetikaLight() {
             ))}
           </div>
           <FadeIn className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3">
-            <PrimaryLink href="/light/programma">Δείτε το πρόγραμμα σπουδών</PrimaryLink>
+            <PrimaryLink href="/light/programma">Πρόγραμμα σπουδών</PrimaryLink>
             <MoreLink href="/light/didaskotes">Οι διδάσκοντες</MoreLink>
           </FadeIn>
         </div>

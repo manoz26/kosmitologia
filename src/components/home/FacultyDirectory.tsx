@@ -12,7 +12,7 @@
 
 import { Mail } from "lucide-react";
 
-import { faculty, facultyInstitutionsText } from "@/data/faculty";
+import { faculty, facultyAnchor, facultyInstitutionsText } from "@/data/faculty";
 import { committee } from "@/data/program";
 import { Reveal, SectionHeading } from "./lib/primitives";
 
@@ -21,17 +21,17 @@ export function FacultyDirectory() {
     <section id="didaskontes" className="relative w-full overflow-hidden py-24 md:py-28">
       <div className="section-container relative z-10 px-4">
         <SectionHeading
-          label="Διδάσκοντες"
+          label="Ακαδημαϊκό προσωπικό"
           labelIcon="users"
-          title="Ποιοι"
-          highlight="διδάσκουν"
+          title={null}
+          highlight="Διδάσκοντες"
           description={`${faculty.length} διδάσκοντες από ${facultyInstitutionsText()}.`}
         />
 
         {/* Συντονιστική Επιτροπή */}
         <Reveal direction="up">
-          <div className="mx-auto mt-12 max-w-5xl rounded-3xl glass-lachani-deep p-6 md:p-7">
-            <h3 className="text-xs font-bold uppercase tracking-[0.16em] text-ihu-green-dark">
+          <div className="mt-10 edge-top glass-lachani-deep p-6 md:mt-12 md:p-7">
+            <h3 className="text-sm font-bold text-ihu-green-dark">
               Συντονιστική Επιτροπή
             </h3>
             <ul className="mt-4 grid gap-x-6 gap-y-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -46,10 +46,11 @@ export function FacultyDirectory() {
         </Reveal>
 
         {/* Everyone */}
-        <ul className="mx-auto mt-6 grid max-w-5xl gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {faculty.map((f, i) => (
             <Reveal key={f.email} as="li" delay={(i % 3) * 0.05} direction="up">
-              <div className="flex h-full items-start gap-3 rounded-2xl glass-lachani p-4">
+              {/* The id is where the site search lands for this teacher. */}
+              <div id={facultyAnchor(f)} className="flex h-full scroll-mt-28 items-start gap-3 rounded-2xl glass-lachani p-4">
                 <span
                   aria-hidden
                   className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-ihu-green to-ihu-green-dark font-heading text-sm font-bold text-white"

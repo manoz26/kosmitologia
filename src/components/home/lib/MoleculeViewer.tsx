@@ -460,7 +460,7 @@ export function MoleculeViewer({ calm = false, className }: { calm?: boolean; cl
 
       <span className="pointer-events-none absolute bottom-3 right-3 inline-flex items-center gap-1.5 rounded-full bg-white/85 px-2.5 py-1 text-[10px] font-semibold text-ihu-green-dark shadow-sm ring-1 ring-ihu-green-dark/10 backdrop-blur-sm">
         <Move3d size={12} />
-        σύρετε για περιστροφή
+        σύρσιμο για περιστροφή
       </span>
     </div>
   );

@@ -3,7 +3,9 @@
 import React, { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
-import { Users, Heart, Sparkles, MessageCircleHeart, X, ZoomIn } from "lucide-react";
+import { Users, Heart, MessageCircleHeart, X, ZoomIn } from "lucide-react";
+
+import { GradientText, SectionHeading } from "@/components/home/lib/primitives";
 
 const ROW_1_IMAGES = [
   "/images/IMG_1825.jpeg",
@@ -51,7 +53,6 @@ export function CommunityGallery() {
   // Function-based — range-based scroll transforms desync via WAAPI (see
   // CinematicScrollHero). Fade in on enter only; never fade out while visible.
   const opacityText = useTransform(scrollYProgress, (p) => clamp01(p / 0.18));
-  const scaleText = useTransform(scrollYProgress, (p) => 0.92 + 0.08 * clamp01(p / 0.25));
 
   return (
     <section 
@@ -102,25 +103,20 @@ export function CommunityGallery() {
       </div>
 
       {/* Content Container */}
-      <div className="relative z-20 container mx-auto px-4 mb-16 text-center max-w-4xl">
-        <motion.div 
-          style={{ opacity: opacityText, scale: scaleText }}
-          className="flex flex-col items-center"
-        >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/70 backdrop-blur-md border border-ihu-green-dark/20 text-ihu-green-dark font-medium text-sm mb-6 shadow-sm">
-            <Sparkles size={16} />
-            <span>Η Κοινότητά μας</span>
-          </div>
+      <div className="section-container relative z-20 mb-14 px-4">
+        <motion.div style={{ opacity: opacityText }}>
+          <SectionHeading
+            label="Η Κοινότητά μας"
+            labelIcon="users"
+            title={
+              <>
+                Η <GradientText>ζωή</GradientText> στο ΠΜΣ Κοσμητολογίας
+              </>
+            }
+            description="Πέρα από την ακαδημαϊκή αριστεία, καλλιεργούμε ένα ανθρώπινο, φιλικό και συνεργατικό περιβάλλον. Εδώ, οι φοιτητές και οι καθηγητές δημιουργούν δεσμούς που διαρκούν μια ζωή."
+          />
 
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-extrabold text-text-primary tracking-tight mb-6">
-            Η <span className="text-transparent bg-clip-text bg-gradient-to-r from-ihu-green-dark to-ihu-green">Ζωή</span> στο ΠΜΣ Κοσμητολογίας
-          </h2>
-          
-          <p className="text-lg md:text-xl text-text-secondary leading-relaxed max-w-2xl mx-auto mb-10">
-            Πέρα από την ακαδημαϊκή αριστεία, καλλιεργούμε ένα ανθρώπινο, φιλικό και συνεργατικό περιβάλλον. Εδώ, οι φοιτητές και οι καθηγητές δημιουργούν δεσμούς που διαρκούν μια ζωή.
-          </p>
-
-          <div className="flex flex-wrap justify-center gap-6">
+          <div className="mt-10 flex flex-wrap gap-4">
              <div className="flex items-center gap-3 bg-white/60 backdrop-blur-sm px-5 py-3 rounded-2xl border border-white/40 shadow-sm transition-all hover:bg-white/80 hover:-translate-y-1">
                 <div className="w-10 h-10 rounded-full bg-ihu-green/10 flex items-center justify-center text-ihu-green-dark">
                   <Users size={20} />
@@ -169,7 +165,7 @@ export function CommunityGallery() {
               <div 
                 key={`row1-${index}`} 
                 onClick={() => setSelectedImage(src)}
-                className="relative w-[280px] h-[200px] md:w-[400px] md:h-[280px] rounded-3xl overflow-hidden shadow-md flex-shrink-0 border-4 border-white transform transition-all duration-500 hover:scale-[1.03] hover:shadow-2xl hover:z-30 cursor-zoom-in group/card"
+                className="relative w-[280px] h-[200px] md:w-[400px] md:h-[280px] overflow-hidden shadow-md flex-shrink-0 border-4 border-white transform transition-all duration-500 hover:scale-[1.03] hover:shadow-2xl hover:z-30 cursor-zoom-in group/card"
               >
                 <div className="absolute inset-0 bg-ihu-green/20 opacity-0 group-hover/card:opacity-30 transition-opacity duration-300 z-10 mix-blend-overlay" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-300 z-10 flex items-end justify-center pb-6">
@@ -199,7 +195,7 @@ export function CommunityGallery() {
               <div 
                 key={`row2-${index}`} 
                 onClick={() => setSelectedImage(src)}
-                className="relative w-[280px] h-[200px] md:w-[400px] md:h-[280px] rounded-3xl overflow-hidden shadow-md flex-shrink-0 border-4 border-white transform transition-all duration-500 hover:scale-[1.03] hover:shadow-2xl hover:z-30 cursor-zoom-in group/card"
+                className="relative w-[280px] h-[200px] md:w-[400px] md:h-[280px] overflow-hidden shadow-md flex-shrink-0 border-4 border-white transform transition-all duration-500 hover:scale-[1.03] hover:shadow-2xl hover:z-30 cursor-zoom-in group/card"
               >
                 <div className="absolute inset-0 bg-secondary/20 opacity-0 group-hover/card:opacity-30 transition-opacity duration-300 z-10 mix-blend-overlay" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-300 z-10 flex items-end justify-center pb-6">

@@ -8,13 +8,16 @@
    ══════════════════════════════════════════════════════════════════════════ */
 
 import React, { createElement } from "react";
+import Link from "next/link";
 import {
   motion,
   useMotionTemplate,
+  useReducedMotion,
   type MotionValue,
   type Variants,
 } from "framer-motion";
 import {
+  ArrowRight,
   Sprout,
   FlaskConical,
   FlaskRound,
@@ -65,6 +68,7 @@ import {
   Waves,
   Hexagon,
   Orbit,
+  Megaphone,
   type LucideIcon,
 } from "lucide-react";
 
@@ -127,6 +131,7 @@ const ICONS: Record<IconKey, LucideIcon> = {
   waves: Waves,
   hexagon: Hexagon,
   orbit: Orbit,
+  megaphone: Megaphone,
 };
 
 export function getIcon(key: IconKey): LucideIcon {
@@ -285,13 +290,71 @@ export function GradientText({
    Section heading block
    ──────────────────────────────────────────── */
 
+/* The rule every section heading stands on: a short dark-green bar on a
+   hairline that runs the width of the column, drawn in from the left as the
+   section arrives — the one motion of the heading. Square-cut, like the
+   other "structure" on the page. */
+export function HeadingRule({ className }: { className?: string }) {
+  const reduced = useReducedMotion();
+  return (
+    <div aria-hidden className={cn("relative h-[3px] w-full", className)}>
+      <motion.span
+        className="absolute inset-x-0 top-[1px] h-px origin-left bg-ihu-green-dark/20"
+        initial={reduced ? false : { scaleX: 0 }}
+        whileInView={{ scaleX: 1 }}
+        viewport={{ once: true, margin: "-60px" }}
+        transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+      />
+      <motion.span
+        className="absolute left-0 top-0 h-[3px] w-12 origin-left bg-ihu-green-dark"
+        initial={reduced ? false : { scaleX: 0 }}
+        whileInView={{ scaleX: 1 }}
+        viewport={{ once: true, margin: "-60px" }}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      />
+    </div>
+  );
+}
+
+/* A text link with an arrow — the "see all" of a section. */
+export function ArrowLink({
+  href,
+  children,
+  className,
+}: {
+  href: string;
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <Link
+      href={href}
+      className={cn(
+        "group inline-flex items-center gap-2 text-sm font-bold text-ihu-green-dark underline-offset-[6px] transition-colors hover:text-text-primary hover:underline",
+        className,
+      )}
+    >
+      {children}
+      <ArrowRight size={16} className="shrink-0 transition-transform group-hover:translate-x-0.5" />
+    </Link>
+  );
+}
+
+/* Section heading — on the page grid, never floating in the middle.
+   • "split" (default): the rule on top with the section's name on the left
+     and its "see all" link on the right; under it the title on the left and
+     the intro on the right, sitting on the title's baseline.
+   • "left": the same rule and label, title and intro stacked — for headings
+     that live inside one column of a two-column section.
+   • "center": the old centred block, for the few places that need it. */
 export function SectionHeading({
   label,
   labelIcon,
   title,
   highlight,
   description,
-  align = "center",
+  action,
+  align = "split",
   className,
 }: {
   label?: string;
@@ -299,43 +362,104 @@ export function SectionHeading({
   title: React.ReactNode;
   highlight?: React.ReactNode;
   description?: React.ReactNode;
-  align?: "center" | "left";
+  /** The section's "see all" link, shown at the right end of the rule. */
+  action?: { href: string; label: string };
+  align?: "split" | "left" | "center";
   className?: string;
 }) {
-  return (
-    <div
+  const heading = (
+    <h2
       className={cn(
-        "max-w-3xl",
-        align === "center" ? "mx-auto text-center" : "text-left",
-        className,
+        "font-heading font-extrabold tracking-[-0.022em] text-text-primary",
+        align === "split"
+          ? "text-[2.15rem] leading-[1.04] md:text-5xl lg:text-[3.4rem]"
+          : "text-3xl leading-[1.08] md:text-[2.75rem]",
       )}
     >
-      {label && (
-        <Reveal direction="up">
-          <SectionLabel icon={labelIcon}>{label}</SectionLabel>
-        </Reveal>
+      {title}
+      {highlight && (
+        <>
+          {title ? " " : null}
+          <GradientText>{highlight}</GradientText>
+        </>
       )}
-      <Reveal direction="up" delay={0.06}>
-        <h2 className="mt-5 font-heading text-3xl font-extrabold leading-[1.1] tracking-tight text-text-primary md:text-5xl">
-          {title}
-          {highlight && (
-            <>
-              {" "}
-              <GradientText>{highlight}</GradientText>
-            </>
+    </h2>
+  );
+
+  if (align === "center") {
+    return (
+      <div className={cn("mx-auto max-w-3xl text-center", className)}>
+        {label && (
+          <Reveal direction="up">
+            <SectionLabel icon={labelIcon}>{label}</SectionLabel>
+          </Reveal>
+        )}
+        <Reveal direction="up" delay={0.06} className="mt-5">
+          {heading}
+        </Reveal>
+        {description && (
+          <Reveal direction="up" delay={0.12}>
+            <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-text-secondary md:text-lg">
+              {description}
+            </p>
+          </Reveal>
+        )}
+      </div>
+    );
+  }
+
+  const intro = description && (
+    <p className="max-w-xl text-base leading-relaxed text-text-secondary md:text-[1.0625rem]">{description}</p>
+  );
+
+  return (
+    <div className={cn("relative", className)}>
+      <HeadingRule />
+      <div className="flex min-h-5 items-center justify-between gap-6 pt-4">
+        {label ? (
+          <Reveal direction="up">
+            <span className="inline-flex items-center gap-2 text-sm font-semibold text-ihu-green-dark">
+              {labelIcon && <Icon name={labelIcon} size={15} />}
+              {label}
+            </span>
+          </Reveal>
+        ) : (
+          <span />
+        )}
+        {action && (
+          <Reveal direction="up" delay={0.1} className="hidden md:block">
+            <ArrowLink href={action.href}>{action.label}</ArrowLink>
+          </Reveal>
+        )}
+      </div>
+
+      {align === "split" ? (
+        <div className="mt-6 grid gap-5 md:mt-8 lg:grid-cols-12 lg:items-end lg:gap-x-10">
+          <Reveal direction="up" delay={0.06} className="lg:col-span-7">
+            {heading}
+          </Reveal>
+          {intro && (
+            <Reveal direction="up" delay={0.12} className="lg:col-span-5 lg:pb-1.5 xl:col-span-4 xl:col-start-9">
+              {intro}
+            </Reveal>
           )}
-        </h2>
-      </Reveal>
-      {description && (
-        <Reveal direction="up" delay={0.12}>
-          <p
-            className={cn(
-              "mt-5 text-base leading-relaxed text-text-secondary md:text-lg",
-              align === "center" ? "mx-auto max-w-2xl" : "max-w-2xl",
-            )}
-          >
-            {description}
-          </p>
+        </div>
+      ) : (
+        <div className="mt-5 max-w-2xl">
+          <Reveal direction="up" delay={0.06}>
+            {heading}
+          </Reveal>
+          {intro && (
+            <Reveal direction="up" delay={0.12} className="mt-5">
+              {intro}
+            </Reveal>
+          )}
+        </div>
+      )}
+
+      {action && (
+        <Reveal direction="up" delay={0.14} className="mt-5 md:hidden">
+          <ArrowLink href={action.href}>{action.label}</ArrowLink>
         </Reveal>
       )}
     </div>

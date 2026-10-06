@@ -12,7 +12,7 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-heading);
+  --font-heading: var(--font-sans);
 
   /* ── Custom Palette ── */
   --color-ihu-blue: #2A427F;
@@ -89,9 +89,10 @@
   /* 10px base → rounded-2xl 15px, rounded-3xl 20px. Softer than square,
      calmer than the old 24–40px "bubble" cards. */
   --radius: 0.625rem;
-  /* --font-heading is provided by next/font (Commissioner, full Greek glyphs)
-     via the @theme inline block above — do not re-declare it here or the Greek
-     face is lost (this is what broke ω/ώ in headings). */
+  /* --font-sans is provided by next/font (Open Sans, full Greek glyphs) and
+     --font-heading aliases it in the @theme inline block above — do not
+     re-declare either here or the Greek face is lost (this is what broke ω/ώ
+     in headings). */
 }
 
 /* ══════════════════
@@ -105,13 +106,14 @@
 
   html {
     scroll-behavior: smooth;
+    /* #anchors (site search, deep links) land below the fixed navbar. */
+    scroll-padding-top: 6rem;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   body {
     @apply bg-surface text-text-primary;
-    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 
   /* Custom scrollbar */
@@ -432,6 +434,14 @@
     box-shadow: 0 14px 36px -20px rgba(63, 79, 24, 0.3);
   }
 
+  /* Square-cut "information" panels (ledgers, letters, side panels, photo
+     captions): no radius and a 2px deep-green edge on top. Declared after
+     the glass classes so it wins over their 1px border when combined. */
+  .edge-top {
+    border-radius: 0;
+    border-top: 2px solid #5F712A;
+  }
+
   /* Soft inner ring used on glass chips */
   .ring-glass { box-shadow: inset 0 0 0 1px rgba(255,255,255,0.55); }
 
@@ -641,4 +651,31 @@ html.perf-lite .glass-lachani-deep {
 }
 .animate-lh-sheen {
   opacity: 0 !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   SEARCH FLASH (2026-10)
+   ──────────────────────────────────────────────────────────────────────────
+   Where the site search lands on a small card (a teacher, an announcement,
+   an FAQ answer), the card glows lime for a moment so the eye finds it.
+   Added and removed by SearchDialog.
+   ══════════════════════════════════════════════════════════════════════════ */
+@keyframes search-flash {
+  0%,
+  35% {
+    box-shadow: 0 0 0 3px rgba(165, 186, 95, 0.95), 0 0 0 12px rgba(200, 226, 94, 0.35);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(165, 186, 95, 0), 0 0 0 0 rgba(200, 226, 94, 0);
+  }
+}
+.search-flash {
+  animation: search-flash 2.4s ease-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  .search-flash {
+    animation-duration: 0.01s;
+    outline: 3px solid rgba(165, 186, 95, 0.95);
+    outline-offset: 3px;
+  }
 }

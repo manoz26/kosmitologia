@@ -63,7 +63,7 @@ function Timeline() {
 
 function CriteriaPanel() {
   return (
-    <div className="rounded-3xl glass-lachani-deep p-7 md:p-8">
+    <div className="edge-top glass-lachani-deep p-7 md:p-8">
       <h3 className="font-heading text-xl font-bold text-text-primary">Κριτήρια Αξιολόγησης</h3>
       <p className="mt-1.5 text-sm text-text-secondary">
         Χωρίς γραπτές εξετάσεις — αξιολόγηση φακέλου υποψηφιότητας με μόρια.
@@ -116,7 +116,7 @@ function CriteriaPanel() {
           href="/eggrafes"
           className="group inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-ihu-green-dark px-5 py-3 text-sm font-bold text-white shadow-lg transition-all hover:gap-3"
         >
-          Κάντε αίτηση
+          Υποβολή αίτησης
           <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
         </Link>
         <a
@@ -142,9 +142,11 @@ export function AdmissionTimeline3D() {
           description="Από την πρόσκληση εκδήλωσης ενδιαφέροντος μέχρι την έναρξη των μαθημάτων — μια ξεκάθαρη, χωρίς εξετάσεις διαδικασία."
         />
 
-        <div className="mt-16 grid grid-cols-1 items-start gap-12 lg:grid-cols-[1.1fr_0.9fr] [perspective:1400px]">
-          <Timeline />
-          <div className="lg:sticky lg:top-28">
+        <div className="mt-12 grid grid-cols-1 items-start gap-12 lg:grid-cols-12 lg:gap-10 [perspective:1400px]">
+          <div className="lg:col-span-7">
+            <Timeline />
+          </div>
+          <div className="lg:sticky lg:top-28 lg:col-span-5">
             <Reveal direction="left">
               <CriteriaPanel />
             </Reveal>

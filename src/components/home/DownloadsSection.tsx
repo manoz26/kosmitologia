@@ -3,9 +3,10 @@
 /* ══════════════════════════════════════════════════════════════════════════
    DownloadsSection — "Επίσημα έγγραφα"
    ──────────────────────────────────────────────────────────────────────────
-   The programme's official files (application form, study guide) as glass
-   download cards. The list lives in src/data/program.ts (officialDocuments) —
-   only files that really exist in public/ are listed there.
+   The programme's official files (application form, study guide) as a
+   square-cut register: one row per file, what it is on the left, its format
+   and the download on the right. The list lives in src/data/program.ts
+   (officialDocuments) — only files that really exist in public/ are listed.
    ══════════════════════════════════════════════════════════════════════════ */
 
 import { Download } from "lucide-react";
@@ -25,32 +26,36 @@ export function DownloadsSection() {
           description="Το έντυπο της αίτησης και ο Οδηγός Σπουδών του ΠΜΣ, όπως τα εκδίδει η Γραμματεία."
         />
 
-        <div className="mx-auto mt-14 grid max-w-3xl grid-cols-1 gap-5 sm:grid-cols-2">
-          {officialDocuments.map((doc, i) => (
-            <Reveal key={doc.href} delay={i * 0.08} direction="up">
-              <a
-                href={doc.href}
-                download
-                className="group relative flex h-full flex-col overflow-hidden rounded-3xl glass-lachani p-6 transition-all duration-300 hover:-translate-y-1.5"
-              >
-                <div className="flex items-center justify-between">
+        <Reveal direction="up">
+          <ul className="mt-10 edge-top glass-lachani md:mt-12">
+            {officialDocuments.map((doc) => (
+              <li key={doc.href} className="border-b border-ihu-green-dark/10 last:border-0">
+                <a
+                  href={doc.href}
+                  download
+                  className="group grid items-center gap-4 p-6 transition-colors hover:bg-lachani-mist/70 sm:grid-cols-[auto_1fr_auto] sm:gap-6 md:px-8"
+                >
                   <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-ihu-green to-ihu-green-dark text-white shadow-lg">
                     <Icon name="book" size={22} />
                   </span>
-                  <span className="rounded-full bg-ihu-green/12 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-ihu-green-dark">
-                    {doc.format} · {doc.size}
+                  <span>
+                    <span className="block font-heading text-lg font-bold text-text-primary">{doc.title}</span>
+                    <span className="mt-1 block text-sm leading-relaxed text-text-secondary">{doc.description}</span>
                   </span>
-                </div>
-                <h3 className="mt-5 font-heading text-base font-bold text-text-primary">{doc.title}</h3>
-                <p className="mt-2 flex-1 text-sm leading-relaxed text-text-secondary">{doc.description}</p>
-                <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-ihu-green-dark">
-                  <Download size={15} />
-                  Λήψη
-                </span>
-              </a>
-            </Reveal>
-          ))}
-        </div>
+                  <span className="flex items-center gap-4 sm:justify-end">
+                    <span className="text-xs font-semibold text-text-secondary">
+                      {doc.format} · {doc.size}
+                    </span>
+                    <span className="inline-flex items-center gap-2 rounded-full bg-ihu-green-dark px-5 py-2.5 text-sm font-bold text-white shadow transition-all group-hover:gap-3">
+                      <Download size={15} />
+                      Λήψη
+                    </span>
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </Reveal>
       </div>
     </section>
   );

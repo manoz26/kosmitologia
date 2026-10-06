@@ -71,7 +71,7 @@ function FlipCard({ path, index }: { path: CareerPath; index: number }) {
             <div className="flex items-center justify-between gap-3">
               <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-text-muted">Ενδεικτικοί ρόλοι</p>
               <span className="flex items-center gap-1 text-[11px] font-bold uppercase tracking-wide" style={{ color: theme.accent }}>
-                <Rotate3d size={13} /> Γύρισε
+                <Rotate3d size={13} /> Περισσότερα
               </span>
             </div>
             <div className="mt-2 flex flex-wrap gap-1.5">
@@ -176,7 +176,7 @@ export function CareerPaths3D() {
 
             {/* Sixth tile: the career numbers (15+ / 12+) and the way in */}
             <CardRiser progress={smooth} index={careerPaths.length} total={careerPaths.length + 1}>
-              <div className="flex h-[27rem] flex-col justify-center rounded-3xl glass-lachani-deep p-8 text-center">
+              <div className="flex h-[27rem] flex-col justify-center edge-top glass-lachani-deep p-8 text-left">
                 <dl className="grid grid-cols-2 gap-4">
                   {careerStats
                     .filter((s) => s.suffix === "+")
@@ -195,9 +195,9 @@ export function CareerPaths3D() {
                 </p>
                 <Link
                   href="/eggrafes"
-                  className="group mx-auto mt-6 inline-flex items-center gap-2 rounded-full bg-ihu-green-dark px-6 py-3 text-sm font-bold text-white shadow-lg transition-all hover:gap-3"
+                  className="group mt-6 inline-flex w-fit items-center gap-2 rounded-full bg-ihu-green-dark px-6 py-3 text-sm font-bold text-white shadow-lg transition-all hover:gap-3"
                 >
-                  Κάνε αίτηση
+                  Υποβολή αίτησης
                   <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
                 </Link>
               </div>

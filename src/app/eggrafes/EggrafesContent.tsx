@@ -1,21 +1,35 @@
 "use client";
 
+/* ══════════════════════════════════════════════════════════════════════════
+   /eggrafes — «Εισαγωγή»
+   ──────────────────────────────────────────────────────────────────────────
+   On the same 12-column grid as the rest of the site:
+     • the page title (LachaniPageHeader),
+     • dates (7 columns, square-cut ledger) beside the application form
+       (5 columns, deep green),
+     • the required documents: the heading holds the left four columns
+       (sticky on desktop), the list the right eight,
+     • the λαχανί band: admission timeline, official documents, FAQ.
+   The ids are site-search anchors (#imerominies, #dikaiologitika).
+   ══════════════════════════════════════════════════════════════════════════ */
+
 import React from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import {
-  CalendarDays, FileText, GraduationCap, Download, Mail, MapPin,
+  CalendarDays, FileText, GraduationCap, Download, Mail,
   BookOpen, Languages, Award, Briefcase, User, ShieldCheck,
 } from "lucide-react";
 
 import { LachaniSurface } from "@/components/home/LachaniSurface";
+import { LachaniPageHeader } from "@/components/home/LachaniPageHeader";
 import { AdmissionTimeline3D } from "@/components/home/AdmissionTimeline3D";
-import { TuitionCalculator3D } from "@/components/home/TuitionCalculator3D";
 import { ScrollBackdrop } from "@/components/home/ScrollBackdrop";
 import { DownloadsSection } from "@/components/home/DownloadsSection";
 import { FaqSection } from "@/components/home/FaqSection";
-import {
-  admissions, contact, formatDate, requiredDocuments, telHref,
-} from "@/data/program";
+import { Reveal, SectionHeading } from "@/components/home/lib/primitives";
+import { cycleLabel, latestAdmissions as call } from "@/data/announcements";
+import { admissionsRule, formatDate, requiredDocuments } from "@/data/program";
 import { ADMISSIONS_STATUS_LABEL, useAdmissionsStatus } from "@/lib/use-admissions-status";
 
 const DOC_ICONS: Record<string, React.ComponentType<{ size?: number }>> = {
@@ -35,187 +49,163 @@ export function EggrafesContent() {
   const status = useAdmissionsStatus();
 
   return (
-    <main className="relative min-h-screen flex flex-col pt-24">
+    <main className="relative flex min-h-screen flex-col">
       {/* Same still λαχανί canvas as the home page */}
       <ScrollBackdrop />
-      
-      {/* HEADER SECTION */}
-      <section className="py-16 lg:py-24">
-        <div className="section-container px-4 max-w-4xl mx-auto text-center">
-          <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-            <span className="text-secondary font-bold text-sm tracking-widest uppercase mb-4 block">Κύκλος Σπουδών {admissions.cycle}</span>
-            <h1 className="font-heading text-4xl md:text-5xl font-extrabold text-text-primary mb-6">
-              Εγγραφές & Αιτήσεις
-            </h1>
-            <p className="text-text-secondary text-lg md:text-xl leading-relaxed max-w-2xl mx-auto">
-              Ενημερωθείτε για τις σημαντικές ημερομηνίες, κατεβάστε την αίτηση και συγκεντρώστε τα απαραίτητα δικαιολογητικά για το ΠΜΣ Κοσμητολογία.
-            </p>
-          </motion.div>
-        </div>
-      </section>
 
-      {/* DATES & DOWNLOAD INFO (SIDE BY SIDE) */}
-      <section className="py-16 -mt-16 relative z-10">
-        <div className="section-container px-4 max-w-5xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-6">
-            
-            {/* DATES CARD */}
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1, duration: 0.5 }} className="bg-white rounded-md p-8 md:p-10 border border-border-soft shadow-lg shadow-black/5 hover:shadow-sm transition-shadow">
-              <div className="flex items-center gap-4 mb-8">
-                <div className="w-14 h-14 bg-primary/10 text-primary rounded-md flex items-center justify-center">
-                  <CalendarDays size={28} />
-                </div>
-                <h2 className="font-heading font-bold text-2xl text-text-primary leading-tight">
-                  Ημερομηνίες Αιτήσεων
+      <LachaniPageHeader
+        eyebrow="Εισαγωγή στο ΠΜΣ"
+        title="Εγγραφές &"
+        highlight="Αιτήσεις"
+        intro="Ημερομηνίες υποβολής, έντυπο αίτησης και απαραίτητα δικαιολογητικά για το ΠΜΣ Κοσμητολογία."
+      />
+
+      {/* DATES (7) & APPLICATION FORM (5) */}
+      <section id="imerominies" className="relative z-10 scroll-mt-28 pb-16">
+        <div className="section-container px-4">
+          <div className="grid gap-6 lg:grid-cols-12">
+            {/* Dates — a square-cut ledger */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1, duration: 0.5 }}
+              className="edge-top glass-lachani p-7 md:p-9 lg:col-span-7"
+            >
+              <div className="flex items-center gap-4">
+                <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-ihu-green/12 text-ihu-green-dark">
+                  <CalendarDays size={24} />
+                </span>
+                <h2 className="font-heading text-2xl font-bold leading-tight text-text-primary">
+                  Ημερομηνίες αιτήσεων
                 </h2>
               </div>
-              
-              <div className="space-y-6">
-                <div className="flex items-center justify-between border-b border-border-soft pb-6">
-                  <p className="text-text-secondary text-lg font-medium">Έναρξη</p>
-                  <p className="text-text-primary font-bold text-xl bg-surface px-4 py-1.5 rounded-md border border-border-soft">{formatDate(admissions.opens)}</p>
-                </div>
-                <div className="flex items-center justify-between">
-                  <p className="text-text-secondary text-lg font-medium">Λήξη</p>
-                  <p className="text-text-primary font-bold text-xl bg-surface px-4 py-1.5 rounded-md border border-border-soft">{formatDate(admissions.closes)}</p>
-                </div>
-              </div>
+
+              {/* Οι ημερομηνίες έρχονται μόνο από την ανακοίνωση της Γραμματείας */}
+              {call ? (
+                <dl className="mt-7">
+                  <p className="text-sm font-semibold text-ihu-green-dark">
+                    Κύκλος {cycleLabel(call.admissions)}
+                  </p>
+                  <div className="mt-3 flex items-baseline justify-between border-y border-ihu-green-dark/12 py-4">
+                    <dt className="text-base font-medium text-text-secondary">Έναρξη</dt>
+                    <dd className="font-heading text-2xl font-bold tabular-nums text-text-primary">
+                      {formatDate(call.admissions.opens)}
+                    </dd>
+                  </div>
+                  <div className="flex items-baseline justify-between border-b border-ihu-green-dark/12 py-4">
+                    <dt className="text-base font-medium text-text-secondary">Λήξη</dt>
+                    <dd className="font-heading text-2xl font-bold tabular-nums text-text-primary">
+                      {formatDate(call.admissions.closes)}
+                    </dd>
+                  </div>
+                </dl>
+              ) : (
+                <p className="mt-7 text-lg font-medium text-text-primary">
+                  Τις ημερομηνίες κάθε κύκλου τις ανακοινώνει η Γραμματεία.
+                </p>
+              )}
 
               <p className="mt-6 text-sm leading-relaxed text-text-secondary">
                 {status && <strong className="text-text-primary">{ADMISSIONS_STATUS_LABEL[status]}. </strong>}
-                {admissions.indicative
-                  ? "Ενδεικτικές ημερομηνίες: ο Οδηγός Σπουδών ορίζει υποβολή από 10 Ιουνίου έως 10 Ιουλίου κάθε έτους. Η επίσημη ανακοίνωση βγαίνει την άνοιξη."
-                  : "Σύμφωνα με την επίσημη ανακοίνωση."}
-              </p>
-            </motion.div>
-
-            {/* DOWNLOAD CARD */}
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.5 }} className="bg-gradient-to-br from-primary to-[#7a8f3c] rounded-md p-8 md:p-10 shadow-lg shadow-primary/20 text-white relative overflow-hidden flex flex-col justify-center">
-              <div className="absolute -right-10 -top-10 w-40 h-40 bg-white/10 rounded-full hidden pointer-events-none"></div>
-              <div className="absolute -left-10 -bottom-10 w-40 h-40 bg-black/10 rounded-full hidden pointer-events-none"></div>
-              <div className="relative z-10 text-center md:text-left flex flex-col h-full justify-between">
-                <div>
-                  <h2 className="font-heading font-bold text-3xl mb-4">
-                    Έντυπο Αίτησης
-                  </h2>
-                  <p className="text-white/90 mb-8 max-w-sm mx-auto md:mx-0 text-lg leading-relaxed">
-                    Κατεβάστε το αρχείο της αίτησης (Word), συμπληρώστε το και επισυνάψτε το στα δικαιολογητικά σας.
-                  </p>
-                </div>
-                <a 
-                  href="/aitisi.docx" 
-                  download="aitisi.docx"
-                  className="inline-flex items-center justify-center md:justify-start gap-3 bg-white text-primary px-8 py-4 rounded-md font-bold hover:bg-surface transition-colors shadow-lg self-start w-full md:w-auto text-lg"
+                {status === "closed" && "Τις ημερομηνίες του επόμενου κύκλου θα τις ανακοινώσει η Γραμματεία. "}
+                Σύμφωνα με τον Οδηγό Σπουδών, οι αιτήσεις υποβάλλονται {admissionsRule.value}.{" "}
+                <Link
+                  href={call && status !== "closed" ? `/nea#${call.id}` : "/nea"}
+                  className="font-semibold text-ihu-green-dark underline-offset-4 hover:underline"
                 >
-                  <Download size={22} />
-                  Λήψη .docx
-                </a>
-              </div>
+                  Ανακοινώσεις
+                </Link>
+              </p>
             </motion.div>
 
-          </div>
-        </div>
-      </section>
-
-      {/* DOCUMENTS LIST */}
-      <section className="py-16 relative z-10">
-        <div className="section-container px-4 max-w-4xl mx-auto">
-          <div className="mb-12 text-center md:text-left">
-            <h2 className="font-heading text-3xl md:text-4xl font-bold text-text-primary mb-6">
-              Διαδικασία Υποβολής Αιτήσεων
-            </h2>
-            <div className="w-16 h-1 bg-secondary mx-auto md:mx-0 mb-6 rounded-md"></div>
-            <p className="text-text-secondary text-lg">
-              Η διαδικασία της αίτησης γίνεται με την κατάθεση από μέρους των ενδιαφερομένων των κάτωθι δικαιολογητικών:
-            </p>
-          </div>
-
-          <div className="bg-white rounded-md border border-border-soft overflow-hidden shadow-lg shadow-black/5">
-            {requiredDocuments.map((doc) => {
-              const Icon = DOC_ICONS[doc.id] ?? FileText;
-              return (
-                <div key={doc.id}className="group border-b border-border-soft last:border-0 p-6 sm:p-8 flex items-start gap-6 hover:bg-primary/5 transition-colors">
-                  <div className="w-12 h-12 bg-surface border border-border-soft text-text-secondary rounded-md flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-white group-hover:border-primary transition-colors">
-                    <Icon size={24} />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-text-primary text-lg mb-2 group-hover:text-primary transition-colors flex items-center flex-wrap gap-2">
-                      {doc.title}
-                      {doc.optional && (
-                        <span className="text-xs font-bold bg-secondary/10 text-secondary px-2.5 py-0.5 rounded-md uppercase tracking-wider">
-                          Προαιρετικο
-                        </span>
-                      )}
-                    </h3>
-                    <p className="text-text-secondary text-sm sm:text-base leading-relaxed">
-                      {doc.description}
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* SUBMISSION INFO */}
-      <section className="py-24 relative z-10">
-        <div className="section-container px-4 max-w-4xl mx-auto text-center">
-          
-          <div className="w-20 h-20 bg-secondary/10 text-secondary rounded-md flex items-center justify-center mx-auto mb-8 rotate-3">
-            <Mail size={36} />
-          </div>
-          
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-text-primary mb-8">
-            Επικοινωνία & Αποστολή
-          </h2>
-          <p className="text-text-secondary text-lg mb-12 max-w-3xl mx-auto leading-relaxed">
-            Δίνεται η δυνατότητα στους ενδιαφερόμενους να στείλουν σε ηλεκτρονική μορφή μέσω email την αίτηση και τα απαραίτητα δικαιολογητικά, με την απαίτηση να τα προσκομίσουν σε έντυπη μορφή μετά την αποδοχή τους και σε κάθε περίπτωση πριν την ολοκλήρωση της εγγραφής τους στο ΠΜΣ.
-          </p>
-
-          <div className="flex flex-col md:flex-row items-stretch justify-center gap-6 text-left">
-            <div className="bg-surface p-8 md:p-10 rounded-md border border-border-soft flex-1 flex flex-col">
-              <h3 className="font-bold text-xl text-text-primary mb-4 flex items-center gap-3">
-                <MapPin className="text-primary" size={24} /> 
-                Διεύθυνση Γραμματείας
-              </h3>
-              <address className="not-italic text-text-secondary leading-relaxed font-medium mt-auto">
-                {contact.office.value}<br/>
-                {contact.building.value}<br/>
-                {contact.campus.value}, {contact.postalCode.value}<br/>
-                Τηλ. <a href={telHref(contact.phone.value)} className="hover:underline">{contact.phone.value}</a>
-              </address>
-            </div>
-
-            <div className="bg-surface p-8 md:p-10 rounded-md border border-border-soft flex-1 flex flex-col">
-              <h3 className="font-bold text-xl text-text-primary mb-4 flex items-center gap-3">
-                <Mail className="text-primary" size={24} />
-                Αποστολή Email
-              </h3>
-              <p className="text-text-secondary mb-6 font-medium">
-                Για αποστολή δικαιολογητικών ή πληροφορίες:
-              </p>
-              <div className="flex flex-col gap-3 mt-auto">
-                {[contact.email.value, contact.emailAlt.value].map((email) => (
-                  <a key={email} href={`mailto:${email}`} className="text-primary font-bold text-lg hover:underline inline-flex items-center gap-2 break-all">
-                    {email}
-                  </a>
-                ))}
+            {/* Application form — deep green, square-cut */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+              className="relative flex flex-col justify-between overflow-hidden p-7 text-white shadow-[0_30px_60px_-30px_rgba(63,82,22,0.75)] md:p-9 lg:col-span-5"
+              style={{ background: "linear-gradient(145deg, #4F6321 0%, #5F712A 55%, #6B8230 100%)" }}
+            >
+              <FileText
+                aria-hidden
+                size={220}
+                strokeWidth={1}
+                className="pointer-events-none absolute -bottom-10 -right-10 text-white/[0.06]"
+              />
+              <div className="relative">
+                <h2 className="font-heading text-3xl font-bold">Έντυπο αίτησης</h2>
+                <p className="mt-4 max-w-sm text-lg leading-relaxed text-white/90">
+                  Το αρχείο της αίτησης (Word) συμπληρώνεται και επισυνάπτεται στα δικαιολογητικά.
+                </p>
               </div>
-            </div>
+              <a
+                href="/aitisi.docx"
+                download="aitisi.docx"
+                className="group relative mt-8 inline-flex w-full items-center justify-center gap-3 self-start rounded-full bg-[#cfe38a] px-7 py-3.5 text-base font-bold text-ihu-green-dark shadow-lg transition-colors hover:bg-white sm:w-auto"
+              >
+                <Download size={20} />
+                Λήψη .docx
+              </a>
+            </motion.div>
           </div>
-
         </div>
       </section>
 
-      {/* ── Λαχανί band: admission timeline, tuition, documents & FAQ ── */}
+      {/* DOCUMENTS — heading left (4), list right (8) */}
+      <section id="dikaiologitika" className="relative z-10 scroll-mt-28 py-16 md:py-20">
+        <div className="section-container grid gap-10 px-4 lg:grid-cols-12 lg:gap-10">
+          <div className="lg:col-span-4">
+            <div className="lg:sticky lg:top-28">
+              <SectionHeading
+                align="left"
+                label="Δικαιολογητικά"
+                labelIcon="book"
+                title="Διαδικασία υποβολής"
+                highlight="αιτήσεων"
+                description="Η αίτηση γίνεται με την κατάθεση από μέρους των ενδιαφερομένων των παρακάτω δικαιολογητικών."
+              />
+            </div>
+          </div>
+
+          <Reveal direction="up" className="lg:col-span-8">
+            <ul className="edge-top glass-lachani">
+              {requiredDocuments.map((doc) => {
+                const Icon = DOC_ICONS[doc.id] ?? FileText;
+                return (
+                  <li
+                    key={doc.id}
+                    className="group flex items-start gap-5 border-b border-ihu-green-dark/10 p-6 transition-colors last:border-0 hover:bg-lachani-mist/70 sm:p-7"
+                  >
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-ihu-green/10 text-ihu-green-dark transition-colors group-hover:bg-ihu-green-dark group-hover:text-white">
+                      <Icon size={22} />
+                    </span>
+                    <div>
+                      <h3 className="flex flex-wrap items-center gap-2 text-lg font-bold text-text-primary">
+                        {doc.title}
+                        {doc.optional && (
+                          <span className="rounded-full bg-ihu-green/12 px-2.5 py-0.5 text-xs font-semibold text-ihu-green-dark">
+                            Προαιρετικό
+                          </span>
+                        )}
+                      </h3>
+                      <p className="mt-1.5 text-sm leading-relaxed text-text-secondary sm:text-base">
+                        {doc.description}
+                      </p>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ── Λαχανί band: admission timeline, documents & FAQ ── */}
       <LachaniSurface>
         <AdmissionTimeline3D />
-        <TuitionCalculator3D />
         <DownloadsSection />
         <FaqSection />
       </LachaniSurface>
-
     </main>
   );
 }

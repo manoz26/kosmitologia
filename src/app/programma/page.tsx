@@ -38,7 +38,9 @@ export default function ProgrammaPage() {
         <LachaniPageHeader
           eyebrow={`${semesters.value.min} εξάμηνα · ${ects.value} ECTS`}
           title="Σπουδές"
-          intro="Δύο ειδικεύσεις με κοινό κορμό, οι διδάσκοντες και πού οδηγεί το πρόγραμμα. Ανοίξτε κάθε μάθημα για τα επίσημα στοιχεία του Οδηγού Σπουδών."
+          intro="Δύο ειδικεύσεις με κοινό κορμό, οι διδάσκοντες και πού οδηγεί το πρόγραμμα. Κάθε μάθημα ανοίγει με τα επίσημα στοιχεία του Οδηγού Σπουδών."
+          photo="classroom"
+          photoCaption="Τα μαθήματα γίνονται διά ζώσης, στις εγκαταστάσεις του Τμήματος στη Σίνδο."
         />
 
         {/* The two specialisations as a branching, scroll-driven, clickable path */}
