@@ -183,12 +183,12 @@ function buildEntries(): SearchEntry[] {
       id: "p-spoudes",
       kind: "page",
       title: "Σπουδές",
-      hint: `${program.specializations.value} ειδικεύσεις, ${program.courses.value} μαθήματα, διδάσκοντες, καριέρα`,
+      hint: `${program.specializations.value} ειδικεύσεις, ${program.courses.value} μαθήματα, καριέρα`,
       href: "/programma",
       keywords: "πρόγραμμα σπουδών μαθήματα εξάμηνα ects ειδικεύσεις",
     },
     { id: "p-eisagogi", kind: "page", title: "Εισαγωγή", hint: "Αιτήσεις, δικαιολογητικά, κριτήρια, δίδακτρα", href: "/eggrafes", keywords: "εγγραφές αιτήσεις υποβολή αίτησης προθεσμία" },
-    { id: "p-tmima", kind: "page", title: "Το Τμήμα", hint: "Ταυτότητα, ιστορία, εργαστήρια, πανεπιστημιούπολη", href: "/sxetika", keywords: "σχετικά ίδρυμα ιστορία ΔΙΠΑΕ" },
+    { id: "p-tmima", kind: "page", title: "Το Τμήμα", hint: "Ταυτότητα, ιστορία, διδάσκοντες, εργαστήρια, πανεπιστημιούπολη", href: "/sxetika", keywords: "σχετικά ίδρυμα ιστορία ΔΙΠΑΕ" },
     { id: "p-epikoinonia", kind: "page", title: "Επικοινωνία", hint: "Γραμματεία, τηλέφωνο, email, χάρτης", href: "/epikoinonia", keywords: "γραμματεία τηλέφωνο email διεύθυνση χάρτης ωράριο" },
     { id: "p-nea", kind: "page", title: "Νέα & ανακοινώσεις", hint: "Όλες οι ανακοινώσεις του ΠΜΣ", href: "/nea", keywords: "ειδήσεις εκδηλώσεις" },
   ];
@@ -256,7 +256,7 @@ function buildEntries(): SearchEntry[] {
       kind: "section",
       title: "Διδάσκοντες",
       hint: `${faculty.length} διδάσκοντες από ${facultyInstitutionsText()}`,
-      href: "/programma#didaskontes",
+      href: "/sxetika#didaskontes",
       keywords: "καθηγητές ακαδημαϊκό προσωπικό συντονιστική επιτροπή",
     },
     { id: "s-karieres", kind: "section", title: "Μονοπάτια σταδιοδρομίας", hint: "Σπουδές · πέντε μονοπάτια", href: "/programma#karieres", keywords: "καριέρα επαγγέλματα θέσεις εργασίας" },
@@ -300,7 +300,7 @@ function buildEntries(): SearchEntry[] {
       kind: "person",
       title: f.name,
       hint: [role, f.role, f.institution].filter(Boolean).join(" · "),
-      href: `/programma#${facultyAnchor(f)}`,
+      href: `/sxetika#${facultyAnchor(f)}`,
       keywords: `${f.email} καθηγητής καθηγήτρια διδάσκων διδάσκουσα`,
     };
   });

@@ -160,11 +160,21 @@ export function useMounted(): boolean {
 }
 
 /* ────────────────────────────────────────────
-   Reduced motion (re-export for ergonomics)
+   Reduced motion — hydration-safe
    ──────────────────────────────────────────── */
 
+/* framer-motion's useReducedMotion reads matchMedia on the very first client
+   render, but the server can't know the preference — so anything rendered
+   from it (styles, classes, branches) came out different on the server and
+   on the hydrating client for reduced-motion visitors: a hydration mismatch.
+   Answer "no preference" while hydrating, like the server did, and the real
+   setting right after (at once for anything mounted later, e.g. on client
+   navigation). Props framer reads only at mount (`initial`) still see the
+   server's answer — use CSS `motion-reduce:` for those. */
 export function useReduced(): boolean {
-  return !!useReducedMotion();
+  const reduced = useReducedMotion();
+  const mounted = useMounted();
+  return mounted && !!reduced;
 }
 
 /* ────────────────────────────────────────────

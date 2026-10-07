@@ -152,6 +152,18 @@ export function PhotoSlot({
   );
 }
 
+/* The photo in the free third of a <ZigZag/> section: as tall as the
+   section's content on desktop (a portrait crop), a 16:10 frame on phones. */
+export function AsidePhoto({ photo }: { photo: PhotoKey }) {
+  return (
+    <PhotoSlot
+      photo={photo}
+      sizes="(min-width: 1024px) 30vw, 100vw"
+      className="aspect-[16/10] w-full lg:aspect-auto lg:h-full lg:min-h-[26rem]"
+    />
+  );
+}
+
 export function PhotoBand({
   photo,
   caption,

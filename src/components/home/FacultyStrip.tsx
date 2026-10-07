@@ -8,6 +8,10 @@
    faculty reads at a glance. Initials stand in for portraits until the client
    sends photos (docs/protasi-anadiamorfosis.md, Αλλαγή 5). No ranks are shown —
    the study guide and faculty.ts disagree on them (see program.ts).
+
+   Unlike the zig-zag sections around it, the strip is a compact block in the
+   middle of the page — four small cards a row (client, 07/10/2026: "smaller,
+   not stuck to one side"). The full list is on /sxetika#didaskontes.
    ══════════════════════════════════════════════════════════════════════════ */
 
 import { faculty, facultyInstitutionsText, initialsOf } from "@/data/faculty";
@@ -43,39 +47,42 @@ const othersCount = faculty.length - people.length;
 
 export function FacultyStrip() {
   return (
-    <section id="didaskontes" className="relative w-full overflow-hidden py-24 md:py-28">
-      <div className="section-container relative z-10 px-4">
-        <SectionHeading
-          label="Ακαδημαϊκό προσωπικό"
-          labelIcon="users"
-          title={null}
-          highlight="Διδάσκοντες"
-          description={`${faculty.length} διδάσκοντες από ${facultyInstitutionsText()}.`}
-          action={{ href: "/programma#didaskontes", label: `Όλοι οι διδάσκοντες (+${othersCount})` }}
-        />
+    <section id="didaskontes" className="relative w-full overflow-hidden py-20 md:py-24">
+      {/* Centred, narrower than the page row */}
+      <div className="section-container relative z-10">
+        <div className="mx-auto max-w-6xl">
+          <SectionHeading
+            align="left"
+            label="Ακαδημαϊκό προσωπικό"
+            labelIcon="users"
+            title={null}
+            highlight="Διδάσκοντες"
+            description={`${faculty.length} διδάσκοντες από ${facultyInstitutionsText()}.`}
+            action={{ href: "/sxetika#didaskontes", label: `Όλοι οι διδάσκοντες (+${othersCount})` }}
+          />
 
-        <ul className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 md:mt-12 lg:grid-cols-4 lg:gap-5">
-          {people.map((p, i) => (
-            <Reveal key={p.name} as="li" delay={(i % 4) * 0.06} direction="up">
-              <div className="flex h-full items-center gap-4 rounded-2xl glass-lachani p-4">
-                <span
-                  aria-hidden
-                  className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-ihu-green to-ihu-green-dark font-heading text-lg font-bold text-white shadow-md"
-                >
-                  {initialsOf(p.name)}
-                </span>
-                <div className="min-w-0">
-                  <p className="font-heading text-sm font-bold leading-snug text-text-primary">{p.name}</p>
-                  <p className="mt-0.5 text-xs text-text-secondary">{p.institution}</p>
-                  {p.role && (
-                    <p className="mt-1 text-[11px] font-semibold text-ihu-green-dark">{p.role}</p>
-                  )}
+          <ul className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 md:mt-10 lg:grid-cols-4">
+            {people.map((p, i) => (
+              <Reveal key={p.name} as="li" delay={(i % 4) * 0.06} direction="up">
+                <div className="flex h-full items-center gap-3 rounded-2xl glass-lachani p-3.5">
+                  <span
+                    aria-hidden
+                    className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-ihu-green to-ihu-green-dark font-heading text-sm font-bold text-white shadow-md"
+                  >
+                    {initialsOf(p.name)}
+                  </span>
+                  <div className="min-w-0">
+                    <p className="font-heading text-sm font-bold leading-snug text-text-primary">{p.name}</p>
+                    <p className="mt-0.5 text-xs text-text-secondary">{p.institution}</p>
+                    {p.role && (
+                      <p className="mt-0.5 text-[11px] font-semibold text-ihu-green-dark">{p.role}</p>
+                    )}
+                  </div>
                 </div>
-              </div>
-            </Reveal>
-          ))}
-        </ul>
-
+              </Reveal>
+            ))}
+          </ul>
+        </div>
       </div>
     </section>
   );

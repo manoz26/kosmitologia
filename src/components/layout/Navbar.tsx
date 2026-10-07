@@ -39,12 +39,27 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  /* The home heroes (/ and /light) are dark footage. While the bar is still
+     transparent on top of them the slate links vanish into the picture, so it
+     switches to light-on-dark; the moment it turns into the glass bar it goes
+     back to the normal palette. */
+  const overDark = !scrolled && (pathname === "/" || pathname === "/light");
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled ? "glass-nav py-3" : "bg-transparent py-5"
       }`}
     >
+      {/* Soft shade behind the bar over the footage — a floor for contrast
+          where the poster is light. Behind the content (-z-10) and faded, not
+          swapped, so it doesn't pop. */}
+      <div
+        aria-hidden
+        className={`pointer-events-none absolute inset-x-0 top-0 -z-10 h-28 bg-gradient-to-b from-black/55 to-transparent transition-opacity duration-300 ${
+          overDark ? "opacity-100" : "opacity-0"
+        }`}
+      />
       <div className="section-container px-4 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-3 group relative z-10">
           <div className="relative w-56 h-14">
@@ -104,15 +119,21 @@ export function Navbar() {
                 <Link
                   key={item.href}
                   href={item.href!}
-                  className={`relative text-sm font-medium transition-colors hover:text-primary ${
-                    pathname === item.href ? "text-primary" : "text-text-secondary"
+                  className={`relative text-sm font-medium transition-colors ${
+                    overDark
+                      ? `drop-shadow-[0_1px_6px_rgba(0,0,0,0.55)] hover:text-[#cfe38a] ${
+                          pathname === item.href ? "text-[#cfe38a]" : "text-white"
+                        }`
+                      : `hover:text-primary ${pathname === item.href ? "text-primary" : "text-text-secondary"}`
                   }`}
                 >
                   {item.label}
                   {pathname === item.href && (
                     <motion.div
                       layoutId="navbar-indicator"
-                      className="absolute -bottom-1 left-0 right-0 h-[2px] bg-secondary rounded-md"
+                      className={`absolute -bottom-1 left-0 right-0 h-[2px] rounded-md ${
+                        overDark ? "bg-[#cfe38a]" : "bg-secondary"
+                      }`}
                       initial={false}
                       transition={{ type: "spring", stiffness: 300, damping: 30 }}
                     />
@@ -123,11 +144,13 @@ export function Navbar() {
           </nav>
 
           {/* Site search — a field on desktop, an icon on smaller screens */}
-          <SiteSearch />
+          <SiteSearch onDark={overDark} />
 
           {/* Mobile Menu Toggle */}
           <button
-            className="lg:hidden relative z-10 p-2 text-text-primary"
+            className={`lg:hidden relative z-10 p-2 transition-colors ${
+              overDark ? "text-white drop-shadow-[0_1px_6px_rgba(0,0,0,0.55)]" : "text-text-primary"
+            }`}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle menu"
           >

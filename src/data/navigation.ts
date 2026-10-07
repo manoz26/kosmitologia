@@ -33,7 +33,7 @@ export const footerGroups: NavGroup[] = [
     label: "Πρόγραμμα",
     items: [
       { label: "Σπουδές", href: "/programma" },
-      { label: "Διδάσκοντες", href: "/programma#didaskontes" },
+      { label: "Διδάσκοντες", href: "/sxetika#didaskontes" },
       { label: "Εισαγωγή & Δικαιολογητικά", href: "/eggrafes" },
     ],
   },
@@ -63,6 +63,7 @@ export const contactInfo = {
   university: program.university.value,
   campus: contact.campus.value,
   postalCode: contact.postalCode.value,
-  mapEmbedUrl:
-    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3026.5!2d22.9874!3d40.6844!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDQxJzAzLjgiTiAyMsKwNTknMTQuNiJF!5e0!3m2!1sel!2sgr!4v1",
+  /* Google's keyless embed, pinned on the Department's building (it used to
+     point at Αμφιθέα, 18 χλμ. away). */
+  mapEmbedUrl: `https://maps.google.com/maps?q=${program.location.value.lat},${program.location.value.lng}&z=16&hl=el&output=embed`,
 };

@@ -13,11 +13,13 @@ import { Download } from "lucide-react";
 
 import { officialDocuments } from "@/data/program";
 import { Icon, Reveal, SectionHeading } from "./lib/primitives";
+import { ZigZag } from "./lib/ZigZag";
 
 export function DownloadsSection() {
   return (
     <section id="downloads" className="relative w-full overflow-hidden py-24 md:py-32">
-      <div className="section-container relative z-10 px-4">
+      {/* Two thirds on the right; the timeline above spans the row */}
+      <ZigZag side="right" className="relative z-10">
         <SectionHeading
           label="Έγγραφα"
           labelIcon="book"
@@ -56,7 +58,7 @@ export function DownloadsSection() {
             ))}
           </ul>
         </Reveal>
-      </div>
+      </ZigZag>
     </section>
   );
 }

@@ -6,16 +6,19 @@
    it, what's new and when can I apply, what will I study, where does it
    lead, who stands behind it, who teaches, how do I apply.
    Everything floats on the still λαχανί <ScrollBackdrop/>; <HomeChrome/> adds
-   a progress bar, a scroll-spy dock and back-to-top.
+   a progress bar, a scroll-spy dock and back-to-top. Below the (centred)
+   hero the sections zig-zag (home/lib/ZigZag): two thirds of the screen,
+   hugging the left or the right edge in turn, with a photo, a panel or
+   white space in the other third. The career compass keeps the full width,
+   and the teachers strip is a compact block in the middle.
 
    Order:
      • CinematicScrollHero . scroll-scrub film opener — the one <h1> + 2 CTAs
      • LatestAnnouncements . «Ανακοινώσεις»: admissions call + latest news (→ /nea)
      • StudyAtAGlance ...... «Πρόγραμμα σπουδών»: 2 specialisations & key numbers (→ /programma)
-     • PhotoBand ........... full-width lab photo (placeholder until src/data/photos.ts has it)
      • GraduateCareers ..... «Επαγγελματική αποκατάσταση»: the career compass (→ /programma#karieres)
      • DirectorMessage ..... a short letter from the director (draft, program.ts)
-     • FacultyStrip ........ «Διδάσκοντες» (→ /programma#didaskontes)
+     • FacultyStrip ........ «Διδάσκοντες», a compact centred block (→ /sxetika#didaskontes)
      • ApplySteps .......... how to apply in 3 steps (→ /eggrafes)
    ══════════════════════════════════════════════════════════════════════════ */
 
@@ -30,8 +33,6 @@ import { GraduateCareers } from "@/components/home/GraduateCareers";
 import { DirectorMessage } from "@/components/home/DirectorMessage";
 import { FacultyStrip } from "@/components/home/FacultyStrip";
 import { ApplySteps } from "@/components/home/ApplySteps";
-import { ArrowLink } from "@/components/home/lib/primitives";
-import { PhotoBand } from "@/components/ui/PhotoSlot";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
@@ -50,11 +51,6 @@ export default function Home() {
         <CinematicScrollHero />
         <LatestAnnouncements />
         <StudyAtAGlance />
-        <PhotoBand
-          photo="homeLab"
-          caption="Τα εργαστήρια του Τμήματος στην Αλεξάνδρεια Πανεπιστημιούπολη, Σίνδος."
-          aside={<ArrowLink href="/sxetika#ergastiria">Τα εργαστήρια</ArrowLink>}
-        />
         <GraduateCareers />
         <DirectorMessage />
         <FacultyStrip />

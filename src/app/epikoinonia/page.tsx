@@ -21,8 +21,6 @@ export default function EpikoinoniaPage() {
           eyebrow="Γραμματεία ΠΜΣ"
           title="Επικοινωνία"
           intro="Τηλέφωνο, email, διεύθυνση και ωράριο της Γραμματείας, με οδηγίες πρόσβασης στην Πανεπιστημιούπολη."
-          photo="secretariat"
-          photoCaption="Η Γραμματεία του ΠΜΣ στην Αλεξάνδρεια Πανεπιστημιούπολη, Σίνδος."
         />
 
         <ContactSection />

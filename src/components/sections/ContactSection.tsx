@@ -167,7 +167,7 @@ export function ContactSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3 }}
-            className="mt-6 rounded-md overflow-hidden border border-border-soft shadow-sm bg-white h-64"
+            className="mt-6 h-72 overflow-hidden border border-border-soft bg-white shadow-sm"
           >
             <iframe
               src={contactInfo.mapEmbedUrl}

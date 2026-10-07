@@ -46,12 +46,12 @@ import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "reac
 import {
   motion,
   useMotionValueEvent,
-  useReducedMotion,
   useTransform,
   type MotionValue,
 } from "framer-motion";
 
 import { isSlowConnection, isTouchDevice } from "@/lib/perf";
+import { useReduced } from "@/components/home/lib/hooks";
 
 /* The hero footage manifest — assets generated in /public/hero-film. */
 export const HERO_FILM = {
@@ -96,9 +96,11 @@ export function useHeroFilm(): FilmManifest {
    frames resident pushes WebKit past its per-tab budget and reloads the page
    on scroll) or a reduced-motion request. Resolves after mount (client-only
    matchMedia via isTouchDevice, read through useSyncExternalStore whose
-   server snapshot is "not touch"), so SSR and hydration stay identical to
-   desktop and no mismatch is possible. Computers
-   (fine pointer, motion allowed) keep the full 120-frame canvas scrub. */
+   server snapshot is "not touch", and the hydration-safe useReduced — not
+   framer's useReducedMotion, which already answers during hydration), so
+   SSR and hydration stay identical to desktop and no mismatch is possible.
+   Computers (fine pointer, motion allowed) keep the full 120-frame canvas
+   scrub. */
 const COARSE_QUERY = "(pointer: coarse)";
 const subscribeCoarse = (onChange: () => void) => {
   const mq = window.matchMedia(COARSE_QUERY);
@@ -107,9 +109,9 @@ const subscribeCoarse = (onChange: () => void) => {
 };
 
 export function useStaticFilm(): boolean {
-  const reduced = useReducedMotion();
+  const reduced = useReduced();
   const coarse = useSyncExternalStore(subscribeCoarse, isTouchDevice, () => false);
-  return !!reduced || coarse;
+  return reduced || coarse;
 }
 
 const clamp01 = (v: number) => Math.min(1, Math.max(0, v));

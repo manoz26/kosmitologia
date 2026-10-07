@@ -14,11 +14,13 @@
 import { announcements, cycleLabel, formatPublished, publishedParts } from "@/data/announcements";
 import { formatDate } from "@/data/program";
 import { Reveal } from "./lib/primitives";
+import { ZigZag } from "./lib/ZigZag";
 
 export function NewsSection() {
   return (
     <section id="news" aria-label="Όλες οι ανακοινώσεις" className="relative w-full overflow-hidden pb-24 pt-4 md:pb-32">
-      <div className="section-container relative z-10 px-4">
+      {/* The archive takes two thirds on the left; white space on the right */}
+      <ZigZag side="left" className="relative z-10">
         <ol className="edge-top glass-lachani">
           {announcements.map((item, i) => {
             const d = publishedParts(item.published);
@@ -26,7 +28,7 @@ export function NewsSection() {
               <Reveal key={item.id} as="li" delay={Math.min(i, 5) * 0.05} direction="up">
                 <article
                   id={item.id}
-                  className="grid scroll-mt-28 gap-4 border-b border-ihu-green-dark/10 p-6 md:grid-cols-12 md:gap-8 md:p-8"
+                  className="grid scroll-mt-28 gap-4 border-b border-ihu-green-dark/10 p-6 md:grid-cols-12 md:gap-6 md:p-8"
                 >
                   {/* date */}
                   <p className="flex items-baseline gap-2 md:col-span-2 md:block">
@@ -64,7 +66,7 @@ export function NewsSection() {
             );
           })}
         </ol>
-      </div>
+      </ZigZag>
     </section>
   );
 }

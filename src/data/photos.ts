@@ -26,12 +26,20 @@ export interface PhotoSpec {
 }
 
 export const photos = {
-  /* Home — the full-width band between «Πρόγραμμα σπουδών» and the careers */
+  /* Home — beside «Ανακοινώσεις» (right third; a tall crop on desktop) */
+  homeEvents: {
+    src: null,
+    alt: "Φοιτητές και διδάσκοντες του ΠΜΣ σε εκδήλωση του Τμήματος",
+    label: "Φωτογραφία φοιτητών ή εκδήλωσης",
+    hint: "Κάθετη ή τετράγωνη, τουλάχιστον 1200 × 1500 px",
+  },
+
+  /* Home — beside «Πρόγραμμα σπουδών» (left third; a tall crop on desktop) */
   homeLab: {
     src: null,
     alt: "Φοιτητές του ΠΜΣ σε εργαστηριακή άσκηση",
     label: "Φωτογραφία εργαστηρίου",
-    hint: "Οριζόντια, τουλάχιστον 2400 × 1200 px",
+    hint: "Κάθετη ή τετράγωνη, τουλάχιστον 1200 × 1500 px",
   },
 
   /* Home — the director's letter */
@@ -65,14 +73,6 @@ export const photos = {
     alt: "Εργαστηριακή άσκηση στην παρασκευή καλλυντικών",
     label: "Φωτογραφία εργαστηριακής άσκησης",
     hint: "Οριζόντια 16:10, τουλάχιστον 1600 × 1000 px",
-  },
-
-  /* /epikoinonia — under the page title */
-  secretariat: {
-    src: null,
-    alt: "Η είσοδος του κτιρίου της Γραμματείας του ΠΜΣ",
-    label: "Φωτογραφία εισόδου / Γραμματείας",
-    hint: "Οριζόντια, τουλάχιστον 2400 × 1000 px",
   },
 } satisfies Record<string, PhotoSpec>;
 

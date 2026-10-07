@@ -5,9 +5,10 @@
    ──────────────────────────────────────────────────────────────────────────
    A short letter between "where graduates work" and "who teaches": the one
    place on the home page where the programme speaks in a person's voice.
-   Laid out like a letter rather than another info block — the heading and
-   the signature hold the left column, the quote and two short paragraphs
-   the right; on phones it reads top to bottom, signature last.
+   Laid out like a letter rather than another info block — the heading and,
+   under it, a large portrait with the signature hold the left column (sticky
+   beside the letter), the quote and two short paragraphs the right; on
+   phones it reads top to bottom, signature last.
 
    The single motion moment: the quote inks in word by word as it scrolls
    through the viewport (function-based transforms, see the WAAPI note in
@@ -27,6 +28,7 @@ import { initialsOf } from "@/data/faculty";
 import { photos } from "@/data/photos";
 import { PhotoSlot } from "@/components/ui/PhotoSlot";
 import { useReduced } from "./lib/hooks";
+import { ZigZag } from "./lib/ZigZag";
 
 /* How many word-slots each word takes to ink in — >1 overlaps neighbours,
    so the quote darkens as a soft wave instead of word-by-word ticks. */
@@ -80,10 +82,16 @@ function InkQuote({ text }: { text: string }) {
 function Signature() {
   const { name } = directorMessage.signedBy;
   return (
-    <div className="flex flex-col gap-5 sm:flex-row sm:items-end lg:flex-col lg:items-start">
-      {/* The portrait (src/data/photos.ts → director); initials until there is one */}
+    <div className="flex flex-col gap-5 sm:flex-row sm:items-end lg:flex-col lg:items-stretch">
+      {/* The portrait (src/data/photos.ts → director); initials until there is
+          one. On desktop it fills the width of the left column. */}
       {photos.director.src ? (
-        <PhotoSlot photo="director" drift={false} sizes="160px" className="aspect-[4/5] w-32 shrink-0 shadow-[0_18px_40px_-24px_rgba(63,79,24,0.6)] md:w-36" />
+        <PhotoSlot
+          photo="director"
+          drift={false}
+          sizes="(min-width: 1024px) 320px, 176px"
+          className="aspect-[4/5] w-40 shrink-0 shadow-[0_24px_50px_-28px_rgba(63,79,24,0.7)] sm:w-44 lg:w-full"
+        />
       ) : (
         <span
           aria-hidden
@@ -110,20 +118,32 @@ export function DirectorMessage() {
     <section
       id="minima"
       aria-labelledby="minima-title"
-      className="relative w-full overflow-hidden py-24 md:py-28"
+      className="relative w-full overflow-clip py-24 md:py-28"
     >
-      <div className="section-container relative z-10 px-4">
-        <article className="glass-lachani grid grid-cols-1 gap-y-10 edge-top px-6 py-10 sm:px-10 md:px-14 md:py-16 lg:grid-cols-12 lg:grid-rows-[auto_1fr] lg:gap-x-10">
-          {/* left column, top */}
-          <h2
-            id="minima-title"
-            className="font-heading text-2xl font-extrabold leading-tight tracking-tight text-text-primary md:text-3xl lg:col-span-4 lg:col-start-1 lg:row-start-1"
-          >
-            Μήνυμα του Διευθυντή
-          </h2>
+      {/* Two thirds on the left, white space on the right — a letter on a page */}
+      <ZigZag side="left" className="relative z-10">
+        <article className="glass-lachani grid grid-cols-1 gap-y-10 edge-top px-6 py-10 sm:px-10 md:px-14 md:py-16 lg:grid-cols-12 lg:gap-x-10">
+          {/* Left column: the heading with the portrait and signature right
+              under it, sticky so they stay beside the letter while it scrolls
+              (overflow-clip on the section, not -hidden, keeps sticky working).
+              On phones both wrappers dissolve (display: contents) and the
+              signature moves after the letter. */}
+          <div className="contents lg:col-span-4 lg:block">
+            <div className="contents lg:sticky lg:top-28 lg:block">
+              <h2
+                id="minima-title"
+                className="font-heading text-2xl font-extrabold leading-tight tracking-tight text-text-primary md:text-3xl"
+              >
+                Μήνυμα του Διευθυντή
+              </h2>
+              <div className="order-last border-t border-ihu-green-dark/15 pt-8 lg:mt-8 lg:border-t-0 lg:pt-0">
+                <Signature />
+              </div>
+            </div>
+          </div>
 
-          {/* right column, full height */}
-          <div className="lg:col-span-8 lg:col-start-5 lg:row-span-2 lg:row-start-1">
+          {/* right column: the letter */}
+          <div className="lg:col-span-8">
             <span
               aria-hidden
               className="-ml-1 block select-none font-heading text-[4.5rem] font-extrabold leading-[0.7] text-ihu-green md:text-[6rem]"
@@ -140,13 +160,8 @@ export function DirectorMessage() {
               ))}
             </div>
           </div>
-
-          {/* left column, bottom — after the letter on phones */}
-          <div className="border-t border-ihu-green-dark/15 pt-8 lg:col-span-4 lg:col-start-1 lg:row-start-2 lg:self-end lg:border-t-0 lg:pt-0">
-            <Signature />
-          </div>
         </article>
-      </div>
+      </ZigZag>
     </section>
   );
 }

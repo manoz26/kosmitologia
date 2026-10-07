@@ -257,7 +257,7 @@ function SemesterMarker({ semester, ects }: { semester: number; ects: number }) 
 
 function SplitBanner() {
   return (
-    <div className="relative mt-10 md:mt-12">
+    <div className="relative mx-auto mt-10 max-w-6xl md:mt-12">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
         {specializations.map((s, i) => {
           const count = getSpecializationCourses(s.id).length;
@@ -533,7 +533,7 @@ export function SpecializationTracks3D() {
         <SplitBanner />
 
         {/* the branching timeline */}
-        <div ref={railRef} className="relative mt-20">
+        <div ref={railRef} className="relative mx-auto mt-20 max-w-6xl">
           {/* central rail (behind everything) */}
           <div
             aria-hidden

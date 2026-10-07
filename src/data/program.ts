@@ -57,6 +57,12 @@ export const program = {
   /** Σε στρέμματα. */
   campusArea: { value: 1600, source: `${GUIDE}, σ.3` },
   campusDistance: { value: "17 χλμ. από τη Θεσσαλονίκη", source: `${GUIDE}, σ.3` },
+  /** Το κτήριο του Τμήματος στην Πανεπιστημιούπολη — για τους χάρτες (/sxetika,
+      /epikoinonia) και τις οδηγίες πρόσβασης. */
+  location: {
+    value: { lat: 40.65812, lng: 22.80373 },
+    source: "OpenStreetMap, way 372296618 «Τμήμα Διατροφής και Διαιτολογίας» — προς επιβεβαίωση από τον πελάτη",
+  },
 } satisfies Record<string, Fact<unknown>>;
 
 /* ── Συντονιστική Επιτροπή ───────────────────────────────────────────────────

@@ -37,6 +37,7 @@ import { isTouchDevice } from "@/lib/perf";
 import { cn } from "@/lib/utils";
 import { Icon, Reveal, SectionHeading, TiltCard } from "./lib/primitives";
 import { useMounted, useReduced } from "./lib/hooks";
+import { ZigZag } from "./lib/ZigZag";
 
 const rolesOf = (g: EmployerGroup) => careerPaths.find((p) => p.id === g.pathId)?.roles.slice(0, 2) ?? [];
 
@@ -554,7 +555,7 @@ function CareerCompass() {
   return (
     <div
       ref={stageRef}
-      className="relative mx-auto mt-16 flex max-w-xl flex-col items-center gap-12 lg:mt-20 lg:grid lg:max-w-none lg:grid-cols-3 lg:items-stretch lg:gap-x-8 lg:gap-y-14"
+      className="relative mx-auto mt-16 flex max-w-xl flex-col items-center gap-12 lg:mt-20 lg:grid lg:max-w-6xl lg:grid-cols-3 lg:items-stretch lg:gap-x-8 lg:gap-y-14"
     >
       {/* a field of dots around the compass — still */}
       <div
@@ -608,7 +609,9 @@ function CareerCompass() {
 export function GraduateCareers() {
   return (
     <section id="apofoitoi" className="relative w-full overflow-hidden py-24 md:py-28">
-      <div className="section-container relative z-10 px-4">
+      {/* The compass is a symmetric figure, so this section keeps the whole
+          row; its heading still starts on the zig-zag sections' left edge. */}
+      <ZigZag side="full" className="relative z-10">
         <SectionHeading
           label="Καριέρα"
           labelIcon="briefcase"
@@ -620,7 +623,7 @@ export function GraduateCareers() {
         <CareerCompass />
 
         {/* The two numbers the department kept + the way to the full paths */}
-        <Reveal delay={0.1} direction="up" className="mt-10 lg:mt-12">
+        <Reveal delay={0.1} direction="up" className="mx-auto mt-10 max-w-6xl lg:mt-12">
           <div className="flex flex-col items-start justify-between gap-6 edge-top glass-lachani-deep px-6 py-5 md:flex-row md:items-center md:px-9">
             <dl className="flex items-center gap-8 sm:gap-10">
               {stats.map((s, i) => (
@@ -642,7 +645,7 @@ export function GraduateCareers() {
             </Link>
           </div>
         </Reveal>
-      </div>
+      </ZigZag>
     </section>
   );
 }

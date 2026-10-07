@@ -12,7 +12,6 @@ import Link from "next/link";
 import {
   motion,
   useMotionTemplate,
-  useReducedMotion,
   type MotionValue,
   type Variants,
 } from "framer-motion";
@@ -293,21 +292,25 @@ export function GradientText({
 /* The rule every section heading stands on: a short dark-green bar on a
    hairline that runs the width of the column, drawn in from the left as the
    section arrives — the one motion of the heading. Square-cut, like the
-   other "structure" on the page. */
+   other "structure" on the page.
+   Reduced motion gets it already drawn, from CSS rather than
+   useReducedMotion: the server can't know the preference, so an `initial`
+   that depends on it renders different markup on the server and on the
+   hydrating client (a hydration mismatch). The media query also holds from
+   the very first paint; `!` beats the inline transform framer writes. */
 export function HeadingRule({ className }: { className?: string }) {
-  const reduced = useReducedMotion();
   return (
     <div aria-hidden className={cn("relative h-[3px] w-full", className)}>
       <motion.span
-        className="absolute inset-x-0 top-[1px] h-px origin-left bg-ihu-green-dark/20"
-        initial={reduced ? false : { scaleX: 0 }}
+        className="absolute inset-x-0 top-[1px] h-px origin-left bg-ihu-green-dark/20 motion-reduce:transform-none!"
+        initial={{ scaleX: 0 }}
         whileInView={{ scaleX: 1 }}
         viewport={{ once: true, margin: "-60px" }}
         transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
       />
       <motion.span
-        className="absolute left-0 top-0 h-[3px] w-12 origin-left bg-ihu-green-dark"
-        initial={reduced ? false : { scaleX: 0 }}
+        className="absolute left-0 top-0 h-[3px] w-12 origin-left bg-ihu-green-dark motion-reduce:transform-none!"
+        initial={{ scaleX: 0 }}
         whileInView={{ scaleX: 1 }}
         viewport={{ once: true, margin: "-60px" }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}

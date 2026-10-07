@@ -4,19 +4,18 @@
    HistoryMilestones3D — "Ορόσημα"
    ──────────────────────────────────────────────────────────────────────────
    The Department's real milestones (study guide σ.4–6) as a connected
-   four-node horizontal timeline, closing with a compact stat row. Reveal-on-scroll with a gradient connector.
+   four-node horizontal timeline. Reveal-on-scroll with a gradient connector.
+   The teachers follow right under it (FacultyDirectory, which now carries
+   the «διδάσκοντες · φορείς» numbers this section used to close with).
    ══════════════════════════════════════════════════════════════════════════ */
 
-import { faculty } from "@/data/faculty";
 import { milestones } from "./lib/data";
 import { Icon, Reveal, SectionHeading } from "./lib/primitives";
 import { GlowOrb } from "./lib/decorations";
 
-const institutions = new Set(faculty.map((f) => f.institution)).size;
-
 export function HistoryMilestones3D() {
   return (
-    <section id="milestones" className="relative w-full overflow-hidden py-24 md:py-32">
+    <section id="milestones" className="relative w-full overflow-hidden pb-16 pt-24 md:pb-20 md:pt-32">
       <GlowOrb className="left-[-4%] top-10" size={420} color="rgba(216,236,128,0.4)" />
 
       <div className="section-container relative z-10 px-4">
@@ -47,21 +46,6 @@ export function HistoryMilestones3D() {
             ))}
           </ol>
         </div>
-
-        {/* The faculty today, as a square-cut strip on the grid */}
-        <Reveal delay={0.05}>
-          <dl className="mt-16 flex flex-wrap items-center gap-x-12 gap-y-4 edge-top pt-6">
-            {[
-              { value: faculty.length, label: "Διδάσκοντες" },
-              { value: institutions, label: "Φορείς διδασκόντων" },
-            ].map((s) => (
-              <div key={s.label} className="flex items-baseline gap-3">
-                <dd className="font-heading text-4xl font-extrabold tabular-nums text-ihu-green-dark">{s.value}</dd>
-                <dt className="text-sm font-medium text-text-secondary">{s.label}</dt>
-              </div>
-            ))}
-          </dl>
-        </Reveal>
       </div>
     </section>
   );

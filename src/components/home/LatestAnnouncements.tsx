@@ -30,7 +30,9 @@ import {
 } from "@/data/announcements";
 import { formatDate, formatDateLong } from "@/data/program";
 import { useAdmissionsProgress, useAdmissionsStatus } from "@/lib/use-admissions-status";
+import { AsidePhoto } from "@/components/ui/PhotoSlot";
 import { Reveal, SectionHeading } from "./lib/primitives";
+import { ZigZag } from "./lib/ZigZag";
 
 const NEXT_CYCLE_NOTE = "Τις ημερομηνίες του επόμενου κύκλου θα τις ανακοινώσει η Γραμματεία.";
 
@@ -227,7 +229,8 @@ function NewsList() {
 export function LatestAnnouncements() {
   return (
     <section id="anakoinoseis" aria-label="Ανακοινώσεις" className="relative z-10 w-full py-20 md:py-24">
-      <div className="section-container relative px-4">
+      {/* Two thirds on the left, a photo in the right third */}
+      <ZigZag side="left" aside={<AsidePhoto photo="homeEvents" />}>
         <SectionHeading
           label="Ενημέρωση"
           labelIcon="megaphone"
@@ -238,17 +241,17 @@ export function LatestAnnouncements() {
         />
 
         {/* The call carries the weight (7 of 12 columns), the news list the rest */}
-        <div className="mt-10 grid gap-5 md:mt-12 lg:grid-cols-12 lg:gap-6">
-          <Reveal direction="up" delay={0.04} className="h-full lg:col-span-7">
+        <div className="mt-10 grid gap-5 md:mt-12 xl:grid-cols-12 xl:gap-6">
+          <Reveal direction="up" delay={0.04} className="h-full xl:col-span-7">
             <AdmissionsCard />
           </Reveal>
           {latestNews.length > 0 && (
-            <Reveal direction="up" delay={0.12} className="h-full lg:col-span-5">
+            <Reveal direction="up" delay={0.12} className="h-full xl:col-span-5">
               <NewsList />
             </Reveal>
           )}
         </div>
-      </div>
+      </ZigZag>
     </section>
   );
 }
